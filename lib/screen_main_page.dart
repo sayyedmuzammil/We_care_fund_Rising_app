@@ -3,7 +3,6 @@ import 'package:we_care/bottom_nav_bar.dart';
 import 'package:we_care/constant_design.dart';
 import 'package:we_care/screens/Home_screen.dart';
 import 'package:we_care/screens/Profile.dart';
-import 'package:we_care/screens/chat_box.dart';
 import 'package:we_care/screens/donation_fundrise/donations.dart';
 import 'package:we_care/screens/donation_fundrise/fund_rising.dart';
 
@@ -12,9 +11,13 @@ class ScreenMainPage extends StatelessWidget {
 final _pages=[HomeScreen(),
 Donations(),
 FundRising(),
-ChatBox(),
+// ChatBox(),
 Profile(), 
 ];
+
+// ls()async*{
+// yield 
+// }
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
-import 'package:we_care/constant_design.dart';
 import 'package:we_care/screen_main_page.dart';
-import 'package:we_care/screens/Home_screen.dart';
-import 'package:we_care/screens/your_interest.dart';
+import 'package:we_care/screens/new_fundrise/new_fundraising.dart';
 
 void main() {
   runApp(const MyApp());
@@ -26,7 +24,7 @@ class MyApp extends StatelessWidget {
     
         primarySwatch: Colors.green,
       ),
-      home:  ScreenMainPage(), 
+      home:  newFundrising(),  
     );
       });
   }

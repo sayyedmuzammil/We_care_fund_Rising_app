@@ -28,11 +28,13 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
   carousel_slider: ^4.0.0
-  cupertino_icons: ^1.0.2
+  cupertino_icons: ^1.0.2 
+  fdottedline_nullsafety: ^2.0.0
   flutter:
     sdk: flutter
   flutter_svg: ^1.0.3
   get: ^4.6.1
+  image_picker: ^0.8.4+4 
   percent_indicator: ^4.0.0
   pit_slider_carousel: ^0.1.0
   sizer: ^2.0.15
@@ -65,7 +67,9 @@ flutter:
     - assets/images/cloth_poor.jpeg
     - assets/images/hungry_kid.jpg
     - assets/images/before Bookmark.svg
-    - assets/images/after Bookmark.svg 
+    - assets/images/after Bookmark.svg
+    - assets/images/settings_icon.svg
+    - assets/images/profile_avatar.png
     - assets/images/nav_icons/chat_green.svg
     - assets/images/nav_icons/chat_white.svg
     - assets/images/nav_icons/donation_green.svg
@@ -77,7 +81,6 @@ flutter:
     - assets/images/nav_icons/profile_green.svg
     - assets/images/nav_icons/profile_white.svg
 
-    
   #   - images/a_dot_ham.jpeg
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

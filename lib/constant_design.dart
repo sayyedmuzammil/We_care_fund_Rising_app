@@ -1,4 +1,6 @@
 
+// ignore_for_file: constant_identifier_names
+
 import 'package:flutter/material.dart';
 
 class Styles {
@@ -16,14 +18,20 @@ class Styles {
     height: 1.2,
     leading: 1.2, 
   );
+  
    static const Header=TextStyle(
                       fontSize: 20,
                       color: Colors.white,
                       fontWeight: FontWeight.w600);
+  
    static const RegularText=  TextStyle(
     
                     fontSize: 16,
                     color:primary_green,
                   );
-  
+                    static const RegularTextBold=  TextStyle(
+    fontWeight: FontWeight.bold,color: Colors.white, 
+                    fontSize: 15,
+                  
+                  );
 }

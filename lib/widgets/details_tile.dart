@@ -79,7 +79,7 @@ class details_tile extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(width: 50,),   
+       Spacer(),   
           Row(
                 
                

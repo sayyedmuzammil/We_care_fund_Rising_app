@@ -5,31 +5,32 @@ import 'package:we_care/constant_design.dart';
 import 'package:we_care/screens/donation_fundrise/widgets/fundrise_bottom_card.dart';
 import 'package:we_care/screens/donation_fundrise/widgets/main_card.dart';
 import 'package:we_care/screens/donation_fundrise/donations.dart';
+import 'package:we_care/widgets/category_buttons.dart';
 
 class FundRising extends StatelessWidget {
-  const FundRising({Key? key}) : super(key: key);
-
+   FundRising({Key? key}) : super(key: key);
+int count=3;
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 2,
-      child: Scaffold(
+    return /* DefaultTabController(
+      length: 1,
+      child:  */Scaffold(
           backgroundColor: Styles.primary_black,
           appBar: AppBar(
-            bottom: const TabBar(
-              //  isScrollable: true,
-              labelStyle: Styles.RegularText,
-              indicatorColor: Styles.primary_green,
+            // bottom: const TabBar(
+            //   //  isScrollable: true,
+            //   labelStyle: Styles.RegularText,
+            //   indicatorColor: Styles.primary_green,
 
-              tabs: [
-                Tab(
-                  text: "My Fundraising",
-                ),
-                Tab(
-                  text: "Activity",
-                ),
-              ],
-            ),
+            //   tabs: [
+            //     Tab(
+            //       text: "My Fundraising",
+            //     ),
+            //     // Tab(
+            //     //   text: "Activity",
+            //     // ),
+            //   ],
+            // ),
             elevation: 0,
             backgroundColor: Styles.primary_black,
             title: const Text(
@@ -56,45 +57,82 @@ class FundRising extends StatelessWidget {
               ),
             ],
           ),
-          body: TabBarView(children: [
-                /*  SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(
-              children: [
-                Styles.KWidth20,
-                category_button(
-                    title: 'All',
-                    currentIndex: 0,
-                ),
-                category_button(
-                    title: 'Medical',
-                    currentIndex: 1,
-                ),
-                category_button(
-                    title: 'Disaster',
-                    currentIndex: 2,
-                ),
-                category_button(
-                    title: 'Education',
-                    currentIndex: 3,
-                ),
-              ])), */
-            Padding(
-            padding: const EdgeInsets.only(left: 10, right: 10, top: 5),  
+          body:/*  TabBarView(children: [ */
+              
+             Padding(
+               padding: const EdgeInsets.only(left: 10, right: 10),
+               child: Column(
+        children: [
+          // Styles.KHeight10, 
+               SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround, 
+        children: [
+          Styles.KWidth20,
+          category_button(
+                title: 'All(9)',
+                currentIndex: 0,
+          ),
+          category_button(
+                title: 'On Going($count)',
+                currentIndex: 1,
+          ),
+          category_button(
+                title: 'Past($count)',
+                currentIndex: 2,
+          ),
+          category_button(
+                title: 'Pending($count)',
+                currentIndex: 3,
+          ),
+        ])),
+          Expanded(
+            child: Padding(
+            padding: const EdgeInsets.only(left: 10, right: 10, ),  
             child: ListView.builder(
-              itemCount: 8,
-              itemBuilder: (context, index) {
-              return donation_card(card_bottom:  card_bottom_fundrise(),bg_image: 'assets/images/blind.jpg', ); 
+                itemCount: 8,
+                itemBuilder: (context, index) {
+                return donation_card(card_bottom:  card_bottom_fundrise(),bg_image: 'assets/images/blind.jpg', ); 
             },),
+                      ),
           ),
-            Text(
-              "hello",
-              style: Styles.RegularText,
-            ),
-          ])
-
-         
-          ),
+      
+        ],
+      ),
+             ),
+            // Text(
+            //   "hello",
+            //   style: Styles.RegularText,
+            // ),
+          /* ]), */
+     
+         floatingActionButton: FloatingActionButton(
+           backgroundColor: Styles.primary_green, 
+        onPressed: (){},
+        tooltip: 'create new fund rising',
+        child: const Icon(Icons.add),
+      ),
+        
     );
   }
 }
+/* 
+class myFundRising_tab extends StatelessWidget {
+  const myFundRising_tab({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+       floatingActionButton: FloatingActionButton(
+        onPressed: (){},
+        tooltip: 'Increment',
+        child: const Icon(Icons.add),
+      ),
+      body:
+    );
+  }
+}
+ */

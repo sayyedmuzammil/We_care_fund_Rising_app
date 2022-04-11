@@ -35,8 +35,7 @@ class category_button extends StatelessWidget {
             ),
             onPressed: () {
               data_control.categoryButtonClicked.value=currentIndex;
-              // data_control.categoryButtonClicked==true?data_control.categoryButtonClicked.value = false:
-              // data_control.categoryButtonClicked.value = true;
+           
               print('Pressed');
             },
           ),
