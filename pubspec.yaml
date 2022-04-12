@@ -28,13 +28,14 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
   carousel_slider: ^4.0.0
-  cupertino_icons: ^1.0.2 
+  cupertino_icons: ^1.0.2
   fdottedline_nullsafety: ^2.0.0
   flutter:
     sdk: flutter
   flutter_svg: ^1.0.3
   get: ^4.6.1
-  image_picker: ^0.8.4+4 
+  image_picker: ^0.8.4+4
+  intl: ^0.17.0
   percent_indicator: ^4.0.0
   pit_slider_carousel: ^0.1.0
   sizer: ^2.0.15
@@ -64,6 +65,7 @@ flutter:
     - assets/images/shelter_video_bg.jpg
     - assets/images/blind.jpg
     - assets/images/alice fund rising.jpeg
+    - assets/images/draft_icon.svg
     - assets/images/cloth_poor.jpeg
     - assets/images/hungry_kid.jpg
     - assets/images/before Bookmark.svg
@@ -80,6 +82,10 @@ flutter:
     - assets/images/nav_icons/home_white.svg
     - assets/images/nav_icons/profile_green.svg
     - assets/images/nav_icons/profile_white.svg
+    - assets/images/srilanka1.jpg
+    - assets/images/srilanka2.jpeg
+    - assets/images/srilanka3.jpg
+    - assets/images/srilanka4.jpg
 
   #   - images/a_dot_ham.jpeg
   # An image asset can refer to one or more resolution-specific "variants", see

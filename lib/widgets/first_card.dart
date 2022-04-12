@@ -53,7 +53,8 @@ class first_card extends StatelessWidget {
               Container(
                 height: 29.5.w,     
                 width: 52.w,
-                child: details_tile(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Details_tile(
                   
                   title: 'Help Orphanage Children to recover',
                   raised_fund: '23,790',

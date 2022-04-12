@@ -18,7 +18,7 @@ class donation_card extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 15),
+      padding: const EdgeInsets.only(bottom: 15,left: 10, right: 10),
       child: Container(
         decoration: BoxDecoration(
           border: Border.all(color: Styles.primary_green_light, width: 2),
@@ -33,8 +33,8 @@ class donation_card extends StatelessWidget {
             children: [
               Styles.KHeight10,
               Container(
-                height: 32.w,
-                width: 84.w,
+                height: 33.w,
+                width: 82.w,
                 decoration: BoxDecoration(
                   color: Styles.primary_black_light,
                   borderRadius: BorderRadius.circular(20),
@@ -66,10 +66,11 @@ class donation_card extends StatelessWidget {
                         ),
                       ],
                     ),
-                    SizedBox(
+                    Container(
                         height: 30.w,
                         width: 52.w,
-                        child: details_tile(
+                         padding: const EdgeInsets.symmetric(horizontal: 10),
+                        child: Details_tile(
                           title: "Help Victims of Flash Flood",
                           total_fund: '1,05,400',
                           raised_fund: '87,750',

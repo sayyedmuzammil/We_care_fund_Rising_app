@@ -4,7 +4,6 @@ import 'package:sizer/sizer.dart';
 import 'package:we_care/constant_design.dart';
 import 'package:we_care/screens/donation_fundrise/widgets/main_card.dart';
 import 'package:we_care/widgets/category_buttons.dart';
-import 'package:we_care/widgets/details_tile.dart';
 
 class Donations extends StatelessWidget {
   const Donations({Key? key}) : super(key: key);
@@ -60,7 +59,7 @@ class card_bottom extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left: 15, top: 2), 
+      padding: const EdgeInsets.only(left: 15, top: 5), 
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -76,10 +75,21 @@ class card_bottom extends StatelessWidget {
                       fontSize: 12, color: Styles.primary_green)),
             ],
           ),
-          category_button(
-            title: 'Donate Again',
-            currentIndex: 7,
+          Row(
+            children: [
+              SizedBox(
+                width: 25.w,
+                child: FittedBox(
+                  child: category_button(
+                    title: 'Donate Again',
+                    currentIndex: 7,
+                  ),
+                ),
+              ),
+            
+            ],
           ),
+     
         ],
       ),
     );

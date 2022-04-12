@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 import 'package:we_care/screen_main_page.dart';
-import 'package:we_care/screens/new_fundrise/new_fundraising.dart';
+import 'package:we_care/screens/donation_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
     
         primarySwatch: Colors.green,
       ),
-      home:  newFundrising(),  
+      home:  donationScreen(),  
     );
       });
   }

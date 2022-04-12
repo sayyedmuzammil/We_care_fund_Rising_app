@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
 import 'package:we_care/constant_design.dart';
 import 'package:we_care/widgets/category_buttons.dart';
 
@@ -11,7 +12,7 @@ class card_bottom_fundrise extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left: 15, top: 2), 
+      padding: const EdgeInsets.only(left: 15, ), 
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -41,12 +42,14 @@ class card_bottom_fundrise extends StatelessWidget {
     ],
           ),
 
-          Padding(
-    padding: const EdgeInsets.only(right: 10),
-    child: category_button(
-      title: 'See Results', 
-      currentIndex: 7,
-    ),
+          SizedBox(
+            width: 25.w,
+            child: FittedBox(
+              child: category_button(
+                title: 'See Results', 
+                currentIndex: 7,
+              ),
+            ),
           ),
            
         ],

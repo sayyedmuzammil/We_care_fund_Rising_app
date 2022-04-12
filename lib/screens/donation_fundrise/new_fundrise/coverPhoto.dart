@@ -7,14 +7,14 @@ import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:sizer/sizer.dart';
 import 'package:we_care/constant_design.dart';
 import 'package:we_care/controller.dart';
-import 'package:we_care/screens/new_fundrise/new_fundraising.dart';
+import 'package:we_care/screens/donation_fundrise/new_fundrise/new_fundraising.dart';
 
 Uint8List? val;
   Stack cover_Photo() {
     return Stack(
             children: [
               Obx(
-                () => data_control.imageTemporary == ''
+                () => data_control.imageTemporary == '' || data_control.imageTemporary=='null' || data_control.imageTemporary==null
                     ? FDottedLine(
                         color:const Color(0xFF172927),
                         strokeWidth: 2.0,

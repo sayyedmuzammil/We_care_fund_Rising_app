@@ -7,18 +7,22 @@ import 'package:sizer/sizer.dart';
 
 import 'package:we_care/constant_design.dart';
 
-class details_tile extends StatelessWidget {
+class Details_tile extends StatelessWidget {
   String title;
   String total_fund;
   String raised_fund;
   String donators_count;
   int days_left;
-   details_tile({
+  int percentWidth;
+  bool titleVisible;
+   Details_tile({
     required this.title, 
     required this.total_fund,
     required this.raised_fund,
     required this.donators_count,
     required this.days_left,
+    this.percentWidth=50,
+    this.titleVisible=true,
     
     Key? key,
   }) : super(key: key);
@@ -31,7 +35,7 @@ class details_tile extends StatelessWidget {
           // top: 4,  
           child: Padding(
             
-            padding: const EdgeInsets.all(10.0),
+            padding: const EdgeInsets.symmetric(vertical: 10), 
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start, 
               children: [
@@ -40,26 +44,34 @@ class details_tile extends StatelessWidget {
                 ),
                 SizedBox(
                     // width:200,   
-                    child: Text(
-                      title,
-                      overflow: TextOverflow.ellipsis,
-                      style: Styles.RegularText.copyWith(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold),
+                    child: Visibility(
+                      visible: titleVisible,
+                      child: Text(
+                        title,
+                        overflow: TextOverflow.ellipsis,
+                        style: Styles.RegularText.copyWith(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold),
+                      ),
                     )),
-                Styles.KHeight10,
-                Row(
-                
-                  children: [
-                    Text("₹$raised_fund  ",
-                        style: Styles.RegularText.copyWith(
-                            fontSize: 12)),
-                    Text("fund raised from ₹$total_fund",
-                        style: Styles.RegularText.copyWith(
-                            fontSize: 12, color: Colors.white)),
-                  ],
+                Visibility(
+                  visible: titleVisible,
+                  child: Styles.KHeight10),
+                SizedBox(
+                  width: 80.w,
+                  child: Row(
+                  
+                    children: [
+                      Text("₹$raised_fund  ",
+                          style: Styles.RegularText.copyWith(
+                              fontSize: 12)),
+                      Text("fund raised from ₹$total_fund",
+                          style: Styles.RegularText.copyWith(
+                              fontSize: 12, color: Colors.white)),
+                    ],
+                  ),
                 ),
-                SizedBox(height: 25,), 
+              Spacer(),
                    
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween, 
@@ -79,22 +91,24 @@ class details_tile extends StatelessWidget {
               ),
             ],
           ),
-       Spacer(),   
-          Row(
-                
-               
-            children: [
-              Text(
-                "$days_left  ",
-                style:
-                    Styles.RegularText.copyWith(fontSize: 12),
-              ),
-              Text(
-                "days left",
-                style: Styles.RegularText.copyWith(
-                    fontSize: 12, color: Colors.white),
-              ),
-            ],
+      Spacer(), 
+          FittedBox(
+            child: Row(
+                  
+                 
+              children: [
+                Text(
+                  "$days_left  ",
+                  style:
+                      Styles.RegularText.copyWith(fontSize: 12),
+                ),
+                Text(
+                  "days left",
+                  style: Styles.RegularText.copyWith(
+                      fontSize: 12, color: Colors.white),
+                ),
+              ],
+            ),
           ),
             ],
           )
@@ -103,17 +117,20 @@ class details_tile extends StatelessWidget {
           ),
         ),
         Positioned(
-          bottom: 35,     
+          bottom: 9.w,     
+          left: -10,
           child: 
-         LinearPercentIndicator(
-      width: 50.w,         
-      animation: true,
-      lineHeight: 5.0,
-      animationDuration: 1000,
-      percent: 0.55,
-      barRadius: const Radius.circular(30),
-      progressColor: Styles.primary_green,
-    ),
+         FittedBox(
+           child: LinearPercentIndicator(
+               width: percentWidth.w,            
+               animation: true,
+               lineHeight: 5.0,
+               animationDuration: 1000,
+               percent: 0.55,
+               barRadius: const Radius.circular(30), 
+               progressColor: Styles.primary_green,
+             ),
+         ),
         ), 
       ],
     );

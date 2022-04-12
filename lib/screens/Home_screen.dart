@@ -45,7 +45,7 @@ class HomeScreen extends StatelessWidget {
            IconButton(
             onPressed: (){},
             icon: SvgPicture.asset("assets/images/bookmark_svg.svg")),
-        SizedBox(width: 15,),  
+        const SizedBox(width: 15,),  
         ],
       ),
       body: ListView(
@@ -87,13 +87,18 @@ class HomeScreen extends StatelessWidget {
                     style: Styles.Header,
                   ),
                 ),
-                TextButton(
-                  onPressed: () {},
-                  child: const Text(
-                    "See All",
-                    style: Styles.RegularText,
-                  ),
-                )
+                  SizedBox(
+                    width: 15.w,
+                    child: FittedBox(
+                      child: TextButton(
+                        onPressed: () {},
+                        child: const Text(
+                          "See All",
+                          style:Styles.RegularText,
+                        ),
+                      ),
+                    ),
+                  )
               ],
             ),
           ),
@@ -158,13 +163,18 @@ class HomeScreen extends StatelessWidget {
                     style: Styles.Header,
                   ),
                 ),
-                TextButton(
-                  onPressed: () {},
-                  child: const Text(
-                    "See All",
-                    style: Styles.RegularText,
-                  ),
-                )
+                SizedBox(
+                    width: 15.w,
+                    child: FittedBox(
+                      child: TextButton(
+                        onPressed: () {},
+                        child: const Text(
+                          "See All",
+                          style:Styles.RegularText,
+                        ),
+                      ),
+                    ),
+                  )
               ],
             ),
           ),
@@ -183,27 +193,38 @@ class HomeScreen extends StatelessWidget {
             ),
           ),
           Styles.KHeight10, 
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                SizedBox(
-                  width: 73.w, 
-                  child: const Text(
-                    "Watch the Impact of Your Donation",
-                    overflow: TextOverflow.ellipsis,
-                    style: Styles.Header,
+          SizedBox(
+                 width: 82.w, 
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  SizedBox(
+                    width: 72.w,
+                    child: FittedBox(
+               
+                      child: const Text(
+                        "Watch the Impact of Your Donation",
+                        overflow: TextOverflow.ellipsis,
+                        style: Styles.Header,
+                      ),
+                    ),
                   ),
-                ),
-                TextButton(
-                  onPressed: () {},
-                  child: const Text(
-                    "See All",
-                    style:Styles.RegularText,
-                  ),
-                )
-              ],
+                  SizedBox(
+                    width: 15.w,
+                    child: FittedBox(
+                      child: TextButton(
+                        onPressed: () {},
+                        child: const Text(
+                          "See All",
+                          style:Styles.RegularText,
+                        ),
+                      ),
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
           const video_card(),
