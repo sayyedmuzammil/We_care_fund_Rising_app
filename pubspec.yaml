@@ -72,6 +72,8 @@ flutter:
     - assets/images/after Bookmark.svg
     - assets/images/settings_icon.svg
     - assets/images/profile_avatar.png
+    - assets/images/avatar2.jpg
+    - assets/images/avatar3.jpg
     - assets/images/nav_icons/chat_green.svg
     - assets/images/nav_icons/chat_white.svg
     - assets/images/nav_icons/donation_green.svg

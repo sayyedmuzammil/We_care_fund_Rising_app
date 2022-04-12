@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:sizer/sizer.dart';
 import 'package:we_care/constant_design.dart';
+import 'package:we_care/screens/donate_click/donation_page.dart';
 import 'package:we_care/widgets/carousel_slider.dart';
 import 'package:we_care/widgets/category_buttons.dart';
 import 'package:we_care/widgets/first_card.dart';
@@ -33,19 +34,20 @@ class HomeScreen extends StatelessWidget {
               ));
         }),
         actions: [
-
           IconButton(
-            onPressed: (){},
-            icon: SvgPicture.asset("assets/images/search_svg.svg")),
+              onPressed: () {},
+              icon: SvgPicture.asset("assets/images/search_svg.svg")),
           // KWidth20,
-           IconButton(
-            onPressed: (){},
-            icon: SvgPicture.asset("assets/images/noti_svg.svg")),
+          IconButton(
+              onPressed: () {},
+              icon: SvgPicture.asset("assets/images/noti_svg.svg")),
           // KWidth20,
-           IconButton(
-            onPressed: (){},
-            icon: SvgPicture.asset("assets/images/bookmark_svg.svg")),
-        const SizedBox(width: 15,),  
+          IconButton(
+              onPressed: () {},
+              icon: SvgPicture.asset("assets/images/bookmark_svg.svg")),
+          const SizedBox(
+            width: 15,
+          ),
         ],
       ),
       body: ListView(
@@ -54,7 +56,7 @@ class HomeScreen extends StatelessWidget {
             children: [
               Container(
                   // decoration: BoxDecoration(borderRadius: BorderRadius.circular(30)),
-                  margin: const EdgeInsets.fromLTRB(20,10,20,0),
+                  margin: const EdgeInsets.fromLTRB(20, 10, 20, 0),
                   child: carousel_Slider()),
               Positioned(
                 bottom: 3.h,
@@ -87,18 +89,18 @@ class HomeScreen extends StatelessWidget {
                     style: Styles.Header,
                   ),
                 ),
-                  SizedBox(
-                    width: 15.w,
-                    child: FittedBox(
-                      child: TextButton(
-                        onPressed: () {},
-                        child: const Text(
-                          "See All",
-                          style:Styles.RegularText,
-                        ),
+                SizedBox(
+                  width: 15.w,
+                  child: FittedBox(
+                    child: TextButton(
+                      onPressed: () {},
+                      child: const Text(
+                        "See All",
+                        style: Styles.RegularText,
                       ),
                     ),
-                  )
+                  ),
+                )
               ],
             ),
           ),
@@ -145,12 +147,22 @@ class HomeScreen extends StatelessWidget {
               // shrinkWrap: true,
               itemCount: 8,
               itemBuilder: (context, index) {
-                return first_card(bg_image: 'assets/images/cloth_poor.jpeg',);
+                return InkWell(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => donationScreen()),
+                      );
+                    },
+                    child: first_card(
+                      bg_image: 'assets/images/cloth_poor.jpeg',
+                    ));
               },
             ),
           ),
-          Styles.KHeight10, 
-           Padding(
+          Styles.KHeight10,
+          Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -164,37 +176,38 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ),
                 SizedBox(
-                    width: 15.w,
-                    child: FittedBox(
-                      child: TextButton(
-                        onPressed: () {},
-                        child: const Text(
-                          "See All",
-                          style:Styles.RegularText,
-                        ),
+                  width: 15.w,
+                  child: FittedBox(
+                    child: TextButton(
+                      onPressed: () {},
+                      child: const Text(
+                        "See All",
+                        style: Styles.RegularText,
                       ),
                     ),
-                  )
+                  ),
+                )
               ],
             ),
           ),
-           SizedBox(
+          SizedBox(
             height: 54.w + 2,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
               // shrinkWrap: true,
               itemCount: 8,
               itemBuilder: (context, index) {
-                return  Container(
-                    height: 115, 
-                  
-                  child: first_card(bg_image: 'assets/images/hungry_kid.jpg',));
+                return SizedBox(
+                    height: 115,
+                    child: first_card(
+                      bg_image: 'assets/images/hungry_kid.jpg',
+                    ));
               },
             ),
           ),
-          Styles.KHeight10, 
+          Styles.KHeight10,
           SizedBox(
-                 width: 82.w, 
+            width: 82.w,
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Row(
@@ -202,9 +215,8 @@ class HomeScreen extends StatelessWidget {
                 children: [
                   SizedBox(
                     width: 72.w,
-                    child: FittedBox(
-               
-                      child: const Text(
+                    child: const FittedBox(
+                      child: Text(
                         "Watch the Impact of Your Donation",
                         overflow: TextOverflow.ellipsis,
                         style: Styles.Header,
@@ -218,7 +230,7 @@ class HomeScreen extends StatelessWidget {
                         onPressed: () {},
                         child: const Text(
                           "See All",
-                          style:Styles.RegularText,
+                          style: Styles.RegularText,
                         ),
                       ),
                     ),
@@ -228,8 +240,7 @@ class HomeScreen extends StatelessWidget {
             ),
           ),
           const video_card(),
-
-         Styles.KHeight20, 
+          Styles.KHeight20,
         ],
       ),
     );
