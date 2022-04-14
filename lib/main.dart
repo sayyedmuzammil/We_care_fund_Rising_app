@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 import 'package:we_care/screen_main_page.dart';
+import 'package:we_care/screens/screenWelcome.dart';
 
 void main() {
   runApp(const MyApp());
@@ -9,8 +10,7 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
-  // This widget is the root of your application.
-  @override
+   @override
   Widget build(BuildContext context) {
     return 
     Sizer(
@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
     
         primarySwatch: Colors.green,
       ),
-      home:  ScreenMainPage(),  
+      home:  ScreenWelcome(),  
     );
       });
   }

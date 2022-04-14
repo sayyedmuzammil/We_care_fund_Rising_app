@@ -8,5 +8,6 @@ class GetController extends GetxController {
    var categoryButtonClicked = 0.obs;
   var imageTemporary=''.obs;
     List<Uint8List?> image_list_unit=[null,null,null,null];
-var TermsValue=false; 
+var TermsCheck=false; 
+var RememberCheck=false.obs; 
 }

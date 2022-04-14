@@ -352,9 +352,9 @@ class newFundrising extends StatelessWidget {
                           ),
                           fillColor:
                               MaterialStateProperty.all(Styles.primary_green),
-                          value: data_control.TermsValue,
+                          value: data_control.TermsCheck,
                           onChanged: (bool? val) {
-                            data_control.TermsValue = val!;
+                            data_control.TermsCheck = val!;
                             data_control.update();
                           },
                         ),
@@ -463,6 +463,7 @@ class text_field extends StatelessWidget {
     this.suffix_icon = const Icon(Icons.ac_unit),
     this.hintText = '',
     this.line_no = 1,
+    this.isPassword=false, 
   });
 
   final TextEditingController Text_field_controller;
@@ -470,6 +471,7 @@ class text_field extends StatelessWidget {
   Icon suffix_icon;
   var hintText;
   int line_no;
+  bool isPassword;
 
   @override
   Widget build(BuildContext context) {
@@ -481,6 +483,7 @@ class text_field extends StatelessWidget {
       ),
       color: Styles.primary_black_light,
       child: TextFormField(
+       obscureText: isPassword,
         maxLines: line_no,
         style: const TextStyle(color: Colors.white),
         controller: Text_field_controller,
