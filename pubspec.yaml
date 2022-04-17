@@ -37,6 +37,7 @@ dependencies:
   image_picker: ^0.8.4+4
   intl: ^0.17.0
   percent_indicator: ^4.0.0
+  pin_code_fields: ^7.4.0
   pit_slider_carousel: ^0.1.0
   sizer: ^2.0.15
 
@@ -66,6 +67,7 @@ flutter:
     - assets/images/noti_svg.svg
     - assets/images/menu_button.svg
     - assets/images/bookmark_svg.svg
+    - assets/images/filter_icon.svg
     - assets/images/shelter_video_bg.jpg
     - assets/images/blind.jpg
     - assets/images/alice fund rising.jpeg

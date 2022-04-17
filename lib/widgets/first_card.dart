@@ -1,7 +1,8 @@
 
+// ignore_for_file: non_constant_identifier_names, must_be_immutable, camel_case_types
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:percent_indicator/percent_indicator.dart';
 import 'package:sizer/sizer.dart';
 import 'package:we_care/constant_design.dart';
 import 'package:we_care/widgets/details_tile.dart';
@@ -16,7 +17,7 @@ class first_card extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(left: 20),
+      margin: const EdgeInsets.only(left: 20),
       alignment: Alignment.topLeft, 
       child: ClipRRect(
         borderRadius: BorderRadius.circular(20),
@@ -29,8 +30,6 @@ class first_card extends StatelessWidget {
             children: [
               Stack(
                 children: [
-                  //  KWidth20,
-
                   SizedBox(
                     width: 50.w,
                     height: 25.w,
@@ -43,7 +42,6 @@ class first_card extends StatelessWidget {
                     right: 3.w,
                     top: 3.w,
                     child: SvgPicture.asset(
-                     /*  "assets/images/after Bookmark.svg", */
                      "assets/images/before Bookmark.svg",
                       height: 8.w,
                     ),
@@ -55,7 +53,6 @@ class first_card extends StatelessWidget {
                 width: 52.w,
                 padding: const EdgeInsets.symmetric(horizontal: 10),
                 child: Details_tile(
-                  
                   title: 'Help Orphanage Children to recover',
                   raised_fund: '23,790',
                   total_fund: '42,000',

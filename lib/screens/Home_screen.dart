@@ -1,10 +1,13 @@
 // ignore: unnecessary_import
+// ignore_for_file: prefer_const_constructors, camel_case_types
+
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:sizer/sizer.dart';
 import 'package:we_care/constant_design.dart';
 import 'package:we_care/screens/donate_click/donation_page.dart';
+import 'package:we_care/screens/urgentFundraising.dart';
 import 'package:we_care/widgets/carousel_slider.dart';
 import 'package:we_care/widgets/category_buttons.dart';
 import 'package:we_care/widgets/first_card.dart';
@@ -12,7 +15,6 @@ import 'package:we_care/widgets/video_card.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
-  
 
   @override
   Widget build(BuildContext context) {
@@ -36,13 +38,19 @@ class HomeScreen extends StatelessWidget {
         }),
         actions: [
           IconButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => UrgentFundraising(
+                              title: 'Search',
+                              bgimage: 'assets/images/srilanka2.jpeg',
+                            )));
+              },
               icon: SvgPicture.asset("assets/images/search_svg.svg")),
-          // KWidth20,
           IconButton(
               onPressed: () {},
               icon: SvgPicture.asset("assets/images/noti_svg.svg")),
-          // KWidth20,
           IconButton(
               onPressed: () {},
               icon: SvgPicture.asset("assets/images/bookmark_svg.svg")),
@@ -56,7 +64,6 @@ class HomeScreen extends StatelessWidget {
           Stack(
             children: [
               Container(
-                  // decoration: BoxDecoration(borderRadius: BorderRadius.circular(30)),
                   margin: const EdgeInsets.fromLTRB(20, 10, 20, 0),
                   child: carousel_Slider()),
               Positioned(
@@ -94,7 +101,16 @@ class HomeScreen extends StatelessWidget {
                   width: 15.w,
                   child: FittedBox(
                     child: TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => UrgentFundraising(
+                                    title: 'Urgent Fundraising',
+                                    bgimage: 'assets/images/cloth_poor.jpeg',
+                                  )),
+                        );
+                      },
                       child: const Text(
                         "See All",
                         style: Styles.RegularText,
@@ -105,47 +121,11 @@ class HomeScreen extends StatelessWidget {
               ],
             ),
           ),
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(
-              children: [
-                Styles.KWidth20,
-                category_button(
-                  title: 'All',
-                  currentIndex: 0,
-                ),
-                category_button(
-                  title: 'Medical',
-                  currentIndex: 1,
-                ),
-                category_button(
-                  title: 'Disaster',
-                  currentIndex: 2,
-                ),
-                category_button(
-                  title: 'Education',
-                  currentIndex: 3,
-                ),
-                category_button(
-                  title: 'Sick Child',
-                  currentIndex: 4,
-                ),
-                category_button(
-                  title: 'Difable',
-                  currentIndex: 5,
-                ),
-                category_button(
-                  title: 'Others',
-                  currentIndex: 6,
-                ),
-              ],
-            ),
-          ),
+          scrollable_category(),
           SizedBox(
             height: 54.w + 2,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
-              // shrinkWrap: true,
               itemCount: 8,
               itemBuilder: (context, index) {
                 return InkWell(
@@ -180,7 +160,16 @@ class HomeScreen extends StatelessWidget {
                   width: 15.w,
                   child: FittedBox(
                     child: TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => UrgentFundraising(
+                                    title: 'Coming to an end',
+                                    bgimage: 'assets/images/hungry_kid.jpg',
+                                  )),
+                        );
+                      },
                       child: const Text(
                         "See All",
                         style: Styles.RegularText,
@@ -195,7 +184,6 @@ class HomeScreen extends StatelessWidget {
             height: 54.w + 2,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
-              // shrinkWrap: true,
               itemCount: 8,
               itemBuilder: (context, index) {
                 return SizedBox(
@@ -242,6 +230,52 @@ class HomeScreen extends StatelessWidget {
           ),
           const video_card(),
           Styles.KHeight20,
+        ],
+      ),
+    );
+  }
+}
+
+class scrollable_category extends StatelessWidget {
+  const scrollable_category({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: Row(
+        children: [
+          Styles.KWidth20,
+          category_button(
+            title: 'All',
+            currentIndex: 0,
+          ),
+          category_button(
+            title: 'Medical',
+            currentIndex: 1,
+          ),
+          category_button(
+            title: 'Disaster',
+            currentIndex: 2,
+          ),
+          category_button(
+            title: 'Education',
+            currentIndex: 3,
+          ),
+          category_button(
+            title: 'Sick Child',
+            currentIndex: 4,
+          ),
+          category_button(
+            title: 'Difable',
+            currentIndex: 5,
+          ),
+          category_button(
+            title: 'Others',
+            currentIndex: 6,
+          ),
         ],
       ),
     );

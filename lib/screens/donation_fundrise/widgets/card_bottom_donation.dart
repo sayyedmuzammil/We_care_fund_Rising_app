@@ -1,3 +1,4 @@
+// ignore_for_file: camel_case_types
 
 import 'package:flutter/material.dart';
 import 'package:we_care/constant_design.dart';
@@ -11,7 +12,7 @@ class card_bottom extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left: 15, top: 2), 
+      padding: const EdgeInsets.only(left: 15, top: 2),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [

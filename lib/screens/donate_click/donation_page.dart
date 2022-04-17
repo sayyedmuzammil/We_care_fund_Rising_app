@@ -27,38 +27,38 @@ class donationScreen extends StatelessWidget {
         children: [
           ListView(
             children: [
-              Column(children: [
-                CarouselSlider(
-                  options: CarouselOptions(
-                    height: 35.h,
-                    viewportFraction: 1,
-                    autoPlay: true,
-                    disableCenter: false,
+              Column(
+                children: [
+                  CarouselSlider(
+                      options: CarouselOptions(
+                        height: 35.h,
+                        viewportFraction: 1,
+                        autoPlay: true,
+                        disableCenter: false,
+                      ),
+                      items: imageList1
+                          .map(
+                            (item) => SizedBox(
+                              width: 100.w,
+                              child: Image.asset(
+                                item,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          )
+                          .toList()),
+                  scroll1(context),
+                  Styles.KHeight20,
+                  Container(
+                    margin: const EdgeInsets.symmetric(horizontal: 20),
+                    height: 1,
+                    color: const Color(0xFF37424F),
                   ),
-                  items: imageList1
-                      .map(
-                        (item) => SizedBox(
-                          width: 100.w,
-                          child: Image.asset(
-                            item,
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                      )
-                      .toList()),
-              scroll1(context),
-              Styles.KHeight20, 
-                Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 20),
-                      height: 1,
-                      color: const Color(0xFF37424F),
-                    ), 
-                    scroll2(),
-                  ],
-                ),
-            ], ),
-            
-          
+                  scroll2(),
+                ],
+              ),
+            ],
+          ),
           Positioned(
             top: 50,
             child: Container(
@@ -91,6 +91,4 @@ class donationScreen extends StatelessWidget {
       ),
     );
   }
-
-
 }

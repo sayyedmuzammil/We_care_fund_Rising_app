@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:sizer/sizer.dart';
 import 'package:we_care/constant_design.dart';
-import 'package:we_care/controller.dart';
+import 'package:we_care/db_functions/controller.dart';
 import 'package:we_care/screens/donation_fundrise/new_fundrise/coverPhoto.dart';
 import 'package:we_care/screens/donation_fundrise/new_fundrise/image_square.dart';
 
@@ -493,6 +493,11 @@ class text_field extends StatelessWidget {
             left: 20,
             top: 12,
           ),
+          focusedBorder:OutlineInputBorder(
+    borderSide:
+    const BorderSide(color: Styles.primary_green, width: 2.0),
+    borderRadius: BorderRadius.circular(20.0),
+  ), 
           hintText: hintText,
           suffixIcon: Visibility(
             visible: isVisible,

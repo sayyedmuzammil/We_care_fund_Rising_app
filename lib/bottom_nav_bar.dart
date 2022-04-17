@@ -15,7 +15,6 @@ class BottomNavigationWidget extends StatelessWidget {
         builder: (context, int newIndex, _) {
           return BottomNavigationBar(
             iconSize: 25,
-            // selectedFontSize: 8,
             unselectedFontSize: 8,
             onTap: (index) {
               indexChangeNotifier.value = index;

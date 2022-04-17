@@ -1,4 +1,6 @@
 
+// ignore_for_file: camel_case_types, must_be_immutable
+
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
@@ -7,10 +9,8 @@ import 'package:we_care/constant_design.dart';
 class carousel_Slider extends StatelessWidget {
    carousel_Slider({
     Key? key,
-    // required this.imageList1,
   }) : super(key: key);
 
-  // final List<Map<String, dynamic>> imageList1;
 List<Map<String, dynamic>> imageList = [
   {
   'title':'Help Alice Brain Surgery',
@@ -24,9 +24,7 @@ List<Map<String, dynamic>> imageList = [
   Widget build(BuildContext context) {
     return CarouselSlider(
           options: CarouselOptions(
-            // enlargeStrategy: CenterPageEnlargeStrategy.scale,
             viewportFraction: 1,  
-            // enlargeCenterPage: true, 
             autoPlay: true, 
     disableCenter: false, 
         ),

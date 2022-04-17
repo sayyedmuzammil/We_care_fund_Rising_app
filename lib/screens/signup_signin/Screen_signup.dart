@@ -1,19 +1,16 @@
-// ignore_for_file: avoid_print, camel_case_types, must_be_immutable
+// ignore_for_file: avoid_print, camel_case_types, must_be_immutable, non_constant_identifier_names, use_key_in_widget_constructors, unused_field, prefer_const_constructors, unrelated_type_equality_checks
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-// import 'package:get/get_state_manager/src/simple/get_state.dart';
 import 'package:sizer/sizer.dart';
 import 'package:we_care/constant_design.dart';
-import 'package:we_care/controller.dart';
-import 'package:we_care/screens/screenWelcome.dart';
-
-import 'donation_fundrise/new_fundrise/new_fundraising.dart';
-// import 'package:we_care/screens/donation_fundrise/new_fundrise/new_fundraising.dart';
+import 'package:we_care/db_functions/controller.dart';
+import 'package:we_care/screens/donation_fundrise/new_fundrise/new_fundraising.dart';
+import 'package:we_care/screens/signup_signin/screen_fill_profile.dart';
 
 class SignupScreen extends StatelessWidget {
-  SignupScreen({Key? key}) : super(key: key);
+  SignupScreen();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _globalKey1 = GlobalKey<FormState>();
@@ -23,8 +20,8 @@ class SignupScreen extends StatelessWidget {
         backgroundColor: Styles.primary_black,
         body: ListView(
           children: [
-            Container(
-              height: 30.h, 
+            SizedBox(
+              height: 25.h,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -36,10 +33,12 @@ class SignupScreen extends StatelessWidget {
               ),
             ),
             Center(
-                child: Text(
-              "Sign up for free",
-              style: Styles.Header.copyWith(fontSize: 24),
-            )),
+                child: Obx(() => Text(
+                      data_control.signUp == true
+                          ? 'Sign up for free'
+                          : 'Sign in to your account',
+                      style: Styles.Header.copyWith(fontSize: 24),
+                    ))),
             SizedBox(
               height: 5.h,
             ),
@@ -95,9 +94,7 @@ class SignupScreen extends StatelessWidget {
                                 size: 22,
                               ),
                             ),
-                            // Styles.KHeight10,
                           ])),
-                  // Styles.KHeight10,
                   Row(
                     children: [
                       Obx(() => Checkbox(
@@ -134,11 +131,11 @@ class SignupScreen extends StatelessWidget {
                     height: 13.w,
                     width: 90.w,
                     child: TextButton(
-                      child: const Text(
-                        'Sign up', 
-                        style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.bold),
-                      ),
+                      child: Obx(() => Text(
+                            data_control.signUp == true ? 'Sign up' : 'Sign in',
+                            style: TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.bold),
+                          )),
                       style: TextButton.styleFrom(
                         backgroundColor: Styles.primary_green,
                         primary: Colors.white,
@@ -147,27 +144,50 @@ class SignupScreen extends StatelessWidget {
                         side: const BorderSide(color: Styles.primary_green),
                       ),
                       onPressed: () {
-                        print('Pressed');
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (BuildContext context) => FillProfile(),
+                          ),
+                        );
                       },
                     ),
                   ),
-                  Styles.KHeight20,
+                  Obx(() => Column(
+                        children: [
+                          Styles.KHeight10,
+                          Visibility(
+                            visible: !data_control.signUp.value,
+                            child: TextButton(
+                                onPressed: () {
+                                  print("forgot clicked");
+                                },
+                                child: Text(
+                                  data_control.signUp == true
+                                      ? ''
+                                      : 'Forgot the password?',
+                                  style: Styles.RegularTextBold.copyWith(
+                                      color: Styles.primary_green),
+                                )),
+                          ),
+                        ],
+                      )),
+                  Styles.KHeight10,
                   Text(
                     "or continue with",
                     style: Styles.RegularText.copyWith(
                       color: Colors.white,
                     ),
                   ),
-                  Styles.KHeight20, 
-                  Container(
-                    width: 70.w,     
+                  Styles.KHeight20,
+                  SizedBox(
+                    width: 70.w,
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround, 
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         Logo_button_signUp(
                           imageIcon: 'assets/images/phone_icon.svg',
                         ),
-                        
                         Logo_button_signUp(
                           imageIcon: 'assets/images/google_icon.svg',
                         ),
@@ -177,29 +197,30 @@ class SignupScreen extends StatelessWidget {
                       ],
                     ),
                   ),
-                  Styles.KHeight10, 
+                  Styles.KHeight10,
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(
-                        "Don't have an account?",
-                        style: Styles.RegularText.copyWith(
-                          color: Colors.white,
-                        ),
-                      ),
+                      Obx(() => Text(
+                            data_control.signUp == true
+                                ? 'Already have an account?'
+                                : "Don't have an account?",
+                            style: Styles.RegularText.copyWith(
+                              color: Colors.white,
+                            ),
+                          )),
                       TextButton(
                           onPressed: () {
-                            Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => ScreenWelcome()),
-                      );
+                            data_control.signUp.value =
+                                !data_control.signUp.value;
                           },
-                          child: Text(
-                            'Sign in',
-                            style: Styles.RegularTextBold.copyWith(
-                                color: Styles.primary_green),
-                          ))
+                          child: Obx(() => Text(
+                                data_control.signUp == true
+                                    ? 'Sign in'
+                                    : 'Sign up',
+                                style: Styles.RegularTextBold.copyWith(
+                                    color: Styles.primary_green),
+                              )))
                     ],
                   )
                 ],
@@ -235,7 +256,7 @@ class Logo_button_signUp extends StatelessWidget {
             SvgPicture.asset(
               imageIcon,
               alignment: Alignment.center,
-              height: 30,
+              height: 24,
             ),
           ],
         ),

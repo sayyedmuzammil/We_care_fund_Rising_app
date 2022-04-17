@@ -1,9 +1,11 @@
-// ignore_for_file: must_be_immutable, camel_case_types
+// ignore_for_file: must_be_immutable, camel_case_types, non_constant_identifier_names
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:sizer/sizer.dart';
+import 'package:we_care/bottom_nav_bar.dart';
 import 'package:we_care/constant_design.dart';
+import 'package:we_care/screen_main_page.dart';
 
 class Profile extends StatelessWidget {
   const Profile({Key? key}) : super(key: key);
@@ -22,7 +24,16 @@ class Profile extends StatelessWidget {
           ),
           leading: Builder(builder: (BuildContext context) {
             return IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  indexChangeNotifier.value = 0;
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(
+                      builder: (BuildContext context) => ScreenMainPage(),
+                    ),
+                    (route) => false,
+                  );
+                },
                 icon: Padding(
                   padding: const EdgeInsets.only(left: 10),
                   child: SvgPicture.asset("assets/images/main_logo.svg"),
@@ -32,9 +43,7 @@ class Profile extends StatelessWidget {
             IconButton(
                 onPressed: () {},
                 icon: SvgPicture.asset("assets/images/settings_icon.svg")),
-            const SizedBox(
-                // width: 15,
-                ),
+            const SizedBox(),
             IconButton(
                 onPressed: () {},
                 icon: SvgPicture.asset("assets/images/menu_button.svg")),
@@ -150,7 +159,7 @@ class Profile extends StatelessWidget {
                 alignment: Alignment.topLeft,
                 child: const Text(
                   "About",
-                  style: Styles.Header, 
+                  style: Styles.Header,
                 ),
               ),
               Styles.KHeight10,
@@ -166,7 +175,7 @@ class Profile extends StatelessWidget {
                   children: [
                     const Text(
                       "Interest",
-                      style: Styles.Header, 
+                      style: Styles.Header,
                     ),
                     IconButton(
                       onPressed: () {
@@ -213,8 +222,8 @@ class Profile extends StatelessWidget {
         )));
   }
 
- Widget my_intersests_button({required String interest}) {
-     return TextButton(
+  Widget my_intersests_button({required String interest}) {
+    return TextButton(
       child: Text(
         interest,
         style: const TextStyle(fontSize: 16),

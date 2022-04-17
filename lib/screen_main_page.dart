@@ -7,28 +7,27 @@ import 'package:we_care/screens/donation_fundrise/donations.dart';
 import 'package:we_care/screens/donation_fundrise/fund_rising.dart';
 
 class ScreenMainPage extends StatelessWidget {
-   ScreenMainPage({ Key? key }) : super(key: key);
-final _pages=[HomeScreen(),
-Donations(),
-FundRising(),
+  ScreenMainPage({Key? key}) : super(key: key);
+  final _pages = [
+    const HomeScreen(),
+    const Donations(),
+    FundRising(),
 // ChatBox(),
-Profile(), 
-];
+    const Profile(),
+  ];
 
-// ls()async*{
-// yield 
-// }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Styles.primary_black, 
-      body:SafeArea(
-        child: ValueListenableBuilder(valueListenable: indexChangeNotifier, builder: (context,int index, _){
-        return _pages[index];
-        }
-        ),
+      backgroundColor: Styles.primary_black,
+      body: SafeArea(
+        child: ValueListenableBuilder(
+            valueListenable: indexChangeNotifier,
+            builder: (context, int index, _) {
+              return _pages[index];
+            }),
       ),
-      bottomNavigationBar:  BottomNavigationWidget(),
+      bottomNavigationBar: const BottomNavigationWidget(),
     );
   }
 }

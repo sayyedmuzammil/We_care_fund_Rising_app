@@ -1,4 +1,3 @@
-
 // ignore_for_file: unrelated_type_equality_checks, camel_case_types
 
 import 'package:fdottedline_nullsafety/fdottedline__nullsafety.dart';
@@ -7,7 +6,7 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:sizer/sizer.dart';
 import 'package:we_care/constant_design.dart';
-import 'package:we_care/controller.dart';
+import 'package:we_care/db_functions/controller.dart';
 
 class getx_image_picker extends StatelessWidget {
   const getx_image_picker({
@@ -69,12 +68,12 @@ class getx_image_picker extends StatelessWidget {
       ],
     );
   }
-  
-pickImage1() async {
-  final ImagePicker _imagePicker = ImagePicker();
-  final _file = await _imagePicker.pickImage(source: ImageSource.gallery);
-  if (_file != null) {
-    return await _file.readAsBytes();
+
+  pickImage1() async {
+    final ImagePicker _imagePicker = ImagePicker();
+    final _file = await _imagePicker.pickImage(source: ImageSource.gallery);
+    if (_file != null) {
+      return await _file.readAsBytes();
+    }
   }
-}
 }
