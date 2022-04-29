@@ -5,6 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:sizer/sizer.dart';
 import 'package:we_care/constant_design.dart';
 import 'package:we_care/db_functions/controller.dart';
+import 'package:we_care/screens/signup_signin/screen_phone.dart';
 
 import 'Screen_signup.dart';
 
@@ -119,7 +120,15 @@ class verification_Logo_button extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {},
+      onTap: () {
+
+        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (BuildContext context) => PhoneAuthentication(), 
+                          ),
+                        );
+      },
       child: Container(
         margin: EdgeInsets.only(bottom: 2.h),
         height: 18.w,

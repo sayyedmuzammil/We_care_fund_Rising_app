@@ -7,7 +7,8 @@ import 'package:we_care/widgets/category_buttons.dart';
 
 class card_bottom_fundrise extends StatelessWidget {
   const card_bottom_fundrise({
-    Key? key,
+    Key? key, 
+  
   }) : super(key: key);
 
   @override

@@ -6,18 +6,28 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:sizer/sizer.dart';
 import 'package:we_care/constant_design.dart';
+import 'package:we_care/db_functions/auth_method.dart';
 import 'package:we_care/screens/donate_click/donation_page.dart';
+import 'package:we_care/screens/signup_signin/Screen_signup.dart';
+import 'package:we_care/screens/signup_signin/screenWelcome.dart';
 import 'package:we_care/screens/urgentFundraising.dart';
 import 'package:we_care/widgets/carousel_slider.dart';
 import 'package:we_care/widgets/category_buttons.dart';
 import 'package:we_care/widgets/first_card.dart';
 import 'package:we_care/widgets/video_card.dart';
 
+import '../db_functions/controller.dart';
+import '../db_functions/firebase.dart';
+
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
-
+init()async{
+await data_control.refreshUser();  
+print("in it ${data_control.user!.photoUrl}");
+}
   @override
   Widget build(BuildContext context) {
+    init();
     return Scaffold(
       backgroundColor: Styles.primary_black,
       appBar: AppBar(
@@ -30,7 +40,17 @@ class HomeScreen extends StatelessWidget {
         ),
         leading: Builder(builder: (BuildContext context) {
           return IconButton(
-              onPressed: () {},
+              onPressed: () async{
+                  await AuthMethods().signOut();
+                 Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(
+        builder: (BuildContext context) =>ScreenWelcome(),
+      ),
+      (route) => false,
+    );
+
+              },
               icon: Padding(
                 padding: const EdgeInsets.only(left: 10),
                 child: SvgPicture.asset("assets/images/main_logo.svg"),

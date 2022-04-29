@@ -92,6 +92,7 @@ class UrgentFundraising extends StatelessWidget {
                 itemCount: 8,
                 itemBuilder: (context, index) {
                   return main_childCard(
+                 
                     bg_image: bgimage,
                   );
                 },

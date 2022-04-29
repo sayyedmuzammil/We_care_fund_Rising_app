@@ -1,17 +1,20 @@
+import 'dart:convert';
+
 // ignore_for_file: file_names
 
-import 'dart:typed_data';
 
-class DonatorsModel {
+class fundriseModel {
   String? fundraiseId;
 
-  Uint8List? mainImage;
+  String? userId;
 
-  List<Uint8List>? childImage;
+  String? mainImage;
+
+  List<String>? childImage;
 
   String? title;
 
-  int? category;
+  String? category;
 
   int? totalRequireAmount;
 
@@ -28,28 +31,38 @@ class DonatorsModel {
   String? medicalPdf;
 
   String? story;
-  DonatorsModel({
+
+  String? status;
+
+  int? fundriseAmount; 
+
+  int? donatorsCount; 
+  fundriseModel({
     this.fundraiseId,
-    // required this.mainImage,
-    // required this.childImage,
-    required this.title,
-    required this.category,
-    required this.totalRequireAmount,
-    // this.raisedAmount,
-    required this.expireDate,
-    required this.fundPlan,
-    required this.organization,
-    required this.documentPdf,
+    this.userId,
+    this.mainImage,
+    this.childImage,
+    this.title,
+    this.category,
+    this.totalRequireAmount,
+    this.expireDate,
+    this.fundPlan,
+    this.organization,
+    this.documentPdf,
     this.medicalPdf,
-    required this.story,
+    this.story,
+    this.status,
+    this.fundriseAmount,
+    this.donatorsCount,
   });
 
 
   Map<String, dynamic> toMap() {
     return {
       'fundraiseId': fundraiseId,
-      // 'mainImage': mainImage?.toMap(),
-      // 'childImage': childImage?.map((x) => x?.toMap())?.toList(),
+      'userId': userId,
+      'mainImage': mainImage,
+      'childImage': childImage,
       'title': title,
       'category': category,
       'totalRequireAmount': totalRequireAmount,
@@ -59,16 +72,20 @@ class DonatorsModel {
       'documentPdf': documentPdf,
       'medicalPdf': medicalPdf,
       'story': story,
+      'status': status,
+      'fundriseAmount': fundriseAmount,
+      'donatorsCount': donatorsCount,
     };
   }
 
-  factory DonatorsModel.fromMap(Map<String, dynamic> map) {
-    return DonatorsModel(
+  static fundriseModel fromMap(Map<String, dynamic> map) {
+    return fundriseModel(
       fundraiseId: map['fundraiseId'],
-      // mainImage: map['mainImage'] != null ? Uint8List.fromMap(map['mainImage']) : null,
-      // childImage: map['childImage'] != null ? List<Uint8List>.from(map['childImage']?.map((x) => Uint8List.fromMap(x))) : null,
+      userId: map['userId'],
+      mainImage: map['mainImage'],
+      childImage: List<String>.from(map['childImage']),
       title: map['title'],
-      category: map['category']?.toInt(),
+      category: map['category'],
       totalRequireAmount: map['totalRequireAmount']?.toInt(),
       expireDate: map['expireDate'],
       fundPlan: map['fundPlan'],
@@ -76,8 +93,13 @@ class DonatorsModel {
       documentPdf: map['documentPdf'],
       medicalPdf: map['medicalPdf'],
       story: map['story'],
+      status: map['status'],
+      fundriseAmount: map['fundriseAmount']?.toInt(),
+      donatorsCount: map['donatorsCount']?.toInt(),
     );
   }
 
- 
+  // String toJson() => json.encode(toMap());
+
+  // factory fundriseModel.fromJson(String source) => fundriseModel.fromMap(json.decode(source));
 }

@@ -1,14 +1,27 @@
-// ignore_for_file: camel_case_types, unrelated_type_equality_checks, must_be_immutable, use_key_in_widget_constructors, non_constant_identifier_names, prefer_typing_uninitialized_variables, type_init_formals
+// ignore_for_file: camel_case_types, unrelated_type_equality_checks, must_be_immutable, use_key_in_widget_constructors, non_constant_identifier_names, prefer_typing_uninitialized_variables, type_init_formals, unused_local_variable
 
+import 'dart:io';
 import 'dart:typed_data';
+import 'package:fdottedline_nullsafety/fdottedline__nullsafety.dart';
+import 'package:file_picker/file_picker.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:open_file/open_file.dart';
 import 'package:sizer/sizer.dart';
+import 'package:uuid/uuid.dart';
 import 'package:we_care/constant_design.dart';
 import 'package:we_care/db_functions/controller.dart';
+import 'package:we_care/db_functions/firebase.dart';
+import 'package:we_care/db_functions/fundRiseModel.dart';
 import 'package:we_care/screens/donation_fundrise/new_fundrise/coverPhoto.dart';
 import 'package:we_care/screens/donation_fundrise/new_fundrise/image_square.dart';
+
+import '../../../db_functions/auth_method.dart';
+import '../../../db_functions/resources/storage_methods.dart';
+import '../../../db_functions/user_model.dart';
 
 class newFundrising extends StatelessWidget {
   newFundrising({Key? key}) : super(key: key);
@@ -23,6 +36,7 @@ class newFundrising extends StatelessWidget {
   final _storyController = TextEditingController();
   final _planController = TextEditingController();
   final _globalKey = GlobalKey<FormState>();
+
 /*   void initState() {
     selectedcontent.isNotEmpty
         ? {
@@ -33,12 +47,18 @@ class newFundrising extends StatelessWidget {
     // dataControl.update();
   } */
   Uint8List? val;
+  String? pdfUrl;
+  FilePickerResult? img;
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+    
       backgroundColor: Styles.primary_black,
-      appBar: AppBar(
+      
+      appBar:
+       AppBar(
         elevation: 0,
         backgroundColor: Styles.primary_black,
         title: const Text(
@@ -60,19 +80,93 @@ class newFundrising extends StatelessWidget {
                   )));
         }),
       ),
+      
       body: SafeArea(
           child: Padding(
         padding: const EdgeInsets.only(left: 20, right: 20),
         child: ListView(
           children: [
-            cover_Photo(),
+            Stack(
+    children: [
+       GetBuilder<GetController>(
+          builder: (controller) => controller.mainImage == '' ||
+                controller.mainImage == 'null' ||
+                controller.mainImage == null
+            ? FDottedLine(
+                color: const Color(0xFF172927),
+                strokeWidth: 2.0,
+                dottedLength: 8.0,
+                space: 7.0,
+                corner: FDottedLineCorner.all(20.0),
+                child: Padding(
+                  padding: const EdgeInsets.all(3.0),
+                  child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: Styles.primary_black_light,
+                      ),
+                      height: 25.h,
+                      width: double.infinity,
+                      alignment: Alignment.center,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Styles.KHeight20,
+                          Styles.KHeight20,
+                          Text(
+                            "Add Cover Photos",
+                            style: Styles.RegularText.copyWith(
+                                color: Colors.grey[600]),
+                          )
+                        ],
+                      )),
+                ),
+              )
+            : ClipRRect(
+                borderRadius: BorderRadius.circular(10),
+                child: SizedBox(
+                  child: FittedBox(
+                      fit: BoxFit.fill, child: Image(image: Image.file(File(data_control.mainImage!.toString()))
+                                        .image) ),
+                  height: 25.h,
+                  width: 100.w,
+                  
+                ),
+              ),
+      ),
+      SizedBox(
+        height: 25.h,
+        width: double.infinity,
+        child: IconButton(
+            onPressed: () async {
+            /*  final val = await pickImage1();
+              if (val.toString() != 'null') {
+                data_control.mainImage = val; 
+                data_control.update();
+              } */
+               img = await FilePicker.platform.pickFiles(
+                            allowMultiple: false, type: FileType.image);
+                            final path = img!.files.single.path;
+                            print("this $path");
+                    data_control.mainImage=path;    
+                    data_control.update(); 
+                         
+            },
+            icon: const Icon(
+              Icons.add,
+              color: Styles.primary_green,
+              size: 32,
+            )),
+      ),
+    ],
+  ),
             Styles.KHeight20,
             SizedBox(
               width: 80.w,
               child: FittedBox(
                 child: Wrap(
                   spacing: 22.0,
-                  children: const [
+                  children:  [
                     getx_image_picker(
                       index: 0,
                     ),
@@ -278,17 +372,60 @@ class newFundrising extends StatelessWidget {
                       ],
                     ),
                   ),
-                  text_field(
-                    Text_field_controller: _uploadProposalController,
-                    hintText: 'Select Document',
-                    isVisible: true,
-                    suffix_icon: const Icon(
-                      Icons.cloud_upload_sharp,
-                      color: Colors.grey,
-                      size: 22,
-                    ),
-                  ),
-                  Styles.KHeight10,
+                  Obx(() => Card(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(
+                            20,
+                          ),
+                        ),
+                        color: Styles.primary_black_light,
+                        child: TextButton(
+                          style: TextButton.styleFrom(
+                            padding: const EdgeInsets.all(16.0),
+                            primary: data_control.pdfName.value=="Select Document"? Color(0xFF37424F):Colors.white,
+                            textStyle: const TextStyle(
+                                fontSize: 16,
+                                color: Styles.primary_black_light),
+                          ),
+                          onPressed: () async {
+                            print("checking ");
+                            final result = await FilePicker.platform.pickFiles(
+                                type: FileType.custom,
+                                allowedExtensions: ['pdf'],
+                                allowMultiple: false);
+                                if (result == null) return;
+                            final x = await File(result.files.single.path!);
+                            final y = await FirebaseStorage.instance
+                                .ref("pdfDocument/${result.names.last}");
+                            final link = await y.putFile(x);
+                            print("${link.ref.getDownloadURL()}"); 
+                            pdfUrl=await link.ref.getDownloadURL(); 
+
+                            print("hello hai ${pdfUrl}");
+                            data_control.pdfName.value =
+                                result.names.last.toString();
+                            
+
+                            final file = result.files.first;
+                            // openFile(file);
+                          },
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children:  [
+                              Text(
+                                data_control.pdfName.value,
+                              ),
+                             const Icon(
+                                Icons.cloud_upload_sharp,
+                                color: Colors.grey,
+                                size: 22,
+                              ),
+                            ],
+                          ),
+                        ),
+                      )),
+                 
+                 /*  Styles.KHeight10,
                   Row(
                     children: [
                       Styles.KWidth20,
@@ -311,7 +448,7 @@ class newFundrising extends StatelessWidget {
                       color: Colors.grey,
                       size: 22,
                     ),
-                  ),
+                  ), */
                   Styles.KHeight10,
                   SizedBox(
                     width: 83.w,
@@ -370,7 +507,7 @@ class newFundrising extends StatelessWidget {
                       ),
                     ],
                   ),
-                  Styles.KHeight10, 
+                  Styles.KHeight10,
                 ],
               ),
             ),
@@ -403,7 +540,7 @@ class newFundrising extends StatelessWidget {
                       width: 30.w,
                       height: 12.w,
                       child: TextButton.icon(
-                        icon: const Icon(Icons.save_outlined), 
+                        icon: const Icon(Icons.save_outlined),
                         label: const Text(
                           'Draft',
                           style: TextStyle(
@@ -441,8 +578,15 @@ class newFundrising extends StatelessWidget {
                               borderRadius: BorderRadius.circular(28.0)),
                           side: const BorderSide(color: Styles.primary_green),
                         ),
-                        onPressed: () {
-                          print('Pressed');
+                        onPressed: () async {
+                          if(img!=null){
+                          final res = await form_submitted(img!);
+                          }
+                         
+                         
+                         
+                            Navigator.pop(context);
+                       
                         },
                       ),
                     ),
@@ -454,6 +598,95 @@ class newFundrising extends StatelessWidget {
       ),
     );
   }
+
+  form_submitted(FilePickerResult image) async {
+    User? currentUser = db_control.auth.currentUser;
+    final String fundriseId = Uuid().v1();
+
+    String _mainImage = '';
+    print("before upload to firebase image ${data_control.mainImage}");
+
+
+// String _mainImage=data_control.mainImage.value;
+//     print("checking unit list ${data_control.child_image_list}");
+// print("mainImage $_mainImage");
+//     if (data_control.child_image_list[0] == null) {
+//       print("child image is null");
+//     } else {
+//       print("not null");
+//     }
+    // int counter = 0;
+    // for (var i = 0; i < 4; i++) {
+    //   if (data_control.child_image_list[i] != null) {
+    //     // subImages[counter]
+    //     final String childImageId = Uuid().v1();
+    //     subImages[i] = await StorageMethods().uploadImageToStorage(
+    //         childName: 'subImage',uuid: childImageId,
+    //         file: ,
+    //         isPost: false);
+
+
+    //     // counter++;
+    //   }
+
+    // }
+// for(int i=0;i<data_control.child_image_list.length;i++){
+//   subImages[i]=data_control.child_image_list[0].toString();
+// }
+// String
+    String _title = _titleController.text;
+    String _category = _categoryController.text;
+    int _requiredAmount=0;
+    if(_requiredAmountController.text!=''){
+     _requiredAmount = int.parse(_requiredAmountController.text);
+    }
+    String _expireDate = _dateController.text;
+    String _fundPlan = _planController.text;
+    String _recipient = _recipientController.text;
+    // String _proposalPDF = _uploadProposalController.text;
+    // String _medicalPDF = _uploadMedicalController.text;
+    String _story = _storyController.text;
+    String res='some error';
+  
+      res = "success";
+      print("successfully completed");
+      String? imageUrl=await imageUpload(image);
+
+      var fundrisemodel = fundriseModel(
+          fundraiseId: fundriseId,
+          userId: currentUser!.uid,
+          mainImage: imageUrl,
+          childImage: data_control.child_image_list,
+          title: _title,
+          category: _category,
+          totalRequireAmount: _requiredAmount,
+          expireDate: _expireDate,
+          fundPlan: _fundPlan,
+          organization: _recipient,
+          documentPdf: pdfUrl,
+          // medicalPdf: _medicalPDF,
+          story: _story,
+          status: 'review');
+      print("before starting db of fundraise");
+      await db_control.firestrore
+          .collection('fundrise')
+          .doc(fundriseId)
+          .set(fundrisemodel.toMap());
+  
+  }
+
+  void openFile(PlatformFile file) {
+    OpenFile.open(file.path!);
+  }
+}
+
+pickImage1() async {
+  final ImagePicker _imagePicker = ImagePicker();
+  // final img = await ImagePicker().pickImage(source: ImageSource.gallery);
+  final _file = await _imagePicker.pickImage(source: ImageSource.gallery);
+  if (_file != null) {
+    return await _file.readAsBytes();
+  }
 }
 
 class text_field extends StatelessWidget {
@@ -463,7 +696,7 @@ class text_field extends StatelessWidget {
     this.suffix_icon = const Icon(Icons.ac_unit),
     this.hintText = '',
     this.line_no = 1,
-    this.isPassword=false, 
+    this.isPassword = false,
   });
 
   final TextEditingController Text_field_controller;
@@ -483,7 +716,7 @@ class text_field extends StatelessWidget {
       ),
       color: Styles.primary_black_light,
       child: TextFormField(
-       obscureText: isPassword,
+        obscureText: isPassword,
         maxLines: line_no,
         style: const TextStyle(color: Colors.white),
         controller: Text_field_controller,
@@ -493,11 +726,11 @@ class text_field extends StatelessWidget {
             left: 20,
             top: 12,
           ),
-          focusedBorder:OutlineInputBorder(
-    borderSide:
-    const BorderSide(color: Styles.primary_green, width: 2.0),
-    borderRadius: BorderRadius.circular(20.0),
-  ), 
+          focusedBorder: OutlineInputBorder(
+            borderSide:
+                const BorderSide(color: Styles.primary_green, width: 2.0),
+            borderRadius: BorderRadius.circular(20.0),
+          ),
           hintText: hintText,
           suffixIcon: Visibility(
             visible: isVisible,
@@ -520,11 +753,17 @@ class text_field extends StatelessWidget {
     );
   }
 }
-
-pickImage1() async {
-  final ImagePicker _imagePicker = ImagePicker();
-  final _file = await _imagePicker.pickImage(source: ImageSource.gallery);
-  if (_file != null) {
-    return await _file.readAsBytes();
+Future<String?> imageUpload(FilePickerResult image) async {
+  final FirebaseStorage storage = FirebaseStorage.instance;
+  final path = image.files.single.path;
+  final fileName = image.files.single.name;
+  File file = File(path!);
+  try {
+    final ref = storage.ref('fundriseImages/${currentUser.uid}/$fileName');
+    final link = await ref.putFile(file).whenComplete(() => null);
+    String imageUrl = await link.ref.getDownloadURL();
+    return imageUrl;
+  } on FirebaseException catch (e) {
+    print(e);
   }
 }

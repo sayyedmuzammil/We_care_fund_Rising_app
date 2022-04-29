@@ -5,12 +5,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:sizer/sizer.dart';
 import 'package:we_care/constant_design.dart';
+import 'package:we_care/db_functions/fundRiseModel.dart';
 import 'package:we_care/widgets/details_tile.dart';
 
 class donation_card extends StatelessWidget {
   Widget?  card_bottom;
   String bg_image;
+  fundriseModel data;
    donation_card({
+     required this.data,
      required this.bg_image, 
      this.card_bottom,
     Key? key,
@@ -33,7 +36,7 @@ class donation_card extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Styles.KHeight10,
-              main_childCard(bg_image: bg_image),
+              main_childCard(bg_image: bg_image, data: data,),
               card_bottom!=null?
              card_bottom!
              :Container(),
@@ -47,12 +50,15 @@ class donation_card extends StatelessWidget {
 }
 
 class main_childCard extends StatelessWidget {
-  const main_childCard({
+    fundriseModel? data;
+   main_childCard({
     Key? key,
+     this.data,
     required this.bg_image,
   }) : super(key: key);
 
   final String bg_image;
+ 
 
   @override
   Widget build(BuildContext context) {
@@ -73,8 +79,7 @@ class main_childCard extends StatelessWidget {
                 child: SizedBox(
                   child: FittedBox(
                       fit: BoxFit.fill,
-                      child: Image.asset(
-                          bg_image)),
+                      child: Image.network(bg_image)),
                   height: 100.w,
                   width: 30.w,
                 ),
@@ -94,10 +99,10 @@ class main_childCard extends StatelessWidget {
               width: 52.w,
                padding: const EdgeInsets.symmetric(horizontal: 10),
               child: Details_tile(
-                title: "Help Victims of Flash Flood",
-                total_fund: '1,05,400',
-                raised_fund: '87,750',
-                donators_count: '4,471',
+                title: data!.title!,
+                total_fund: data!.totalRequireAmount.toString(),
+                raised_fund: data!.fundriseAmount.toString(),
+                donators_count: data!.donatorsCount.toString(),
                 days_left: 9,
               )),
         ],

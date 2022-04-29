@@ -1,12 +1,20 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
+import 'package:we_care/constant_design.dart';
+import 'package:we_care/screen_main_page.dart';
+// import 'package:we_care/screens/Home_screen.dart';
+import 'package:we_care/screens/signup_signin/Screen_signup.dart';
 
 import 'screens/signup_signin/screenWelcome.dart';
 
-void main() {
-  runApp(const MyApp());
+void main() async{ 
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp( MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -16,13 +24,42 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return Sizer(builder: (context, orientation, deviceType) {
       return MaterialApp(
+  //       builder: (context, child) {
+  //   return ScrollConfiguration(
+  //     behavior: MyBehavior(),
+  //     child: ScrollView(),
+  //   );
+  // },
         debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
         theme: ThemeData(
           fontFamily: 'SourceSansPro',
           primarySwatch: Colors.green,
         ),
-        home: ScreenWelcome(),
+        home: StreamBuilder(
+        stream: FirebaseAuth.instance.authStateChanges(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.active) {
+            if (snapshot.hasData) {
+              return ScreenMainPage();
+            } else if (snapshot.hasError) {
+              return Center(
+                child: Text('${snapshot.error}'),
+              );
+            } else {
+              return ScreenWelcome();
+            }
+          }
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(
+              child: CircularProgressIndicator(
+                color: Styles.primary_green,
+              ),
+            );
+          }
+          return SignupScreen();
+        },
+      ),
       );
     });
   }

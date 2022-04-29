@@ -1,6 +1,9 @@
 // ignore_for_file: unrelated_type_equality_checks, camel_case_types
 
+import 'dart:io';
+
 import 'package:fdottedline_nullsafety/fdottedline__nullsafety.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -9,19 +12,19 @@ import 'package:we_care/constant_design.dart';
 import 'package:we_care/db_functions/controller.dart';
 
 class getx_image_picker extends StatelessWidget {
-  const getx_image_picker({
+   getx_image_picker({
     Key? key,
     required this.index,
   }) : super(key: key);
 
   final int index;
-
+  List<dynamic> squareImage=['','','',''];
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
         GetBuilder<GetController>(
-          builder: (controller) => (data_control.image_list_unit[index] == null
+          builder: (controller) => (data_control.child_image_list[index]==''
               ? FDottedLine(
                   color: const Color(0xFF172927),
                   strokeWidth: 2.0,
@@ -40,9 +43,8 @@ class getx_image_picker extends StatelessWidget {
                   child: SizedBox(
                     child: FittedBox(
                         fit: BoxFit.fill,
-                        child: Image(
-                            image: MemoryImage(
-                                data_control.image_list_unit[index]!))),
+                        child:  Image(image: Image.file(File(data_control.child_image_list[index].toString()))
+                                        .image)),
                     height: 18.w,
                     width: 18.w,
                   ),
@@ -53,12 +55,15 @@ class getx_image_picker extends StatelessWidget {
           width: 18.w,
           child: IconButton(
               onPressed: () async {
-                var val = await pickImage1();
-                if (val.toString != 'null') {
-                  data_control.image_list_unit[index] = val;
+                squareImage[index] = (await FilePicker.platform.pickFiles(
+                            allowMultiple: false, type: FileType.image))!;
+                            final path = squareImage[index].files.single.path;
+                if (squareImage[index].toString != 'null') {
+                  data_control.child_image_list[index] = path!;
                 }
                 data_control.update();
               },
+             
               icon: const Icon(
                 Icons.add,
                 color: Styles.primary_green,

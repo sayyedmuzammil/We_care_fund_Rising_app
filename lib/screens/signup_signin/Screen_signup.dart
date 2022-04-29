@@ -5,7 +5,10 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 import 'package:we_care/constant_design.dart';
+import 'package:we_care/db_functions/auth_method.dart';
 import 'package:we_care/db_functions/controller.dart';
+import 'package:we_care/screen_main_page.dart';
+import 'package:we_care/screens/Home_screen.dart';
 import 'package:we_care/screens/donation_fundrise/new_fundrise/new_fundraising.dart';
 import 'package:we_care/screens/signup_signin/screen_fill_profile.dart';
 
@@ -68,6 +71,7 @@ class SignupScreen extends StatelessWidget {
                             text_field(
                               Text_field_controller: _emailController,
                               hintText: 'Email',
+                              
                             ),
                             Styles.KHeight10,
                             Row(
@@ -85,7 +89,7 @@ class SignupScreen extends StatelessWidget {
                               ],
                             ),
                             text_field(
-                              Text_field_controller: _emailController,
+                              Text_field_controller: _passwordController,
                               hintText: 'Password',
                               isVisible: true,
                               suffix_icon: const Icon(
@@ -143,14 +147,30 @@ class SignupScreen extends StatelessWidget {
                             borderRadius: BorderRadius.circular(28.0)),
                         side: const BorderSide(color: Styles.primary_green),
                       ),
-                      onPressed: () {
+                      onPressed: data_control.signUp==true?() async{
+                         String res= await AuthMethods().signUpUser(email: _emailController.text, password: _passwordController.text);
+                          print("this in login button $res");
+                          data_control.profileImage=null;
+                          if(res=='success'){
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (BuildContext context) => FillProfile(),
+                            builder: (BuildContext context) => FillProfile(email: _emailController.text, password: _passwordController.text,),
                           ),
                         );
-                      },
+                          }
+                      }:()async{
+                         String res= await AuthMethods().signInUser(email: _emailController.text, password: _passwordController.text);
+                          print(res);
+                          if(res=='success'){
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (BuildContext context) => ScreenMainPage()
+                          ),
+                        );
+                          }
+                      }
                     ),
                   ),
                   Obx(() => Column(
@@ -211,6 +231,7 @@ class SignupScreen extends StatelessWidget {
                           )),
                       TextButton(
                           onPressed: () {
+
                             data_control.signUp.value =
                                 !data_control.signUp.value;
                           },
@@ -230,6 +251,7 @@ class SignupScreen extends StatelessWidget {
         ));
   }
 }
+
 
 class Logo_button_signUp extends StatelessWidget {
   String imageIcon;

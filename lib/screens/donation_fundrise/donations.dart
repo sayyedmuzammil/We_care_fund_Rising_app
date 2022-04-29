@@ -1,11 +1,15 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:sizer/sizer.dart';
 import 'package:we_care/bottom_nav_bar.dart';
 import 'package:we_care/constant_design.dart';
+import 'package:we_care/db_functions/fundRiseModel.dart';
 import 'package:we_care/screen_main_page.dart';
 import 'package:we_care/screens/donation_fundrise/widgets/main_card.dart';
 import 'package:we_care/widgets/category_buttons.dart';
+
+import '../../db_functions/firebase.dart';
 
 class Donations extends StatelessWidget {
   const Donations({Key? key}) : super(key: key);
@@ -50,7 +54,7 @@ class Donations extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.only(left: 10, right: 10, top: 5),
-        child: ListView.builder(
+        child: /* ListView.builder(
           itemCount: 8,
           itemBuilder: (context, index) {
             return donation_card(
@@ -58,7 +62,32 @@ class Donations extends StatelessWidget {
               bg_image: 'assets/images/shelter_video_bg.jpg',
             );
           },
-        ),
+        ), */
+         StreamBuilder<List<fundriseModel>>(
+              stream:    getFundrise(),
+              builder: (context, snapshot) {
+                
+               
+               if(snapshot.data != null){
+                return  ListView.builder(
+                  itemCount: snapshot.data!.length,
+                  itemBuilder: (context, index) {
+                    final data=snapshot.data![index];
+                  // print("${snapshot.data![index].status}");
+
+                    return donation_card(
+                      data:  data,
+              card_bottom: card_bottom(),
+              bg_image: data.mainImage!,
+            );
+                  },
+                );
+               }
+               else{
+                 return Center( child: Text("No data"));
+               }
+              }
+            ),
       ),
     );
   }
