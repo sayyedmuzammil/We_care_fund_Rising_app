@@ -1,6 +1,10 @@
 // ignore_for_file: non_constant_identifier_names
 
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
+import 'package:we_care/db_functions/controller.dart';
+import 'package:we_care/screens/signup_signin/screen_fill_profile.dart';
+import 'package:we_care/settings/help.dart';
 
 import '../constant_design.dart';
 import '../db_functions/auth_method.dart';
@@ -42,19 +46,37 @@ class SettingsUser extends StatelessWidget {
             children: [
               Styles.KHeight10,  
               GestureDetector(
-                  onTap: () {print("edit profile clicked");},
+                  onTap: () {print("edit profile clicked");
+
+                  data_control.editProfile=true;
+                  data_control.update();
+                   Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => FillProfile(
+                            
+                            )));
+                  },
                   child:
                       Optional_buttons(Icons.person_rounded, "Edit Profile")),
               GestureDetector(
                 onTap: () {},
                 child: Optional_buttons(Icons.notifications, "Notification"),
               ),
-              GestureDetector(
+              GestureDetector( 
                 onTap: () {},
                 child: Optional_buttons(Icons.lock, "Security"),
               ),
               GestureDetector(
-                onTap: () {},
+                onTap: () {
+              Navigator.push(
+                  context,
+                  PageTransition(
+                    type: PageTransitionType.rightToLeft,
+                    child:const ScreenHelp(),
+                  ),
+                );
+                },
                 child: Optional_buttons(Icons.info, "Help"),
               ),
               GestureDetector(
@@ -97,12 +119,18 @@ class SettingsUser extends StatelessWidget {
                   ],
                 ),
               ),
+               
+               
+              
+                
             ],
           ),
         ),
       ),
     );
   }
+
+}
 
   Column Optional_buttons(icon, title) {
     return Column(
@@ -139,7 +167,7 @@ class SettingsUser extends StatelessWidget {
           ),
         ),
         Styles.KHeight10, 
+        
       ],
     );
   }
-}

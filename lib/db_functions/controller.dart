@@ -22,6 +22,7 @@ var signUp=true.obs;
 userModel? user;
 var pdfName="Select Document".obs;
 var approvalButton=false.obs;
+bool editProfile=false;
 
 //add profile data
   Future<void> refreshUser() async {
@@ -46,6 +47,7 @@ var orphanage=false.obs;
 var difable=false.obs;
 var humanity=false.obs;
 var others=false.obs;
+
 
 }
 final fundRiseStream=<fundriseModel>[].obs;

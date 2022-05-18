@@ -19,6 +19,7 @@ import 'package:we_care/screens/signup_signin/screen_yourInterest.dart';
 import '../../db_functions/auth_method.dart';
 import '../../db_functions/controller.dart';
 import '../../db_functions/user_model.dart';
+import '../../widgets/appBarHead.dart';
 
 class FillProfile extends StatelessWidget {
   FillProfile({this.email = '', this.password = ''});
@@ -44,28 +45,7 @@ class FillProfile extends StatelessWidget {
     print("in build profile $password and $email");
     return Scaffold(
       backgroundColor: Styles.primary_black,
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: Styles.primary_black,
-        title: const Text(
-          "Fill Your Profile",
-          style: TextStyle(
-              fontSize: 24, color: Colors.white, fontWeight: FontWeight.bold),
-        ),
-        leading: Builder(builder: (BuildContext context) {
-          return IconButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              icon: const Padding(
-                  padding: EdgeInsets.only(left: 10),
-                  child: Icon(
-                    Icons.arrow_back,
-                    size: 20,
-                    color: Styles.primary_green,
-                  )));
-        }),
-      ),
+      appBar: AppBarHead(data_control.editProfile==false? "Fill Your Profile": "Edit Profile"),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: NotificationListener<OverscrollIndicatorNotification>(
@@ -281,8 +261,9 @@ class FillProfile extends StatelessWidget {
                       height: 13.w,
                       width: 100.w,
                       child: TextButton(
-                        child: const Text(
-                          'Continue',
+                        child:  Text(
+                          data_control.editProfile==false?
+                          'Continue':"Saave Changes", 
                           style: TextStyle(
                               fontSize: 16, fontWeight: FontWeight.bold),
                         ),
@@ -316,6 +297,8 @@ class FillProfile extends StatelessWidget {
       ),
     );
   }
+
+  
 
 pickImage() async {
     try {

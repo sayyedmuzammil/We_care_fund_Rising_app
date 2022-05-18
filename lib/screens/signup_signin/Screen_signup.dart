@@ -251,6 +251,7 @@ class SignupScreen extends StatelessWidget {
 
                             data_control.signUp.value =
                                 !data_control.signUp.value;
+                                data_control.update();
                           },
                           child: Obx(() => Text(
                                 data_control.signUp == true
