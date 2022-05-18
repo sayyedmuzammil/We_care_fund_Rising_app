@@ -1,10 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:razorpay_flutter/razorpay_flutter.dart';
+import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'package:sizer/sizer.dart';
 import 'package:we_care/constant_design.dart';
 import 'package:we_care/screens/donate_click/donators.dart';
 import 'package:we_care/widgets/details_tile.dart';
 
+  Razorpay _razorpay = Razorpay();
+
 Padding scroll1(BuildContext context) {
+  _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
+_razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
+// _razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
   return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Column(
@@ -130,6 +137,8 @@ Padding scroll1(BuildContext context) {
                       side: const BorderSide(color: Styles.primary_green),
                     ),
                     onPressed: () {
+ 
+                      onPay();
                       print('Pressed');
                     },
                   ),
@@ -140,4 +149,25 @@ Padding scroll1(BuildContext context) {
           ),
         ],
       ));
+      
 }
+  void onPay(){
+    var options = {
+  'key': 'rzp_test_6hKFuGbRrXGWWi',
+  'amount': 100*100,
+  'name': 'We Care Trust.',
+  'description': 'Fine T-Shirt',
+  'prefill': {
+    'contact': '9037739383',
+    'email': 'sayyedmuzammil9383@gmail.com'
+  }
+};
+ _razorpay.open(options);
+  }
+    _handlePaymentSuccess(PaymentSuccessResponse response) {
+      print("success response $response");
+    
+  }
+  
+  _handlePaymentError() {
+  }

@@ -18,13 +18,14 @@ class getx_image_picker extends StatelessWidget {
   }) : super(key: key);
 
   final int index;
-  List<dynamic> squareImage=['','','',''];
+  List<File> squareImage=[];
   @override
   Widget build(BuildContext context) {
+    print("this is index $index");
     return Stack(
       children: [
-        GetBuilder<GetController>(
-          builder: (controller) => (data_control.child_image_list[index]==''
+        
+          Obx(() => (data_control.squaredImage[index]==''
               ? FDottedLine(
                   color: const Color(0xFF172927),
                   strokeWidth: 2.0,
@@ -43,25 +44,33 @@ class getx_image_picker extends StatelessWidget {
                   child: SizedBox(
                     child: FittedBox(
                         fit: BoxFit.fill,
-                        child:  Image(image: Image.file(File(data_control.child_image_list[index].toString()))
+                        child:  Image(image: Image.file(File(data_control.squaredImage[index].toString())  )
                                         .image)),
                     height: 18.w,
                     width: 18.w,
                   ),
-                )),
-        ),
+                )
+          ),),
         SizedBox(
           height: 18.w,
           width: 18.w,
           child: IconButton(
               onPressed: () async {
-                squareImage[index] = (await FilePicker.platform.pickFiles(
-                            allowMultiple: false, type: FileType.image))!;
-                            final path = squareImage[index].files.single.path;
-                if (squareImage[index].toString != 'null') {
-                  data_control.child_image_list[index] = path!;
-                }
-                data_control.update();
+                // squareImage[index] = (await FilePicker.platform.pickFiles(
+                //             allowMultiple: false, type: FileType.image))!;
+                //             final path = squareImage[index].files.single.path;
+                // if (squareImage[index].toString != 'null') {
+                //   data_control.child_image_list[index] = path!;
+                // }
+                // data_control.update();
+
+                final image= await FilePicker.platform.pickFiles(
+                            allowMultiple: false, type: FileType.image);
+                            final img=image!.files.single.path;
+                            final fl= File(img!);
+                            data_control.child_image_list.add(image);
+                            data_control.squaredImage[index]=img;
+                            data_control.update();
               },
              
               icon: const Icon(

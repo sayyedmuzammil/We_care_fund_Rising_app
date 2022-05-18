@@ -3,8 +3,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
+import 'package:sizer/sizer.dart';
 import 'package:we_care/bottom_nav_bar.dart';
 import 'package:we_care/constant_design.dart';
+import 'package:we_care/db_functions/controller.dart';
 import 'package:we_care/screens/donation_fundrise/new_fundrise/new_fundraising.dart';
 import 'package:we_care/screens/donation_fundrise/tab_activity.dart';
 import 'package:we_care/screens/donation_fundrise/tab_fundraising.dart';
@@ -62,9 +64,11 @@ class FundRising extends StatelessWidget {
           actions: [
             IconButton(
                 onPressed: () {
+                  data_control.approvalButton.value=false;
+                  data_control.update();
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => newFundrising()),
+                    MaterialPageRoute(builder: (context) => newFundrising(firstButton:  draft_or_cancel_button('Draft', Icon(Icons.save_outlined,),Styles.primary_green),)),
                   );
                 },
                 icon: SvgPicture.asset("assets/images/draft_icon.svg")),
@@ -80,9 +84,11 @@ class FundRising extends StatelessWidget {
         floatingActionButton: FloatingActionButton(
           backgroundColor: Styles.primary_green,
           onPressed: () {
+             data_control.approvalButton.value=false;
+                  data_control.update();
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => newFundrising()),
+              MaterialPageRoute(builder: (context) => newFundrising(firstButton:  draft_or_cancel_button('Draft', Icon(Icons.save_outlined,),Styles.primary_green),)),
             );
           },
           tooltip: 'create new fund rising',
@@ -92,3 +98,28 @@ class FundRising extends StatelessWidget {
     );
   }
 }
+
+  SizedBox draft_or_cancel_button(title, icon, color) {
+    return SizedBox(
+                    width: 30.w,
+                    height: 12.w,
+                    child: TextButton.icon(
+                      icon: icon ,
+                      label:  Text(
+                        title,
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.bold),
+                      ),
+                      style: TextButton.styleFrom(
+                        backgroundColor: Styles.primary_black,
+                        primary: color,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(28.0)),
+                        side:  BorderSide(color: color ),
+                      ),
+                      onPressed: () {
+                        print('Pressed');
+                      },
+                    ),
+                  );
+  }

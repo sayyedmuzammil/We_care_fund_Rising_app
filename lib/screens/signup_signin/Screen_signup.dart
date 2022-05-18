@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
+import 'package:we_care/admin_side/home_page_admin.dart';
 import 'package:we_care/constant_design.dart';
 import 'package:we_care/db_functions/auth_method.dart';
 import 'package:we_care/db_functions/controller.dart';
@@ -11,6 +12,8 @@ import 'package:we_care/screen_main_page.dart';
 import 'package:we_care/screens/Home_screen.dart';
 import 'package:we_care/screens/donation_fundrise/new_fundrise/new_fundraising.dart';
 import 'package:we_care/screens/signup_signin/screen_fill_profile.dart';
+
+import '../../admin_side/admin_main_sscren.dart';
 
 class SignupScreen extends StatelessWidget {
   SignupScreen();
@@ -24,15 +27,20 @@ class SignupScreen extends StatelessWidget {
         body: ListView(
           children: [
             SizedBox(
-              height: 25.h,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SvgPicture.asset(
-                    'assets/images/main_logo.svg',
-                    height: 80,
-                  ),
-                ],
+              height: 27.h,     
+              // width: 100.w, 
+              child: FittedBox( 
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    // SvgPicture.asset(
+                    //   'assets/images/main_logo.svg',
+                    //   height: 80,
+                    // ),
+                     Image.asset(
+                                    'assets/images/WeCareMainLogo.png')
+                  ],
+                ),
               ),
             ),
             Center(
@@ -42,8 +50,8 @@ class SignupScreen extends StatelessWidget {
                           : 'Sign in to your account',
                       style: Styles.Header.copyWith(fontSize: 24),
                     ))),
-            SizedBox(
-              height: 5.h,
+            SizedBox( 
+              height: 3.h,
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -161,7 +169,16 @@ class SignupScreen extends StatelessWidget {
                           }
                       }:()async{
                          String res= await AuthMethods().signInUser(email: _emailController.text, password: _passwordController.text);
-                          print(res);
+                          print("777 res $res");
+                          if(res=='admin')
+                          {
+                             Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (BuildContext context) => AdminScreenMain()
+                          ),
+                        );
+                          }
                           if(res=='success'){
                         Navigator.push(
                           context,

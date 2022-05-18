@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:we_care/constant_design.dart';
 import 'package:we_care/widgets/category_buttons.dart';
+import 'package:we_care/widgets/single_button.dart';
 
 class card_bottom extends StatelessWidget {
   const card_bottom({
@@ -28,9 +29,9 @@ class card_bottom extends StatelessWidget {
                       fontSize: 12, color: Styles.primary_green)),
             ],
           ),
-          category_button(
+          single_button(
             title: 'Donate Again',
-            currentIndex: 7,
+            // currentIndex: 7,
           ),
         ],
       ),

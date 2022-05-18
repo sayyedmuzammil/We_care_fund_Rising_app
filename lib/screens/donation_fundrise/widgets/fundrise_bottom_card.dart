@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 import 'package:we_care/constant_design.dart';
 import 'package:we_care/widgets/category_buttons.dart';
+import 'package:we_care/widgets/single_button.dart';
 
 class card_bottom_fundrise extends StatelessWidget {
   const card_bottom_fundrise({
@@ -58,9 +59,9 @@ class card_bottom_fundrise extends StatelessWidget {
           SizedBox(
             width: 25.w,
             child: FittedBox(
-              child: category_button(
+              child: single_button(
                 title: 'See Results',
-                currentIndex: 7,
+                // currentIndex: 7,
               ),
             ),
           ),

@@ -5,12 +5,14 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:sizer/sizer.dart';
 import 'package:we_care/bottom_nav_bar.dart';
 import 'package:we_care/constant_design.dart';
 import 'package:we_care/db_functions/controller.dart';
 import 'package:we_care/db_functions/user_model.dart';
 import 'package:we_care/screen_main_page.dart';
+import 'package:we_care/settings/settings.dart';
 
 import '../db_functions/firebase.dart';
 
@@ -49,7 +51,15 @@ class Profile extends StatelessWidget {
           }),
           actions: [
             IconButton(
-                onPressed: () {},
+                onPressed: () {
+                     Navigator.push(
+                  context,
+                  PageTransition(
+                    type: PageTransitionType.leftToRight,
+                    child:const SettingsUser(),
+                  ),
+                );
+                },
                 icon: SvgPicture.asset("assets/images/settings_icon.svg")),
             const SizedBox(),
             IconButton(

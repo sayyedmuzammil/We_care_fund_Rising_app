@@ -24,7 +24,12 @@ import '../../../db_functions/resources/storage_methods.dart';
 import '../../../db_functions/user_model.dart';
 
 class newFundrising extends StatelessWidget {
-  newFundrising({Key? key}) : super(key: key);
+  Widget firstButton;
+
+  newFundrising({
+    Key? key,
+    required this.firstButton,
+  }) : super(key: key);
 
   final _titleController = TextEditingController();
   final _categoryController = TextEditingController();
@@ -49,16 +54,12 @@ class newFundrising extends StatelessWidget {
   Uint8List? val;
   String? pdfUrl;
   FilePickerResult? img;
-
-
+List<String> childImages=[];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-    
       backgroundColor: Styles.primary_black,
-      
-      appBar:
-       AppBar(
+      appBar: AppBar(
         elevation: 0,
         backgroundColor: Styles.primary_black,
         title: const Text(
@@ -80,93 +81,93 @@ class newFundrising extends StatelessWidget {
                   )));
         }),
       ),
-      
       body: SafeArea(
           child: Padding(
         padding: const EdgeInsets.only(left: 20, right: 20),
         child: ListView(
           children: [
             Stack(
-    children: [
-       GetBuilder<GetController>(
-          builder: (controller) => controller.mainImage == '' ||
-                controller.mainImage == 'null' ||
-                controller.mainImage == null
-            ? FDottedLine(
-                color: const Color(0xFF172927),
-                strokeWidth: 2.0,
-                dottedLength: 8.0,
-                space: 7.0,
-                corner: FDottedLineCorner.all(20.0),
-                child: Padding(
-                  padding: const EdgeInsets.all(3.0),
-                  child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: Styles.primary_black_light,
-                      ),
-                      height: 25.h,
-                      width: double.infinity,
-                      alignment: Alignment.center,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Styles.KHeight20,
-                          Styles.KHeight20,
-                          Text(
-                            "Add Cover Photos",
-                            style: Styles.RegularText.copyWith(
-                                color: Colors.grey[600]),
-                          )
-                        ],
-                      )),
+              children: [
+                GetBuilder<GetController>(
+                  builder: (controller) => controller.mainImage == '' ||
+                          controller.mainImage == 'null' ||
+                          controller.mainImage == null
+                      ? FDottedLine(
+                          color: const Color(0xFF172927),
+                          strokeWidth: 2.0,
+                          dottedLength: 8.0,
+                          space: 7.0,
+                          corner: FDottedLineCorner.all(20.0),
+                          child: Padding(
+                            padding: const EdgeInsets.all(3.0),
+                            child: Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20),
+                                  color: Styles.primary_black_light,
+                                ),
+                                height: 25.h,
+                                width: double.infinity,
+                                alignment: Alignment.center,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Styles.KHeight20,
+                                    Styles.KHeight20,
+                                    Text(
+                                      "Add Cover Photos",
+                                      style: Styles.RegularText.copyWith(
+                                          color: Colors.grey[600]),
+                                    )
+                                  ],
+                                )),
+                          ),
+                        )
+                      : ClipRRect(
+                          borderRadius: BorderRadius.circular(10),
+                          child: SizedBox(
+                            child: FittedBox(
+                                fit: BoxFit.fill,
+                                child: Image(
+                                    image: Image.file(File(
+                                            data_control.mainImage!.toString()))
+                                        .image)),
+                            height: 25.h,
+                            width: 100.w,
+                          ),
+                        ),
                 ),
-              )
-            : ClipRRect(
-                borderRadius: BorderRadius.circular(10),
-                child: SizedBox(
-                  child: FittedBox(
-                      fit: BoxFit.fill, child: Image(image: Image.file(File(data_control.mainImage!.toString()))
-                                        .image) ),
+                SizedBox(
                   height: 25.h,
-                  width: 100.w,
-                  
-                ),
-              ),
-      ),
-      SizedBox(
-        height: 25.h,
-        width: double.infinity,
-        child: IconButton(
-            onPressed: () async {
-            /*  final val = await pickImage1();
+                  width: double.infinity,
+                  child: IconButton(
+                      onPressed: () async {
+                        /*  final val = await pickImage1();
               if (val.toString() != 'null') {
                 data_control.mainImage = val; 
                 data_control.update();
               } */
-               img = await FilePicker.platform.pickFiles(
+                        img = await FilePicker.platform.pickFiles(
                             allowMultiple: false, type: FileType.image);
-                            final path = img!.files.single.path;
-                            print("this $path");
-                    data_control.mainImage=path;    
-                    data_control.update(); 
-                         
-            },
-            icon: const Icon(
-              Icons.add,
-              color: Styles.primary_green,
-              size: 32,
-            )),
-      ),
-    ],
-  ),
+                        final path = img!.files.single.path;
+                        print("this $path");
+                        data_control.mainImage = path;
+                        data_control.update();
+                      },
+                      icon: const Icon(
+                        Icons.add,
+                        color: Styles.primary_green,
+                        size: 32,
+                      )),
+                ),
+              ],
+            ),
             Styles.KHeight20,
             SizedBox(
               width: 80.w,
               child: FittedBox(
                 child: Wrap(
                   spacing: 22.0,
-                  children:  [
+                  children: [
                     getx_image_picker(
                       index: 0,
                     ),
@@ -382,7 +383,10 @@ class newFundrising extends StatelessWidget {
                         child: TextButton(
                           style: TextButton.styleFrom(
                             padding: const EdgeInsets.all(16.0),
-                            primary: data_control.pdfName.value=="Select Document"? Color(0xFF37424F):Colors.white,
+                            primary:
+                                data_control.pdfName.value == "Select Document"
+                                    ? Color(0xFF37424F)
+                                    : Colors.white,
                             textStyle: const TextStyle(
                                 fontSize: 16,
                                 color: Styles.primary_black_light),
@@ -393,29 +397,28 @@ class newFundrising extends StatelessWidget {
                                 type: FileType.custom,
                                 allowedExtensions: ['pdf'],
                                 allowMultiple: false);
-                                if (result == null) return;
+                            if (result == null) return;
                             final x = await File(result.files.single.path!);
                             final y = await FirebaseStorage.instance
                                 .ref("pdfDocument/${result.names.last}");
                             final link = await y.putFile(x);
-                            print("${link.ref.getDownloadURL()}"); 
-                            pdfUrl=await link.ref.getDownloadURL(); 
+                            print("${link.ref.getDownloadURL()}");
+                            pdfUrl = await link.ref.getDownloadURL();
 
                             print("hello hai ${pdfUrl}");
                             data_control.pdfName.value =
                                 result.names.last.toString();
-                            
 
                             final file = result.files.first;
                             // openFile(file);
                           },
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children:  [
+                            children: [
                               Text(
                                 data_control.pdfName.value,
                               ),
-                             const Icon(
+                              const Icon(
                                 Icons.cloud_upload_sharp,
                                 color: Colors.grey,
                                 size: 22,
@@ -424,8 +427,8 @@ class newFundrising extends StatelessWidget {
                           ),
                         ),
                       )),
-                 
-                 /*  Styles.KHeight10,
+
+                  /*  Styles.KHeight10,
                   Row(
                     children: [
                       Styles.KWidth20,
@@ -536,28 +539,7 @@ class newFundrising extends StatelessWidget {
                 Row(
                   children: [
                     Styles.KWidth10,
-                    SizedBox(
-                      width: 30.w,
-                      height: 12.w,
-                      child: TextButton.icon(
-                        icon: const Icon(Icons.save_outlined),
-                        label: const Text(
-                          'Draft',
-                          style: TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.bold),
-                        ),
-                        style: TextButton.styleFrom(
-                          backgroundColor: Styles.primary_black,
-                          primary: Styles.primary_green,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(28.0)),
-                          side: const BorderSide(color: Styles.primary_green),
-                        ),
-                        onPressed: () {
-                          print('Pressed');
-                        },
-                      ),
-                    ),
+                    firstButton,
                   ],
                 ),
                 Row(
@@ -565,30 +547,51 @@ class newFundrising extends StatelessWidget {
                     SizedBox(
                       width: 55.w,
                       height: 12.w,
-                      child: TextButton(
-                        child: const Text(
-                          'Create & Submit',
-                          style: TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.bold),
-                        ),
-                        style: TextButton.styleFrom(
-                          backgroundColor: Styles.primary_green,
-                          primary: Colors.white,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(28.0)),
-                          side: const BorderSide(color: Styles.primary_green),
-                        ),
-                        onPressed: () async {
-                          if(img!=null){
-                          final res = await form_submitted(img!);
-                          }
-                         
-                         
-                         
-                            Navigator.pop(context);
-                       
-                        },
-                      ),
+                      child: data_control.approvalButton == false
+                          ? TextButton(
+                              child: const Text(
+                                'Create & Submit',
+                                style: TextStyle(
+                                    fontSize: 16, fontWeight: FontWeight.bold),
+                              ),
+                              style: TextButton.styleFrom(
+                                backgroundColor: Styles.primary_green,
+                                primary: Colors.white,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(28.0)),
+                                side: const BorderSide(
+                                    color: Styles.primary_green),
+                              ),
+                              onPressed: () async {
+                                if (img != null) {
+                                  final res = await form_submitted(img!);
+                                }
+
+                                Navigator.pop(context);
+                              },
+                            )
+                          : TextButton(
+                              child: const Text(
+                                'Publish',
+                                style: TextStyle(
+                                    fontSize: 16, fontWeight: FontWeight.bold),
+                              ),
+                              style: TextButton.styleFrom(
+                                backgroundColor: Styles.primary_green,
+                                primary: Colors.white,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(28.0)),
+                                side: const BorderSide(
+                                    color: Styles.primary_green),
+                              ),
+                              onPressed: () async {
+                                if (img != null) {
+                                  // final res = await form_submitted(img!);
+                                }
+
+                                Navigator.pop(context);
+                              },
+                            ),
                     ),
                     Styles.KWidth10,
                   ],
@@ -605,8 +608,11 @@ class newFundrising extends StatelessWidget {
 
     String _mainImage = '';
     print("before upload to firebase image ${data_control.mainImage}");
-
-
+    for (var item in data_control.child_image_list) {
+     final img=await imageUpload(item);
+     childImages.add(img!);
+      
+    }
 // String _mainImage=data_control.mainImage.value;
 //     print("checking unit list ${data_control.child_image_list}");
 // print("mainImage $_mainImage");
@@ -625,7 +631,6 @@ class newFundrising extends StatelessWidget {
     //         file: ,
     //         isPost: false);
 
-
     //     // counter++;
     //   }
 
@@ -636,9 +641,9 @@ class newFundrising extends StatelessWidget {
 // String
     String _title = _titleController.text;
     String _category = _categoryController.text;
-    int _requiredAmount=0;
-    if(_requiredAmountController.text!=''){
-     _requiredAmount = int.parse(_requiredAmountController.text);
+    int _requiredAmount = 0;
+    if (_requiredAmountController.text != '') {
+      _requiredAmount = int.parse(_requiredAmountController.text);
     }
     String _expireDate = _dateController.text;
     String _fundPlan = _planController.text;
@@ -646,38 +651,40 @@ class newFundrising extends StatelessWidget {
     // String _proposalPDF = _uploadProposalController.text;
     // String _medicalPDF = _uploadMedicalController.text;
     String _story = _storyController.text;
-    String res='some error';
-  
-      res = "success";
-      print("successfully completed");
-      String? imageUrl=await imageUpload(image);
+    String res = 'some error';
 
-      var fundrisemodel = fundriseModel(
-          fundraiseId: fundriseId,
-          userId: currentUser!.uid,
-          mainImage: imageUrl,
-          childImage: data_control.child_image_list,
-          title: _title,
-          category: _category,
-          totalRequireAmount: _requiredAmount,
-          expireDate: _expireDate,
-          fundPlan: _fundPlan,
-          organization: _recipient,
-          documentPdf: pdfUrl,
-          // medicalPdf: _medicalPDF,
-          story: _story,
-          status: 'review');
-      print("before starting db of fundraise");
-      await db_control.firestrore
-          .collection('fundrise')
-          .doc(fundriseId)
-          .set(fundrisemodel.toMap());
-  
+    res = "success";
+    print("successfully completed $image");
+    String? imageUrl = await imageUpload(image);
+
+    var fundrisemodel = fundriseModel(
+      fundraiseId: fundriseId,
+      userId: currentUser!.uid,
+      mainImage: imageUrl,
+      childImage: childImages,
+      title: _title,
+      category: _category,
+      totalRequireAmount: _requiredAmount,
+      expireDate: _expireDate,
+      fundPlan: _fundPlan,
+      organization: _recipient,
+      documentPdf: pdfUrl,
+      // medicalPdf: _medicalPDF,
+      story: _story,
+      status: 'review',
+      donatorsCount: 0,
+      fundriseAmount: 0,
+    );
+    print("before starting db of fundraise");
+    await db_control.firestrore
+        .collection('fundrise')
+        .doc(fundriseId)
+        .set(fundrisemodel.toMap());
   }
 
-  void openFile(PlatformFile file) {
-    OpenFile.open(file.path!);
-  }
+  // void openFile(PlatformFile file) {
+  //   OpenFile.open(file.path!);
+  // }
 }
 
 pickImage1() async {
@@ -753,13 +760,15 @@ class text_field extends StatelessWidget {
     );
   }
 }
+
 Future<String?> imageUpload(FilePickerResult image) async {
   final FirebaseStorage storage = FirebaseStorage.instance;
   final path = image.files.single.path;
   final fileName = image.files.single.name;
   File file = File(path!);
   try {
-    final ref = storage.ref('fundriseImages/${currentUser.uid}/$fileName');
+    final ref = storage.ref(
+        'fundriseImages/${FirebaseAuth.instance.currentUser!.uid}/$fileName');
     final link = await ref.putFile(file).whenComplete(() => null);
     String imageUrl = await link.ref.getDownloadURL();
     return imageUrl;

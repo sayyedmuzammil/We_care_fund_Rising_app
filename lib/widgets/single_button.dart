@@ -2,15 +2,14 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:we_care/db_functions/controller.dart';
 import '../constant_design.dart';
 
-class category_button extends StatelessWidget {
+class single_button extends StatelessWidget {
   String title;
-  int currentIndex;
-  category_button({
+
+  single_button({
     required this.title,
-    this.currentIndex = 0,
+
     Key? key,
   }) : super(key: key);
 
@@ -18,29 +17,24 @@ class category_button extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(0, 0, 10, 10),
-      child: Obx(
-        () => TextButton(
+      child: TextButton(
           child: Text(
             title,
             style: const TextStyle(fontSize: 16),
           ),
           style: TextButton.styleFrom(
-            backgroundColor: data_control.categoryButtonClicked == currentIndex
-                ? Styles.primary_green
-                : Styles.primary_black,
-            primary: data_control.categoryButtonClicked == currentIndex
-                ? Colors.white
-                : Styles.primary_green,
+            backgroundColor: Styles.primary_black,
+            primary:  Styles.primary_green,
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(18.0)),
             side: const BorderSide(color: Styles.primary_green),
           ),
           onPressed: () { 
-            data_control.categoryButtonClicked.value = currentIndex;
+            // data_control.categoryButtonClicked.value = currentIndex;
             print('Pressed');
           },
         ),
-      ),
+     
     );
   }
 }

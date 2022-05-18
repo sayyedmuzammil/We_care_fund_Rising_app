@@ -3,25 +3,36 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'package:sizer/sizer.dart';
 import 'package:we_care/constant_design.dart';
+import 'package:we_care/db_functions/fundRiseModel.dart';
 import 'package:we_care/screens/donate_click/scroll1_donate.dart';
 import 'package:we_care/screens/donate_click/scroll2_donate.dart';
 import 'package:we_care/screens/donation_fundrise/new_fundrise/new_fundraising.dart';
 import 'package:we_care/widgets/details_tile.dart';
 
 class donationScreen extends StatelessWidget {
-  donationScreen({Key? key}) : super(key: key);
+   fundriseModel data;
+  donationScreen({ required this.data});
 
   List<String> imageList1 = [
+    
     'assets/images/srilanka1.jpg',
     'assets/images/srilanka2.jpeg',
     'assets/images/srilanka3.jpg',
     'assets/images/srilanka4.jpg',
   ];
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    for (var item in data.childImage!) {
+    print("checking donate now $item");
+    }
+
+    return 
+    // data!=null?
+    Scaffold(
       backgroundColor: Styles.primary_black,
       body: Stack(
         children: [
@@ -36,11 +47,11 @@ class donationScreen extends StatelessWidget {
                         autoPlay: true,
                         disableCenter: false,
                       ),
-                      items: imageList1
+                      items: data.childImage!/* imageList1 */
                           .map(
                             (item) => SizedBox(
                               width: 100.w,
-                              child: Image.asset(
+                              child: Image.network(
                                 item,
                                 fit: BoxFit.cover,
                               ),
@@ -89,6 +100,9 @@ class donationScreen extends StatelessWidget {
           ),
         ],
       ),
-    );
+    )/* :Container(); */;
   }
+
+
+
 }

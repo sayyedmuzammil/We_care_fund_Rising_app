@@ -4,6 +4,9 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_instance/get_instance.dart';
 import 'package:sizer/sizer.dart';
 import 'package:we_care/constant_design.dart';
 import 'package:we_care/db_functions/auth_method.dart';
@@ -21,10 +24,12 @@ import '../db_functions/firebase.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
-init()async{
-await data_control.refreshUser();  
-print("in it ${data_control.user!.photoUrl}");
-}
+  init() async {
+    await data_control.refreshUser();
+    // data_control.update();
+    print("in it ${data_control.user!.photoUrl}");
+  }
+
   @override
   Widget build(BuildContext context) {
     init();
@@ -40,16 +45,15 @@ print("in it ${data_control.user!.photoUrl}");
         ),
         leading: Builder(builder: (BuildContext context) {
           return IconButton(
-              onPressed: () async{
-                  await AuthMethods().signOut();
-                 Navigator.pushAndRemoveUntil(
-      context,
-      MaterialPageRoute(
-        builder: (BuildContext context) =>ScreenWelcome(),
-      ),
-      (route) => false,
-    );
-
+              onPressed: () async {
+                await AuthMethods().signOut();
+                Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(
+                    builder: (BuildContext context) => ScreenWelcome(),
+                  ),
+                  (route) => false,
+                );
               },
               icon: Padding(
                 padding: const EdgeInsets.only(left: 10),
@@ -64,7 +68,6 @@ print("in it ${data_control.user!.photoUrl}");
                     MaterialPageRoute(
                         builder: (context) => UrgentFundraising(
                               title: 'Search',
-                              bgimage: 'assets/images/srilanka2.jpeg',
                             )));
               },
               icon: SvgPicture.asset("assets/images/search_svg.svg")),
@@ -79,6 +82,7 @@ print("in it ${data_control.user!.photoUrl}");
           ),
         ],
       ),
+     
       body: ListView(
         children: [
           Stack(
@@ -127,7 +131,6 @@ print("in it ${data_control.user!.photoUrl}");
                           MaterialPageRoute(
                               builder: (context) => UrgentFundraising(
                                     title: 'Urgent Fundraising',
-                                    bgimage: 'assets/images/cloth_poor.jpeg',
                                   )),
                         );
                       },
@@ -144,21 +147,28 @@ print("in it ${data_control.user!.photoUrl}");
           scrollable_category(),
           SizedBox(
             height: 54.w + 2,
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              itemCount: 8,
-              itemBuilder: (context, index) {
-                return InkWell(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => donationScreen()),
-                      );
-                    },
-                    child: first_card(
-                      bg_image: 'assets/images/cloth_poor.jpeg',
-                    ));
+            child: GetX<GetController>(
+              builder: (controller) {
+                return ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: controller.fundRiseStream.length,
+                  itemBuilder: (context, index) {
+                    final data = controller.fundRiseStream[index];
+                    print("checking1 $data");
+                    return InkWell( 
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => donationScreen(data: data,)),
+                          );
+                        },
+                        child: first_card(
+                          data: data,
+                          // bg_image: 'assets/images/cloth_poor.jpeg',
+                        ));
+                  },
+                );
               },
             ),
           ),
@@ -186,7 +196,6 @@ print("in it ${data_control.user!.photoUrl}");
                           MaterialPageRoute(
                               builder: (context) => UrgentFundraising(
                                     title: 'Coming to an end',
-                                    bgimage: 'assets/images/hungry_kid.jpg',
                                   )),
                         );
                       },
@@ -202,15 +211,19 @@ print("in it ${data_control.user!.photoUrl}");
           ),
           SizedBox(
             height: 54.w + 2,
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              itemCount: 8,
-              itemBuilder: (context, index) {
-                return SizedBox(
-                    height: 115,
-                    child: first_card(
-                      bg_image: 'assets/images/hungry_kid.jpg',
+            child: GetX<GetController>(
+              
+              builder: (controller) {
+                return ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: controller.fundRiseStream.length,
+                  itemBuilder: (context, index) {
+                    final data=controller.fundRiseStream[index];
+                    return SizedBox(height: 115, child: first_card(
+                      data: data,
                     ));
+                  },
+                );
               },
             ),
           ),

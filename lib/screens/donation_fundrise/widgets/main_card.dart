@@ -36,7 +36,7 @@ class donation_card extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Styles.KHeight10,
-              main_childCard(bg_image: bg_image, data: data,),
+              main_childCard( data: data,),
               card_bottom!=null?
              card_bottom!
              :Container(),
@@ -54,10 +54,9 @@ class main_childCard extends StatelessWidget {
    main_childCard({
     Key? key,
      this.data,
-    required this.bg_image,
   }) : super(key: key);
 
-  final String bg_image;
+ 
  
 
   @override
@@ -79,7 +78,7 @@ class main_childCard extends StatelessWidget {
                 child: SizedBox(
                   child: FittedBox(
                       fit: BoxFit.fill,
-                      child: Image.network(bg_image)),
+                      child: Image.network(data!.mainImage!)),
                   height: 100.w,
                   width: 30.w,
                 ),

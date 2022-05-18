@@ -6,9 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 import 'package:we_care/constant_design.dart';
 import 'package:we_care/screen_main_page.dart';
-// import 'package:we_care/screens/Home_screen.dart';
 import 'package:we_care/screens/signup_signin/Screen_signup.dart';
-
+import 'admin_side/admin_main_sscren.dart';
 import 'screens/signup_signin/screenWelcome.dart';
 
 void main() async{ 
@@ -40,7 +39,15 @@ class MyApp extends StatelessWidget {
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.active) {
+          
+         
             if (snapshot.hasData) {
+                 User datas=snapshot.data! as User;
+            // print("7777 ${datas['email']}");
+            print("777 ${datas.email}");
+            if(datas.email=='admin@gmail.com'){
+              return AdminScreenMain();
+            }
               return ScreenMainPage();
             } else if (snapshot.hasError) {
               return Center(
@@ -49,6 +56,7 @@ class MyApp extends StatelessWidget {
             } else {
               return ScreenWelcome();
             }
+            
           }
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(

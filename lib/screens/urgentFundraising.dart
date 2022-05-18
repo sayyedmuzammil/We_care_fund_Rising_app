@@ -2,20 +2,24 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 import 'package:we_care/constant_design.dart';
+import 'package:we_care/db_functions/controller.dart';
+import 'package:we_care/db_functions/firebase.dart';
+import 'package:we_care/db_functions/fundRiseModel.dart';
 import 'package:we_care/screens/Home_screen.dart';
 import 'package:we_care/screens/donation_fundrise/widgets/main_card.dart';
 import 'donation_fundrise/new_fundrise/new_fundraising.dart';
 
 class UrgentFundraising extends StatelessWidget {
   String title;
-  String bgimage;
+
 
   final _searchController = TextEditingController();
   UrgentFundraising({
     this.title = 'Urgent Fundraising',
-    this.bgimage = '',
+  
   });
 
   @override
@@ -86,17 +90,37 @@ class UrgentFundraising extends StatelessWidget {
           const scrollable_category(),
           Expanded(
             child: Padding(
+
               padding: const EdgeInsets.only(left: 20, right: 20, top: 0),
-              child: ListView.separated(
-                separatorBuilder: (context, index) => Styles.KHeight10,
-                itemCount: 8,
-                itemBuilder: (context, index) {
-                  return main_childCard(
-                 
-                    bg_image: bgimage,
-                  );
-                },
-              ),
+              child: /* StreamBuilder<List<fundriseModel>>(
+                stream: getFundrise(),
+                builder: (context, snapshot) {
+                  if(snapshot.connectionState==ConnectionState.waiting){
+                    return CircularProgressIndicator();
+                  }
+                  if(snapshot.data!=null){ */
+                   GetX<GetController>(
+                    //  init: funController(),
+                    //  initState: (_) {},
+                     builder: (controller) {
+                       return ListView.separated(
+                                       separatorBuilder: (context, index) => Styles.KHeight10,
+                                       itemCount: controller.fundRiseStream.length,
+                                       itemBuilder: (context, index) {
+                                         final data=controller.fundRiseStream[index];
+                                         return main_childCard(
+                                           data: data,
+                                          
+                                         );
+                                       },
+                                      
+                                     ); 
+                     },
+                   ), 
+              //  }
+              //  else return Center(child: Text("No Data"),);
+              //   }
+              // ),
             ),
           ),
           Styles.KHeight20,

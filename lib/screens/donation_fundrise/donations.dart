@@ -8,6 +8,7 @@ import 'package:we_care/db_functions/fundRiseModel.dart';
 import 'package:we_care/screen_main_page.dart';
 import 'package:we_care/screens/donation_fundrise/widgets/main_card.dart';
 import 'package:we_care/widgets/category_buttons.dart';
+import 'package:we_care/widgets/single_button.dart';
 
 import '../../db_functions/firebase.dart';
 
@@ -122,9 +123,9 @@ class card_bottom extends StatelessWidget {
               SizedBox(
                 width: 25.w,
                 child: FittedBox(
-                  child: category_button(
+                  child: single_button(
                     title: 'Donate Again',
-                    currentIndex: 7,
+                    // currentIndex: 7,
                   ),
                 ),
               ),
