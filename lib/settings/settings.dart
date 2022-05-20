@@ -50,12 +50,13 @@ class SettingsUser extends StatelessWidget {
 
                   data_control.editProfile=true;
                   data_control.update();
-                   Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => FillProfile(
-                            
-                            )));
+                    Navigator.push(
+                  context,
+                  PageTransition(
+                    type: PageTransitionType.rightToLeft,
+                    child: FillProfile(),
+                  ),
+                );
                   },
                   child:
                       Optional_buttons(Icons.person_rounded, "Edit Profile")),

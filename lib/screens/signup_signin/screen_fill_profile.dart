@@ -20,6 +20,8 @@ import '../../db_functions/auth_method.dart';
 import '../../db_functions/controller.dart';
 import '../../db_functions/user_model.dart';
 import '../../widgets/appBarHead.dart';
+import 'package:dropdown_button2/dropdown_button2.dart';
+
 
 class FillProfile extends StatelessWidget {
   FillProfile({this.email = '', this.password = ''});
@@ -33,15 +35,36 @@ class FillProfile extends StatelessWidget {
   final _cityController = TextEditingController();
   final _aboutController = TextEditingController();
   final _globalKey2 = GlobalKey<FormState>();
-  Uint8List? val;
+
+    final List<String> items = [
+    'Female',
+    'Male',
+    'Others',
+  ];
+  String? selectedValue;
+  String? _gender;
+  // Uint8List? val;
 
   void init() {
     _emailController.text = email;
+       if(data_control.editProfile==true){
+      _nameController.text=data_control.user!.name.toString();
+      _emailController.text=data_control.user!.email.toString();
+      _phoneControler.text=data_control.user!.phoneNumber.toString();
+      _gender=data_control.user!.gender.toString();
+      _cityController.text=data_control.user!.city.toString();
+      _aboutController.text=data_control.user!.about.toString();
+      // _nameController.text=data_control.user!.name.toString();
+      // data_control.update();
+      
+      
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     init();
+  
     print("in build profile $password and $email");
     return Scaffold(
       backgroundColor: Styles.primary_black,
@@ -71,7 +94,7 @@ class FillProfile extends StatelessWidget {
                                                 height: 130.0,
                                                 decoration: BoxDecoration(
                                                     shape: BoxShape.circle,
-                                                    image: data_control.profileImage != null
+                                                    image: data_control.editProfile==false? data_control.profileImage != null
                                                         ? DecorationImage(
                                                             image: MemoryImage(
                                                                 data_control.profileImage!),
@@ -81,6 +104,10 @@ class FillProfile extends StatelessWidget {
                                                         : DecorationImage(
                                                             image: NetworkImage(
                                                                 'https://th.bing.com/th/id/OIP.0i7tOueCViNYUKRiC4La9gHaHa?pid=ImgDet&rs=1'),
+                                                            fit: BoxFit.cover,
+                                                          ): DecorationImage(
+                                                            image: NetworkImage(
+                                                                data_control.user!.photoUrl.toString()),
                                                             fit: BoxFit.cover,
                                                           ))),
                                           ],
@@ -153,13 +180,15 @@ class FillProfile extends StatelessWidget {
                           "*",
                           style:
                               Styles.RegularTextBold.copyWith(color: Colors.red),
-                        ),
+                        ), 
                       ],
                     ),
                     text_field(
                       Text_field_controller: _emailController,
-                      hintText: 'Email',
+                      hintText: 'Email', 
                       isVisible: true,
+                      inputType: TextInputType.none, 
+                      inputColor: Colors.grey, 
                       suffix_icon: const Icon(
                         Icons.email,
                         color: Colors.grey,
@@ -185,6 +214,7 @@ class FillProfile extends StatelessWidget {
                       Text_field_controller: _phoneControler,
                       hintText: 'Phone Number',
                       isVisible: true,
+                      inputType: TextInputType.number, 
                       suffix_icon: const Icon(
                         Icons.phone,
                         color: Colors.grey,
@@ -206,16 +236,107 @@ class FillProfile extends StatelessWidget {
                         ),
                       ],
                     ),
-                    text_field(
-                      Text_field_controller: _genderController,
-                      hintText: 'Gender',
-                      isVisible: true,
-                      suffix_icon: const Icon(
-                        Icons.arrow_drop_down,
-                        color: Colors.grey,
-                        size: 24,
-                      ),
-                    ),
+
+
+
+                   GetBuilder<GetController>(
+                    //  init: MyController(),
+                    //  initState: (_) {},
+                     builder: (controller) {
+                       return Padding(
+                         padding: const EdgeInsets.only(left: 4, right: 4),   
+                         child: DropdownButtonHideUnderline(
+                               child: DropdownButton2(
+                                 
+                                 isExpanded: true,
+                                 hint: Expanded(
+                                   child: Text(
+                                     _gender==null?'Select Item': '$_gender',
+                                     style:
+                                     _gender==null?
+                                     Styles.RegularText.copyWith(
+            color: const Color(0xFF37424F),
+          ):  const TextStyle(
+                                               fontSize: 16,
+                                               color: Colors.white,
+                                             ),
+                                    //  overflow: TextOverflow.ellipsis,
+                                   ),
+                                 ),
+                                 items: items
+                                     .map((item) => DropdownMenuItem<String>(
+                                           value: item,
+                                           child: Text(
+                                             item,
+                                             style: const TextStyle(
+                                               fontSize: 16,
+                                              //  fontWeight: FontWeight.bold,
+                                               color: Colors.white,
+                                             ),
+                                             overflow: TextOverflow.ellipsis,
+                                           ),
+                                         ))
+                                     .toList(),
+                                 value: data_control.selectedValueGender,
+                                 onChanged: (value) {
+                                  
+                                     data_control.selectedValueGender = value as String;
+                                    controller.update(); 
+                                  
+                                   // });
+                                 },
+                                 icon: const Icon(
+                                   Icons.arrow_drop_down, 
+                                 ),
+                                 iconSize: 24, 
+                                 iconEnabledColor: Colors.grey,
+                                 iconDisabledColor: Colors.grey,
+                                 buttonHeight: 50, 
+                                //  buttonWidth: 160,
+                                 buttonPadding: const EdgeInsets.only(left: 20, right: 12), 
+                                 buttonDecoration: BoxDecoration(
+                                   borderRadius: BorderRadius.circular(20),
+                                  
+                                   border: Border.all(
+                                     color: Colors.black26,
+                                   ),
+                                   color: Styles.primary_black_light,
+                                 ),
+                                 buttonElevation: 2,
+                                 itemHeight: 40,
+                                 itemPadding: const EdgeInsets.only(left: 20, right: 12),  
+                                //  dropdownMaxHeight: 200,
+                                //  dropdownWidth: 200, 
+                                 dropdownPadding: null,
+                                   
+                                 dropdownDecoration: BoxDecoration( 
+                                   borderRadius: BorderRadius.circular(20),
+                                   color: Styles.primary_black_light,
+                                 ),
+                                 dropdownElevation: 8,
+                                 scrollbarRadius: const Radius.circular(20), 
+                                 scrollbarThickness: 6,
+                                 scrollbarAlwaysShow: true,
+                                 offset: const Offset(-0, 0), 
+                               )
+                         ),
+                       );
+                     },
+                   ),
+                  
+            
+                    
+                    
+                    // text_field(
+                    //   Text_field_controller: _genderController,
+                    //   hintText: 'Gender',
+                    //   isVisible: true,
+                    //   suffix_icon: const Icon(
+                    //     Icons.arrow_drop_down,
+                    //     color: Colors.grey,
+                    //     size: 24,
+                    //   ),
+                    // ),
                     Styles.KHeight20,
                     Row(
                       children: [
@@ -263,7 +384,7 @@ class FillProfile extends StatelessWidget {
                       child: TextButton(
                         child:  Text(
                           data_control.editProfile==false?
-                          'Continue':"Saave Changes", 
+                          'Continue':"Save Changes", 
                           style: TextStyle(
                               fontSize: 16, fontWeight: FontWeight.bold),
                         ),

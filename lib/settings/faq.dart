@@ -43,9 +43,10 @@ class FaqScreen extends StatelessWidget {
   ExpansionTileCard ExpansionTile(title, subTitle, isExpand) {
     return ExpansionTileCard(
                   // key: cardA,
-                  elevation: 5, 
+                  elevation: 1,  
                   animateTrailing: true,
                   initiallyExpanded: isExpand,
+                  
                   borderRadius: BorderRadius.all(Radius.circular(20),),
                   baseColor: Styles.primary_black_light,  
                   expandedTextColor: Styles.primary_green,
@@ -58,11 +59,7 @@ class FaqScreen extends StatelessWidget {
                   children: <Widget>[
                     Padding(
                       padding: const EdgeInsets.only(left: 16, right: 20), 
-                      child: Divider(
-                        thickness: 1.0,
-                        height: 1.0,
-                        color: Colors.grey[800] ,    
-                      ),
+                      child:  Divider(color: Colors.grey[800],),  
                     ),
                     Align(
                       alignment: Alignment.centerLeft,

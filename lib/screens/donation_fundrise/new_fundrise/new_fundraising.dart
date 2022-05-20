@@ -705,6 +705,8 @@ class text_field extends StatelessWidget {
     this.hintText = '',
     this.line_no = 1,
     this.isPassword = false,
+    this.inputType=  TextInputType.streetAddress, 
+    this.inputColor= Colors.white, 
   });
 
   final TextEditingController Text_field_controller;
@@ -713,6 +715,8 @@ class text_field extends StatelessWidget {
   var hintText;
   int line_no;
   bool isPassword;
+  var inputType;
+  Color inputColor;
 
   @override
   Widget build(BuildContext context) {
@@ -724,9 +728,10 @@ class text_field extends StatelessWidget {
       ),
       color: Styles.primary_black_light,
       child: TextFormField(
+        keyboardType:inputType,        
         obscureText: isPassword,
         maxLines: line_no,
-        style: const TextStyle(color: Colors.white),
+        style:  TextStyle(color:inputColor ),
         controller: Text_field_controller,
         decoration: InputDecoration(
           border: InputBorder.none,

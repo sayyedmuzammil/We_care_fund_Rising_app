@@ -24,6 +24,8 @@ var pdfName="Select Document".obs;
 var approvalButton=false.obs;
 bool editProfile=false;
 
+String? selectedValueGender=null;
+
 //add profile data
   Future<void> refreshUser() async {
     userModel _user = await getUserDetails();
