@@ -7,11 +7,11 @@ import 'package:we_care/widgets/category_buttons.dart';
 import 'package:we_care/widgets/single_button.dart';
 
 class card_bottom_fundrise extends StatelessWidget {
-  const card_bottom_fundrise({
+   card_bottom_fundrise({
     Key? key, 
-  
+  this.data, 
   }) : super(key: key);
-
+final data;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -60,7 +60,9 @@ class card_bottom_fundrise extends StatelessWidget {
             width: 25.w,
             child: FittedBox(
               child: single_button(
+                data: data,
                 title: 'See Results',
+                resultBtn: true,
                 // currentIndex: 7,
               ),
             ),

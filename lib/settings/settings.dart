@@ -49,6 +49,7 @@ class SettingsUser extends StatelessWidget {
                   onTap: () {print("edit profile clicked");
 
                   data_control.editProfile=true;
+                  data_control.profileImage=null;
                   data_control.update();
                     Navigator.push(
                   context,

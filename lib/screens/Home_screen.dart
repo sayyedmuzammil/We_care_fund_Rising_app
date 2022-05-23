@@ -45,15 +45,20 @@ class HomeScreen extends StatelessWidget {
         ),
         leading: Builder(builder: (BuildContext context) {
           return IconButton(
-              onPressed: () async {
-                await AuthMethods().signOut();
-                Navigator.pushAndRemoveUntil(
-                  context,
-                  MaterialPageRoute(
-                    builder: (BuildContext context) => ScreenWelcome(),
-                  ),
-                  (route) => false,
-                );
+            // splashColor: Colors.transparent,
+            highlightColor: Colors.transparent,
+            // visualDensity: null,     
+
+              onPressed: ()  {
+
+                // await AuthMethods().signOut();
+                // Navigator.pushAndRemoveUntil(
+                //   context,
+                //   MaterialPageRoute(
+                //     builder: (BuildContext context) => ScreenWelcome(),
+                //   ),
+                //   (route) => false,
+                // );
               },
               icon: Padding(
                 padding: const EdgeInsets.only(left: 10),

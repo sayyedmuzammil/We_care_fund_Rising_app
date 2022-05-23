@@ -698,7 +698,8 @@ pickImage1() async {
 }
 
 class text_field extends StatelessWidget {
-  text_field({
+  text_field(
+    {
     required TextEditingController this.Text_field_controller,
     this.isVisible = false,
     this.suffix_icon = const Icon(Icons.ac_unit),
@@ -707,6 +708,7 @@ class text_field extends StatelessWidget {
     this.isPassword = false,
     this.inputType=  TextInputType.streetAddress, 
     this.inputColor= Colors.white, 
+    //  this.validation,
   });
 
   final TextEditingController Text_field_controller;
@@ -717,6 +719,7 @@ class text_field extends StatelessWidget {
   bool isPassword;
   var inputType;
   Color inputColor;
+  // String? Function(String?)? validation;
 
   @override
   Widget build(BuildContext context) {
@@ -734,6 +737,7 @@ class text_field extends StatelessWidget {
         style:  TextStyle(color:inputColor ),
         controller: Text_field_controller,
         decoration: InputDecoration(
+          // errorText: _errorText,
           border: InputBorder.none,
           contentPadding: const EdgeInsets.only(
             left: 20,
@@ -753,19 +757,24 @@ class text_field extends StatelessWidget {
             color: const Color(0xFF37424F),
           ),
         ),
-        validator: (value) {
-          (value) {
-            if (value == null || value.isEmpty) {
-              return 'Item is required';
-            } else if (value.startsWith(" ")) {
-              return "Item should not contain whitespace";
-            }
-          };
-        },
+  //       validator:validation
+  
       ),
     );
   }
+  
 }
+//  validation
+//    (value) {
+          
+//             if (value == null || value.isEmpty) {
+//               return 'Item is required';
+//             } else if (value.startsWith(" ")) {
+//               return "Item should not contain whitespace";
+//             }
+        
+//    }
+       
 
 Future<String?> imageUpload(FilePickerResult image) async {
   final FirebaseStorage storage = FirebaseStorage.instance;
@@ -782,3 +791,4 @@ Future<String?> imageUpload(FilePickerResult image) async {
     print(e);
   }
 }
+

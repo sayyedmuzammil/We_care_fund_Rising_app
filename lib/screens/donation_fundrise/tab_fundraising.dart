@@ -59,7 +59,7 @@ Padding tab_fundraising(count) {
 
                       return donation_card(
                         data: data,
-                      card_bottom:  card_bottom_fundrise(),
+                      card_bottom:  card_bottom_fundrise(data: data,),
                       bg_image: data.mainImage!,
                     );
                   },
