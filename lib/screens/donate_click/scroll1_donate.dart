@@ -1,16 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'package:sizer/sizer.dart';
 import 'package:we_care/constant_design.dart';
+import 'package:we_care/db_functions/controller.dart';
+import 'package:we_care/db_functions/firebase.dart';
+import 'package:we_care/db_functions/fundRiseModel.dart';
+import 'package:we_care/db_functions/user_model.dart';
 import 'package:we_care/screens/donate_click/donators.dart';
 import 'package:we_care/widgets/details_tile.dart';
 
-  Razorpay _razorpay = Razorpay();
+import 'payment_screen.dart';
 
-Padding scroll1(BuildContext context) {
-  _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
-_razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
+  
+
+Padding scroll1(BuildContext context, fundriseModel data) {
+
+  print(DateTime.now()); 
+  // print(data_control.clickedData!.expireDate!);
+  
+
 // _razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
   return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -20,17 +30,17 @@ _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
           Styles.KHeight20,
           SizedBox(
               width: 80.w,
-              child: Text('Sri Lankan Economic Crisis',
+              child: Text(data.title!,
                   style: Styles.Header.copyWith(fontSize: 26))),
           SizedBox(
               height: 22.w,
               width: 100.w,
               child: Details_tile(
-                title: 'Sri Lanka Economic Crisis',
-                total_fund: '82,000',
-                raised_fund: '66,790',
-                donators_count: '3,438',
-                days_left: 11,
+                title: data.title!,
+                total_fund: data.totalRequireAmount!.toString(),
+                raised_fund: data.fundriseAmount!.toString(),
+                donators_count: data.donatorsCount!.toString(),
+                days_left: calculateExpiryDate(data.expireDate!)+1,
                 percentWidth: 95,
                 titleVisible: false,
               )),
@@ -137,8 +147,14 @@ _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
                       side: const BorderSide(color: Styles.primary_green),
                     ),
                     onPressed: () {
- 
-                      onPay();
+                         Navigator.push(
+                  context,
+                  PageTransition(
+                    type: PageTransitionType.rightToLeft,
+                    child:  PaymentScreen(data:data),
+                  ),
+                );
+                      
                       print('Pressed');
                     },
                   ),
@@ -151,23 +167,4 @@ _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
       ));
       
 }
-  void onPay(){
-    var options = {
-  'key': 'rzp_test_6hKFuGbRrXGWWi',
-  'amount': 100*100,
-  'name': 'We Care Trust.',
-  'description': 'Fine T-Shirt',
-  'prefill': {
-    'contact': '9037739383',
-    'email': 'sayyedmuzammil9383@gmail.com'
-  }
-};
- _razorpay.open(options);
-  }
-    _handlePaymentSuccess(PaymentSuccessResponse response) {
-      print("success response $response");
-    
-  }
   
-  _handlePaymentError() {
-  }

@@ -9,45 +9,47 @@ class DonatorsModel {
 
   String? fundRiseId;
 
+  String? fundRiseUserID;
+
   String? date;
 
   int? amount;
 
-  String? isAnonymous;
+  bool? isAnonymous;
   
   DonatorsModel({
-    this.donationId,
-    required this.userId,
+    // this.donationId,
+    // required this.userId,
     required this.fundRiseId,
+    required this.fundRiseUserID, 
     required this.date,
     required this.amount,
     this.isAnonymous,
   });
 
-  // String? favourite;
-
-
   Map<String, dynamic> toMap() {
     return {
-      'donationId': donationId,
-      'userId': userId,
+      // 'donationId': donationId,
+      // 'userId': userId,
       'fundRiseId': fundRiseId,
+      'fundRiseUserID': fundRiseUserID,
       'date': date,
       'amount': amount,
       'isAnonymous': isAnonymous,
     };
   }
 
-  factory DonatorsModel.fromMap(Map<String, dynamic> map) {
+  static DonatorsModel fromMap(Map<String, dynamic> map) {
     return DonatorsModel(
-      donationId: map['donationId'],
-      userId: map['userId'],
+      // donationId: map['donationId'],
+      // userId: map['userId'],
       fundRiseId: map['fundRiseId'],
+      fundRiseUserID: map['fundRiseUserID'],
       date: map['date'],
-      amount: map['amount']?.toInt(),
+      amount: map['amount'],
       isAnonymous: map['isAnonymous'],
     );
   }
 
- 
+
 }

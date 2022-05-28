@@ -6,6 +6,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'package:sizer/sizer.dart';
 import 'package:we_care/constant_design.dart';
+import 'package:we_care/db_functions/controller.dart';
 import 'package:we_care/db_functions/fundRiseModel.dart';
 import 'package:we_care/screens/donate_click/scroll1_donate.dart';
 import 'package:we_care/screens/donate_click/scroll2_donate.dart';
@@ -58,14 +59,14 @@ class donationScreen extends StatelessWidget {
                             ),
                           )
                           .toList()),
-                  scroll1(context),
+                  scroll1(context, data),
                   Styles.KHeight20,
                   Container(
                     margin: const EdgeInsets.symmetric(horizontal: 20),
                     height: 1,
                     color: const Color(0xFF37424F),
                   ),
-                  scroll2(),
+                  scroll2(data),
                 ],
               ),
             ],

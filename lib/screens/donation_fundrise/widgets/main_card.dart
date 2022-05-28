@@ -5,16 +5,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:sizer/sizer.dart';
 import 'package:we_care/constant_design.dart';
+import 'package:we_care/db_functions/controller.dart';
+import 'package:we_care/db_functions/firebase.dart';
 import 'package:we_care/db_functions/fundRiseModel.dart';
 import 'package:we_care/widgets/details_tile.dart';
 
 class donation_card extends StatelessWidget {
   Widget?  card_bottom;
-  String bg_image;
+  // String? bg_image;
   fundriseModel data;
    donation_card({
      required this.data,
-     required this.bg_image, 
+      // this.bg_image, 
      this.card_bottom,
     Key? key,
   }) : super(key: key);
@@ -102,7 +104,7 @@ class main_childCard extends StatelessWidget {
                 total_fund: data!.totalRequireAmount.toString(),
                 raised_fund: data!.fundriseAmount.toString(),
                 donators_count: data!.donatorsCount.toString(),
-                days_left: 9,
+                days_left: calculateExpiryDate(data!.expireDate!),
               )),
         ],
       ),

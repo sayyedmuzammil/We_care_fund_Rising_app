@@ -2,6 +2,7 @@
 
 import 'dart:io';
 import 'dart:typed_data';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:get/get.dart';
 import 'package:we_care/db_functions/fundRiseModel.dart';
@@ -17,14 +18,16 @@ class GetController extends GetxController {
     List<FilePickerResult> child_image_list=[];
     List<String> squaredImage=['','','',''].obs;
 var TermsCheck=false; 
+var anonymousCheck=false;
 var RememberCheck=false.obs; 
 var signUp=true.obs;
 userModel? user;
 var pdfName="Select Document".obs;
 var approvalButton=false.obs;
 bool editProfile=false;
+  late DateTime selectedDate = DateTime.now();
 
-String? selectedValueGender=null;
+String? selectedValueDrop=null;
 
 //add profile data
   Future<void> refreshUser() async {
@@ -53,12 +56,40 @@ var others=false.obs;
 
 }
 final fundRiseStream=<fundriseModel>[].obs;
+// fundriseModel? clickedData;
+DateTime? expiry;
+List<fundriseModel> endingFundrise = <fundriseModel>[];
+  List<fundriseModel> urgentFundrise = <fundriseModel>[];
+
+saparatelist() {
+  
+                for (var item in fundRiseStream) {
+                  final dayLeft = calculateExpiryDate(item.expireDate!);
+                  if (dayLeft <= 3 && dayLeft >= 0) {
+                    endingFundrise.add(item);
+                  }else {
+                    urgentFundrise.add(item);
+                  }
+                }
+                print(endingFundrise.length);
+                print(urgentFundrise.length);
+}
+
+
+
 @override
   void onInit() {
-    print("working on stream buil fundrise");
+   
     fundRiseStream.bindStream( getFundrise());
+    // saparatelist();
    
     // TODO: implement onInit
     super.onInit();
   }
+
+
+
+
+
+// ---------------------------------------------------------
 }

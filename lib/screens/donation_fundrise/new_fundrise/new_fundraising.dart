@@ -2,6 +2,7 @@
 
 import 'dart:io';
 import 'dart:typed_data';
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:fdottedline_nullsafety/fdottedline__nullsafety.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -9,6 +10,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 import 'package:open_file/open_file.dart';
 import 'package:sizer/sizer.dart';
 import 'package:uuid/uuid.dart';
@@ -42,6 +44,8 @@ class newFundrising extends StatelessWidget {
   final _planController = TextEditingController();
   final _globalKey = GlobalKey<FormState>();
 
+  List<String> items=['Education','Environment', 'Social','Sick Child', 'Medical', 'Infrastructure','Art','Disaster','Orphanage','Difable','Humanity','Others'];
+
 /*   void initState() {
     selectedcontent.isNotEmpty
         ? {
@@ -55,8 +59,12 @@ class newFundrising extends StatelessWidget {
   String? pdfUrl;
   FilePickerResult? img;
 List<String> childImages=[];
+var previusValue=null;
+  
   @override
   Widget build(BuildContext context) {
+    data_control.selectedValueDrop=null; 
+    
     return Scaffold(
       backgroundColor: Styles.primary_black,
       appBar: AppBar(
@@ -228,16 +236,89 @@ List<String> childImages=[];
                       ),
                     ],
                   ),
-                  text_field(
-                    Text_field_controller: _categoryController,
-                    hintText: 'Category',
-                    isVisible: true,
-                    suffix_icon: const Icon(
-                      Icons.arrow_drop_down,
-                      color: Colors.grey,
-                      size: 24,
+                   GetBuilder<GetController>(
+                      builder: (controller) {
+                        return Padding(
+                          padding: const EdgeInsets.only(left: 4, right: 4),
+                          child: DropdownButtonHideUnderline(
+                              child: DropdownButton2(
+                            isExpanded: true,
+                            hint: Expanded(
+                              child: Text(
+                                previusValue == null ? 'Select Item' : previusValue,
+                                style: previusValue == null
+                                    ? Styles.RegularText.copyWith(
+                                        color: const Color(0xFF37424F),
+                                      )
+                                    : const TextStyle(
+                                        fontSize: 16,
+                                        color: Colors.white,
+                                      ),
+                                //  overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                            items: items
+                                .map((item) => DropdownMenuItem<String>(
+                                      value: item,
+                                      child: Text(
+                                        item,
+                                        style: const TextStyle(
+                                          fontSize: 16,
+                                          //  fontWeight: FontWeight.bold,
+                                          color: Colors.white,
+                                        ),
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                    ))
+                                .toList(),
+                            value: controller.selectedValueDrop,
+                            onChanged: (value) {
+                              controller.selectedValueDrop =
+                                  value as String;
+                              controller.update();
+                   
+                              // });
+                            },
+                            icon: const Icon(
+                              Icons.arrow_drop_down,
+                            ),
+                            iconSize: 24,
+                            iconEnabledColor: Colors.grey,
+                            iconDisabledColor: Colors.grey,
+                            buttonHeight: 50,
+                            //  buttonWidth: 160,
+                            buttonPadding:
+                                const EdgeInsets.only(left: 20, right: 12),
+                            buttonDecoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              border: Border.all(
+                                color: Colors.black26,
+                              ),
+                              color: Styles.primary_black_light,
+                            ),
+                            buttonElevation: 2,
+                            itemHeight: 40,
+                            itemPadding:
+                                const EdgeInsets.only(left: 20, right: 12),
+                            //  dropdownMaxHeight: 200,
+                            //  dropdownWidth: 200,
+                            dropdownPadding: null,
+                            dropdownMaxHeight: 35.h,    
+                   
+                            dropdownDecoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              color: Styles.primary_black_light,
+                            ),
+                            dropdownElevation: 8,
+                            scrollbarRadius: const Radius.circular(20),
+                            scrollbarThickness: 6,
+                            scrollbarAlwaysShow: true,
+                            offset: const Offset(-0, 0),
+                          )),
+                        );
+                      },
                     ),
-                  ),
+
                   Styles.KHeight10,
                   Row(
                     children: [
@@ -254,11 +335,12 @@ List<String> childImages=[];
                     ],
                   ),
                   text_field(
+                    inputType: TextInputType.number, 
                     Text_field_controller: _requiredAmountController,
                     hintText: '0',
                     isVisible: true,
                     suffix_icon: const Icon(
-                      Icons.attach_money_outlined,
+                      Icons.currency_rupee, 
                       color: Colors.grey,
                       size: 20,
                     ),
@@ -282,16 +364,69 @@ List<String> childImages=[];
                       ],
                     ),
                   ),
-                  text_field(
-                    Text_field_controller: _dateController,
-                    hintText: 'Select Date',
-                    isVisible: true,
-                    suffix_icon: const Icon(
-                      Icons.event_outlined,
-                      color: Colors.grey,
-                      size: 20,
-                    ),
-                  ),
+                Card(
+                  shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(
+          20,
+        ),
+      ),
+      color: Styles.primary_black_light,
+                  child: TextFormField(
+                    
+                     onTap: () async {
+                                              final _selectedDateTemp =
+                                                  await showDatePicker(
+                                                context: context,
+                                                initialDate: DateTime.now(),
+                                                firstDate: DateTime.now(),
+                                                    
+                                                lastDate: DateTime.now().add(const Duration(
+                                                        days: 90)), 
+                                              );
+
+                                              if (_selectedDateTemp == null) {
+                                                return;
+                                              } else {
+                                                data_control.selectedDate =
+                                                    _selectedDateTemp;
+                                                _dateController.text =
+                                                    DateFormat('MMM dd').format(
+                                                        data_control
+                                                            .selectedDate);
+
+                                                            print(data_control.selectedDate);
+                                              }
+                                            },
+                        keyboardType:TextInputType.none,        
+                        // obscureText: isPassword,
+                        // maxLines: line_no,
+                        style:  TextStyle(color:Colors.white ),
+                        controller: _dateController,
+                        decoration: InputDecoration(
+                          // errorText: _errorText,
+                          border: InputBorder.none,
+                          contentPadding: const EdgeInsets.only(
+                            left: 20,
+                            top: 12,
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide:
+                  const BorderSide(color: Styles.primary_green, width: 2.0),
+                            borderRadius: BorderRadius.circular(20.0),
+                          ),
+                          hintText: "Select Date",
+                          suffixIcon: Visibility(
+                            visible: true,
+                            child: Icon(Icons.calendar_month,color: Colors.grey, size: 20,),  
+                          ),
+                          hintStyle: Styles.RegularText.copyWith(
+                            color: const Color(0xFF37424F),
+                          ),
+                        ),
+                  //       validator:validation
+                  
+                      ),
+                ),
                   Styles.KHeight10,
                   SizedBox(
                     width: 83.w,
@@ -563,6 +698,25 @@ List<String> childImages=[];
                                     color: Styles.primary_green),
                               ),
                               onPressed: () async {
+                                var res= await validator_newFundraise();  
+                                if(res!='success')
+                                {
+                                  Get.snackbar(
+                              'Error', "$res",
+                              animationDuration: Duration(milliseconds: 500),
+                              duration: Duration(seconds: 1),
+                              icon: Icon(
+                                Icons.error,
+                                size: 36,
+                                color: Colors.black,
+                              ),
+                              snackPosition: SnackPosition.BOTTOM,
+                              backgroundColor: Color.fromARGB(255, 235, 75, 75)
+                                  .withOpacity(1),
+                              colorText: Colors.white,
+                            
+                            );
+                                }
                                 if (img != null) {
                                   final res = await form_submitted(img!);
                                 }
@@ -588,8 +742,26 @@ List<String> childImages=[];
                                 if (img != null) {
                                   // final res = await form_submitted(img!);
                                 }
-
-                                Navigator.pop(context);
+                                else{
+                                  form_submitted;
+                                  Get.snackbar(
+                              'Success',
+                              "Form submitted Successfully",
+                              animationDuration: Duration(milliseconds: 500),
+                              duration: Duration(seconds: 1),
+                              icon: Icon(
+                                Icons.done_all,
+                                size: 36,
+                                color: Colors.black,
+                              ),
+                              snackPosition: SnackPosition.BOTTOM,
+                              backgroundColor: Color.fromARGB(255, 44, 184, 102)
+                                  .withOpacity(.7),
+                              colorText: Colors.white,
+                            );
+                            Navigator.pop(context);
+                                }
+                                
                               },
                             ),
                     ),
@@ -602,6 +774,86 @@ List<String> childImages=[];
    
     );
   }
+
+   String validator_newFundraise() {
+  
+  /* 
+    if (data_control.selectedValueGender == null) {
+      gender = _gender;
+    } else {
+      gender = data_control.selectedValueGender;
+    }
+
+    photoUrl = await data_control.editProfile == true &&
+            data_control.profileImage == null
+        ? await data_control.user!.photoUrl.toString()
+        : await StorageMethods().uploadImageToStorage(
+            childName: 'profilePics',
+            file: data_control.profileImage!,
+            isPost: false,
+            uuid: db_control.auth.currentUser!.uid);
+
+    if (photoUrl == null) {
+      res = "Add your profile picture";
+    } else */ 
+    var res;
+      var _title = _titleController.text.trim();
+    var _amount = _requiredAmountController.text.trim();
+    var _plan = _planController.text.trim();
+    var _recipient_name = _recipientController.text.trim();
+    var _story = _storyController.text.trim();
+
+      var _category;
+    if (data_control.selectedValueDrop == null) {
+      _category = previusValue;
+    } else {
+      _category = data_control.selectedValueDrop;
+    } 
+
+    if (_title.isEmpty || _title.length <= 2 ) {
+      res = "Title is required minimum 3 character";
+    }else if(_category==null){
+      res="Please select a categoty";
+    } 
+    
+      else if (_amount.isEmpty) {
+         res= 'please enter the amount';
+        }
+        
+         else if (_amount.contains(" ")) {
+         res= "Amount - white space is not acceptable";
+         } else if (_amount.contains(".")) {
+          res= "Amount - decimal number is not acceptable";
+          } else if (_amount.contains(",") || _amount.contains("-") || _amount.contains(",") || _amount.startsWith("0")) 
+          {
+          res="Enter a Valid Amount";
+          }
+          else if(_amount.length<=4){res="Required amount is must be greater than 10000";}  
+    
+    else if (_plan.isEmpty || _plan.length<=5) {
+      res = "Please Explain Your plan of usage of this fund";
+    } /* else if (number.length != 10 ||
+        number.contains('.') ||
+        number.contains('-') ||
+        number.contains(',') ||
+        number.contains(' ')) {
+      res = "Please enter valid mobile number";
+    } */ 
+  
+    else if (_recipient_name.isEmpty || _recipient_name.length <= 2) {
+      res = "Valid recipient name is required";
+    }else if(_story.isEmpty || _story.length<=10){
+      res= "Breifly explain the story";
+    }
+    else if (data_control.TermsCheck==false){
+      res="Please check terms and conditions";
+    }
+     else {
+      res = "success";
+    }
+    return res;
+  }
+
 
   form_submitted(FilePickerResult image) async {
     User? currentUser = db_control.auth.currentUser;
@@ -646,7 +898,7 @@ List<String> childImages=[];
     if (_requiredAmountController.text != '') {
       _requiredAmount = int.parse(_requiredAmountController.text);
     }
-    String _expireDate = _dateController.text;
+    String _expireDate = data_control.selectedDate.toString();
     String _fundPlan = _planController.text;
     String _recipient = _recipientController.text;
     // String _proposalPDF = _uploadProposalController.text;
@@ -661,7 +913,7 @@ List<String> childImages=[];
     var fundrisemodel = fundriseModel(
       fundraiseId: fundriseId,
       userId: currentUser!.uid,
-      mainImage: imageUrl,
+      mainImage: imageUrl!,
       childImage: childImages,
       title: _title,
       category: _category,
@@ -682,6 +934,8 @@ List<String> childImages=[];
         .doc(fundriseId)
         .set(fundrisemodel.toMap());
   }
+
+  
 
   // void openFile(PlatformFile file) {
   //   OpenFile.open(file.path!);
@@ -790,5 +1044,7 @@ Future<String?> imageUpload(FilePickerResult image) async {
   } on FirebaseException catch (e) {
     print(e);
   }
+
+ 
 }
 

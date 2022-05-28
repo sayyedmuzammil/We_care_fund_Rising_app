@@ -9,11 +9,11 @@ import 'package:we_care/screens/donation_fundrise/donations.dart';
 import 'package:we_care/screens/donation_fundrise/fund_rising.dart';
 
 class ScreenMainPage extends StatelessWidget {
-  
-  ScreenMainPage({Key? key}) : super(key: key);
+  int indexGett;
+  ScreenMainPage({Key? key, this.indexGett=0}) : super(key: key);
   final _pages = [
     const HomeScreen(),
-    const Donations(),
+     Donations(),
     FundRising(),
 // ChatBox(),
     const Profile(),
@@ -21,6 +21,7 @@ class ScreenMainPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // indexChangeNotifier.value=indexGett; 
   Get.put(GetController());
     return Scaffold(
       backgroundColor: Styles.primary_black,
@@ -31,7 +32,7 @@ class ScreenMainPage extends StatelessWidget {
               return _pages[index];
             }),
       ),
-      bottomNavigationBar: const BottomNavigationWidget(),
+      bottomNavigationBar:  BottomNavigationWidget(),
     );
   }
 }

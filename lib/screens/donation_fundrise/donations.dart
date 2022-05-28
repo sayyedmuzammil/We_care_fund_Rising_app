@@ -1,11 +1,18 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
+import 'package:get/state_manager.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:sizer/sizer.dart';
 import 'package:we_care/bottom_nav_bar.dart';
 import 'package:we_care/constant_design.dart';
+import 'package:we_care/controller/myDonationController.dart';
+import 'package:we_care/db_functions/donators_model.dart';
 import 'package:we_care/db_functions/fundRiseModel.dart';
 import 'package:we_care/screen_main_page.dart';
+import 'package:we_care/screens/donate_click/donation_page.dart';
+import 'package:we_care/screens/donate_click/payment_screen.dart';
 import 'package:we_care/screens/donation_fundrise/widgets/main_card.dart';
 import 'package:we_care/widgets/category_buttons.dart';
 import 'package:we_care/widgets/single_button.dart';
@@ -13,10 +20,12 @@ import 'package:we_care/widgets/single_button.dart';
 import '../../db_functions/firebase.dart';
 
 class Donations extends StatelessWidget {
-  const Donations({Key? key}) : super(key: key);
+   Donations({Key? key}) : super(key: key);
+  final  _myDonationController=Get.put(MyDonationController());
 
   @override
   Widget build(BuildContext context) {
+    _myDonationController.getDonationDetails();
     return Scaffold(
       backgroundColor: Styles.primary_black,
       appBar: AppBar(
@@ -64,38 +73,36 @@ class Donations extends StatelessWidget {
             );
           },
         ), */
-         StreamBuilder<List<fundriseModel>>(
-              stream:    getFundrise(),
-              builder: (context, snapshot) {
-                
-               
-               if(snapshot.data != null){
-                return  ListView.builder(
-                  itemCount: snapshot.data!.length,
-                  itemBuilder: (context, index) {
-                    final data=snapshot.data![index];
-                  // print("${snapshot.data![index].status}");
-
-                    return donation_card(
-                      data:  data,
-              card_bottom: card_bottom(),
-              bg_image: data.mainImage!,
+         GetBuilder<MyDonationController>(
+           id: 'donations',
+           builder: (controller) {
+           if (controller.myDonations.isEmpty) {
+            return Center(child:Image.asset(
+                                    'assets/images/No result icon.png'));
+           } else {
+            return ListView.builder(
+          itemCount: controller.myDonations.length,
+          itemBuilder: (context, index) {
+            return donation_card(
+              data: controller.myDonations[index],
+              card_bottom: card_bottom(amount: controller.donationData[index].amount,  data:controller.myDonations[index] ),
+              // bg_image: 'assets/images/shelter_video_bg.jpg',
             );
-                  },
-                );
-               }
-               else{
-                 return Center( child: Text("No data"));
-               }
-              }
-            ),
+          },
+        );
+           }
+         })
       ),
     );
   }
 }
 
 class card_bottom extends StatelessWidget {
-  const card_bottom({
+  int? amount;
+  fundriseModel data;
+   card_bottom({
+     required this.data,
+    this.amount,
     Key? key,
   }) : super(key: key);
 
@@ -113,7 +120,7 @@ class card_bottom extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                       fontSize: 14,
                       color: Colors.white)),
-              Text(" ₹220",
+              Text(" ₹$amount",
                   style: Styles.RegularText.copyWith(
                       fontSize: 12, color: Styles.primary_green)),
             ],
@@ -123,10 +130,33 @@ class card_bottom extends StatelessWidget {
               SizedBox(
                 width: 25.w,
                 child: FittedBox(
-                  child: single_button(
-                    title: 'Donate Again',
-                    // currentIndex: 7,
+                  child:  TextButton(
+          child: Text(
+            'Donate Again',
+            style: const TextStyle(fontSize: 16),
+          ),
+          style: TextButton.styleFrom(
+            backgroundColor: Styles.primary_black,
+            primary:  Styles.primary_green,
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(18.0)),
+            side: const BorderSide(color: Styles.primary_green),
+          ),
+          onPressed: () { 
+             
+                 Navigator.push(
+                  context,
+                  PageTransition(
+                    type: PageTransitionType.rightToLeft,    
+                    child:  PaymentScreen(data: data,),  
                   ),
+                );
+            
+             
+            // data_control.categoryButtonClicked.value = currentIndex;
+            
+          },
+        ),
                 ),
               ),
             ],

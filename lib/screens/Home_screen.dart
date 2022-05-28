@@ -7,9 +7,12 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_instance/get_instance.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:sizer/sizer.dart';
 import 'package:we_care/constant_design.dart';
+import 'package:we_care/controller/myDonationController.dart';
 import 'package:we_care/db_functions/auth_method.dart';
+import 'package:we_care/db_functions/fundRiseModel.dart';
 import 'package:we_care/screens/donate_click/donation_page.dart';
 import 'package:we_care/screens/signup_signin/Screen_signup.dart';
 import 'package:we_care/screens/signup_signin/screenWelcome.dart';
@@ -24,15 +27,18 @@ import '../db_functions/firebase.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
-  init() async {
-    await data_control.refreshUser();
-    // data_control.update();
-    print("in it ${data_control.user!.photoUrl}");
-  }
+  // init() async {
+  //   await data_control.refreshUser();
+  //   // data_control.update();
+  //   print("in it ${data_control.user!.photoUrl}");
+  // }
 
   @override
   Widget build(BuildContext context) {
-    init();
+   data_control.refreshUser();
+    // data_control.saparatelist();
+    // print(data_control.endingFundrise.length);
+    Get.put(MyDonationController());
     return Scaffold(
       backgroundColor: Styles.primary_black,
       appBar: AppBar(
@@ -45,12 +51,11 @@ class HomeScreen extends StatelessWidget {
         ),
         leading: Builder(builder: (BuildContext context) {
           return IconButton(
-            // splashColor: Colors.transparent,
-            highlightColor: Colors.transparent,
-            // visualDensity: null,     
+              // splashColor: Colors.transparent,
+              highlightColor: Colors.transparent,
+              // visualDensity: null,
 
-              onPressed: ()  {
-
+              onPressed: () {
                 // await AuthMethods().signOut();
                 // Navigator.pushAndRemoveUntil(
                 //   context,
@@ -87,7 +92,6 @@ class HomeScreen extends StatelessWidget {
           ),
         ],
       ),
-     
       body: ListView(
         children: [
           Stack(
@@ -154,26 +158,38 @@ class HomeScreen extends StatelessWidget {
             height: 54.w + 2,
             child: GetX<GetController>(
               builder: (controller) {
+                List<fundriseModel> urgentFundrise = [];
+                for (var item in controller.fundRiseStream) {
+                  final dayLeft = calculateExpiryDate(item.expireDate!);
+                  if (dayLeft > 3) {
+                    urgentFundrise.add(item);
+                  }
+                }
                 return ListView.builder(
                   scrollDirection: Axis.horizontal,
-                  itemCount: controller.fundRiseStream.length,
+                  itemCount: urgentFundrise.length,
                   itemBuilder: (context, index) {
-                    final data = controller.fundRiseStream[index];
-                    print("checking1 $data");
-                    return InkWell( 
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => donationScreen(data: data,)),
-                          );
-                        },
-                        child: first_card(
-                          data: data,
-                          // bg_image: 'assets/images/cloth_poor.jpeg',
+                    final data = urgentFundrise[index];
+                    return SizedBox(
+                        height: 115,
+                        child: GestureDetector(
+                          onTap: () {
+                            
+                      Navigator.push(
+                  context,
+                  PageTransition(
+                    type: PageTransitionType.rightToLeft,
+                    child: donationScreen(data: urgentFundrise[index],),
+                  ),
+                );
+                          },
+                          child: first_card(
+                            data: data,
+                          ),
                         ));
                   },
                 );
+                //  final daysRemaining=data_control.calculateExpiryDate(controller.expiry)
               },
             ),
           ),
@@ -217,18 +233,39 @@ class HomeScreen extends StatelessWidget {
           SizedBox(
             height: 54.w + 2,
             child: GetX<GetController>(
-              
               builder: (controller) {
+                List<fundriseModel> endingFundrise = [];
+                for (var item in controller.fundRiseStream) {
+                  final dayLeft = calculateExpiryDate(item.expireDate!);
+                  if (dayLeft <= 3 && dayLeft >= 0) {
+                    endingFundrise.add(item);
+                  }
+                }
                 return ListView.builder(
                   scrollDirection: Axis.horizontal,
-                  itemCount: controller.fundRiseStream.length,
+                  itemCount: endingFundrise.length,
                   itemBuilder: (context, index) {
-                    final data=controller.fundRiseStream[index];
-                    return SizedBox(height: 115, child: first_card(
-                      data: data,
-                    ));
+                    final data = endingFundrise[index];
+                    return SizedBox(
+                        height: 115,
+                        child: GestureDetector(
+                           onTap: () {
+                            
+                      Navigator.push(
+                  context,
+                  PageTransition(
+                    type: PageTransitionType.rightToLeft,
+                    child: donationScreen(data: endingFundrise[index],),
+                  ),
+                );
+                          },
+                          child: first_card(
+                            data: data,
+                          ),
+                        ));
                   },
                 );
+                //  final daysRemaining=data_control.calculateExpiryDate(controller.expiry)
               },
             ),
           ),

@@ -265,9 +265,9 @@ class FillProfile extends StatelessWidget {
                                       ),
                                     ))
                                 .toList(),
-                            value: data_control.selectedValueGender,
+                            value: controller.selectedValueDrop,
                             onChanged: (value) {
-                              data_control.selectedValueGender =
+                              controller.selectedValueDrop =
                                   value as String;
                               controller.update();
 
@@ -494,10 +494,10 @@ class FillProfile extends StatelessWidget {
     var city = _cityController.text;
     var res;
     var gender;
-    if (data_control.selectedValueGender == null) {
+    if (data_control.selectedValueDrop == null) {
       gender = _gender;
     } else {
-      gender = data_control.selectedValueGender;
+      gender = data_control.selectedValueDrop;
     }
 
     photoUrl = await data_control.editProfile == true &&

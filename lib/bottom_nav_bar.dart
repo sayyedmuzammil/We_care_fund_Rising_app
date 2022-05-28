@@ -5,10 +5,12 @@ import 'package:we_care/constant_design.dart';
 ValueNotifier<int> indexChangeNotifier = ValueNotifier(0);
 
 class BottomNavigationWidget extends StatelessWidget {
-  const BottomNavigationWidget({Key? key}) : super(key: key);
+
+   BottomNavigationWidget({Key? key,}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+
     print("start $indexChangeNotifier");
     return ValueListenableBuilder(
         valueListenable: indexChangeNotifier,

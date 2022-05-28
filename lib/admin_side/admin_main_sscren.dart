@@ -13,7 +13,7 @@ class AdminScreenMain extends StatelessWidget {
    AdminScreenMain({ Key? key }) : super(key: key);
 final _pages = [
     const Home_page_admin(),
-    const Donations(),
+     Donations(),
     FundRising(),
 // ChatBox(),
     const Profile(),
@@ -30,7 +30,7 @@ final _pages = [
               return _pages[index];
             }),
       ),
-      bottomNavigationBar: const BottomNavigationWidget(),
+      bottomNavigationBar:  BottomNavigationWidget(),
     );
   }
 }

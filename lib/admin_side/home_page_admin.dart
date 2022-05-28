@@ -116,7 +116,7 @@ class Home_page_admin extends StatelessWidget {
                         builder: (context) => newFundrising(firstButton:  draft_or_cancel_button('Cancel', Icon(Icons.cancel,),Colors.red),)));
           },
         ),
-              bg_image: data.mainImage!,
+              // bg_image: data.mainImage!,
             ),
                     );
                   },

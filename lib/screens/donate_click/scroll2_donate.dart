@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:we_care/constant_design.dart';
+import 'package:we_care/db_functions/controller.dart';
 
-Padding scroll2() {
+Padding scroll2(data) {
   return Padding(
     padding: const EdgeInsets.symmetric(horizontal: 20),
     child: Column(
@@ -17,18 +18,24 @@ Padding scroll2() {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Styles.KWidth10,
-            const CircleAvatar(
+             CircleAvatar(
               backgroundColor: Styles.primary_black,
               radius: 25,
-              backgroundImage: AssetImage('assets/images/profile_avatar.png'),
+              backgroundImage: 
+                                           NetworkImage(data_control
+                                              .user!.photoUrl
+                                              .toString()),
+                                          // fit: BoxFit.cover,
+                                      
+                                            
             ),
             Styles.KWidth20,
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text(
-                  'Anonymous',
+                 Text(
+                  data_control.user!.name!,
                   style: Styles.Header,
                 ),
                 const SizedBox(
@@ -108,7 +115,7 @@ Padding scroll2() {
         ),
         Styles.KHeight10,
         Text(
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ',
+         data.story!,
           style: Styles.RegularText.copyWith(
             color: Colors.white,
             fontSize: 14,

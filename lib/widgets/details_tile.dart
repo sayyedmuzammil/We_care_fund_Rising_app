@@ -5,6 +5,7 @@ import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:sizer/sizer.dart';
 
 import 'package:we_care/constant_design.dart';
+import 'package:we_care/db_functions/controller.dart';
 
 class Details_tile extends StatelessWidget {
   String title;
@@ -53,9 +54,9 @@ class Details_tile extends StatelessWidget {
                   width: 80.w,
                   child: Row(
                     children: [
-                      Text("₹$raised_fund  ",
+                      Text("₹$total_fund  ", 
                           style: Styles.RegularText.copyWith(fontSize: 12)),
-                      Text("fund raised from ₹$total_fund",
+                      Text("fund raised from ₹$raised_fund",
                           style: Styles.RegularText.copyWith(
                               fontSize: 12, color: Colors.white)),
                     ],
@@ -68,11 +69,11 @@ class Details_tile extends StatelessWidget {
                     Row(
                       children: [
                         Text(
-                          "$donators_count  ",
+                          donators_count,
                           style: Styles.RegularText.copyWith(fontSize: 12),
                         ),
                         Text(
-                          "Donators",
+                          " Donators",
                           style: Styles.RegularText.copyWith(
                               fontSize: 12, color: Colors.white),
                         ),
