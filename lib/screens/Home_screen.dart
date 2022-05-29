@@ -1,7 +1,6 @@
 // ignore: unnecessary_import
 // ignore_for_file: prefer_const_constructors, camel_case_types
 
-import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -35,10 +34,7 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-   data_control.refreshUser();
-    // data_control.saparatelist();
-    // print(data_control.endingFundrise.length);
-    Get.put(MyDonationController());
+
     return Scaffold(
       backgroundColor: Styles.primary_black,
       appBar: AppBar(

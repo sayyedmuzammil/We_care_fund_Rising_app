@@ -157,35 +157,44 @@ class PaymentScreen extends StatelessWidget {
                   side: const BorderSide(color: Styles.primary_green),
                 ),
                 onPressed: () async {
-                  var res;
-                  //                               if (_amountController.text.trim().isEmpty) {
-                  //  res= 'please enter the amount';
-                  // }
+                  int futRisedAmount = (data.fundriseAmount!) +
+                      int.parse(_amountController.text);
+                  int balanceAmount =
+                      data.totalRequireAmount! - data.fundriseAmount!;
 
-                  //  else if (_amountController.text.trim().contains(" ")) {
-                  //  res= "Amount - white space is not acceptable";
-                  //  } else if (_amountController.text.trim().contains(".")) {
-                  //   res= "Amount - decimal number is not acceptable";
-                  //   } else if (_amountController.text.trim().contains(",") || _amountController.text.trim().contains("-") || _amountController.text.trim().contains(",") || _amountController.text.trim().startsWith("0"))
-                  //   {
-                  //   res="Enter a Valid Amount";
-                  //   }
-                  //                               Navigator.pop(context);
+                  if (data.totalRequireAmount! > futRisedAmount) {
+                    await RazorpayPayment(
+                            fundriseData: data,
+                            amount: _amountController.text.trim())
+                        .onPay(data_control.user!);
 
-                  await RazorpayPayment(
-                          fundriseData: data,
-                          amount: _amountController.text.trim())
-                      .call();
+                    // Alert(context: context, title: "RFLUTTER", desc: "Flutter is awesome.",
+                    // buttons: single_button('hello')).show();
+                    Navigator.push(
+                      context,
+                      PageTransition(
+                        type: PageTransitionType.rightToLeft,
+                        child: successAlert(),
+                      ),
+                    );
+                  } else {
+                    Get.snackbar(
+                      'Error',
+                      "Only $balanceAmount is Needed",
+                      animationDuration: Duration(milliseconds: 500),
+                      duration: Duration(seconds: 1),
+                      icon: Icon(
+                        Icons.error,
+                        size: 36,
+                        color: Colors.black,
+                      ),
+                      margin: EdgeInsets.only(bottom: 20, left: 20, right: 20),
+                      snackPosition: SnackPosition.BOTTOM,
+                      backgroundColor: Colors.blueAccent.withOpacity(1),
+                      colorText: Colors.white,
+                    );
+                  }
 
-                  // Alert(context: context, title: "RFLUTTER", desc: "Flutter is awesome.",
-                  // buttons: single_button('hello')).show();
-                  Navigator.push(
-                  context,
-                  PageTransition(
-                    type: PageTransitionType.rightToLeft,
-                    child: successAlert(),
-                  ),
-                );
                   // Navigator.pop(context);
                 },
               ),
@@ -238,11 +247,12 @@ donationSuccess(String fundRiseId, String fundRiseUserId, String amount) {
   });
 }
 
-addAmount(int oldFundriseAmount, int amount, String fundriseId, int oldDontorsCount) async {
+addAmount(int oldFundriseAmount, int amount, String fundriseId,
+    int oldDontorsCount) async {
   final total = oldFundriseAmount + amount;
   final donationDb = FirebaseFirestore.instance;
   final data = await donationDb
       .collection('fundrise')
       .doc(fundriseId)
-      .update({"fundriseAmount": total, "donatorsCount" : oldDontorsCount++});
+      .update({"fundriseAmount": total, "donatorsCount": oldDontorsCount++});
 }

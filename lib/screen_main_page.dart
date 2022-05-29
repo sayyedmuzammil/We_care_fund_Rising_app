@@ -8,7 +8,10 @@ import 'package:we_care/screens/Profile.dart';
 import 'package:we_care/screens/donation_fundrise/donations.dart';
 import 'package:we_care/screens/donation_fundrise/fund_rising.dart';
 
+import 'controller/myDonationController.dart';
+
 class ScreenMainPage extends StatelessWidget {
+  
   int indexGett;
   ScreenMainPage({Key? key, this.indexGett=0}) : super(key: key);
   final _pages = [
@@ -21,8 +24,15 @@ class ScreenMainPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print('main 1');
+Get.put(MyDonationController()).getDonationDetails();
+    // print('main called');
+      //  data_control.refreshUser();
+    // data_control.saparatelist();
+    // print(data_control.endingFundrise.length);
+    Get.put(MyDonationController());
     // indexChangeNotifier.value=indexGett; 
-  Get.put(GetController());
+  Get.put(GetController()).refreshUser();
     return Scaffold(
       backgroundColor: Styles.primary_black,
       body: SafeArea(

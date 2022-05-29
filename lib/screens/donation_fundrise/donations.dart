@@ -21,7 +21,7 @@ import '../../db_functions/firebase.dart';
 
 class Donations extends StatelessWidget {
    Donations({Key? key}) : super(key: key);
-  final  _myDonationController=Get.put(MyDonationController());
+  final MyDonationController  _myDonationController=Get.put(MyDonationController());
 
   @override
   Widget build(BuildContext context) {
@@ -74,7 +74,7 @@ class Donations extends StatelessWidget {
           },
         ), */
          GetBuilder<MyDonationController>(
-           id: 'donations',
+          //  id: 'donations',
            builder: (controller) {
            if (controller.myDonations.isEmpty) {
             return Center(child:Image.asset(

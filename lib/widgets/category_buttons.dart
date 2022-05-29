@@ -8,9 +8,11 @@ import '../constant_design.dart';
 class category_button extends StatelessWidget {
   String title;
   int currentIndex;
+  final controller;
   category_button({
+    this.controller, 
     required this.title,
-    this.currentIndex = 0,
+   required this.currentIndex ,
     Key? key,
   }) : super(key: key);
 
@@ -36,8 +38,9 @@ class category_button extends StatelessWidget {
             side: const BorderSide(color: Styles.primary_green),
           ),
           onPressed: () { 
-            data_control.categoryButtonClicked.value = currentIndex;
-            print('Pressed');
+             controller.jumpToPage(currentIndex);
+            // data_control.categoryButtonClicked.value = currentIndex;
+            // print('Pressed');
           },
         ),
       ),

@@ -27,10 +27,12 @@ import '../../../db_functions/user_model.dart';
 
 class newFundrising extends StatelessWidget {
   Widget firstButton;
+  fundriseModel? data;
 
   newFundrising({
     Key? key,
     required this.firstButton,
+    this.data,
   }) : super(key: key);
 
   final _titleController = TextEditingController();
@@ -61,8 +63,24 @@ class newFundrising extends StatelessWidget {
 List<String> childImages=[];
 var previusValue=null;
   
+
+  init(){
+   if(data!=null)
+   {
+     String expiryData=DateFormat('MMM dd').format(DateTime.parse(data!.expireDate!) ) ;
+    //  data_control.selectedDate=;
+     _titleController.text=data!.title!;
+     _requiredAmountController.text=data!.totalRequireAmount!.toString(); 
+     _dateController.text=expiryData;
+     _planController.text=data!.fundPlan!;
+     _recipientController.text=data!.organization!;
+     _storyController.text=data!.story!;
+
+   }
+  }
   @override
   Widget build(BuildContext context) {
+    init();
     data_control.selectedValueDrop=null; 
     
     return Scaffold(
@@ -710,6 +728,7 @@ var previusValue=null;
                                 size: 36,
                                 color: Colors.black,
                               ),
+                              margin: EdgeInsets.only(bottom: 20, left: 20, right: 20),
                               snackPosition: SnackPosition.BOTTOM,
                               backgroundColor: Color.fromARGB(255, 235, 75, 75)
                                   .withOpacity(1),
@@ -744,6 +763,7 @@ var previusValue=null;
                                 }
                                 else{
                                   form_submitted;
+                                  
                                   Get.snackbar(
                               'Success',
                               "Form submitted Successfully",
@@ -754,6 +774,7 @@ var previusValue=null;
                                 size: 36,
                                 color: Colors.black,
                               ),
+                              margin: EdgeInsets.only(bottom: 20, left: 20, right: 20),
                               snackPosition: SnackPosition.BOTTOM,
                               backgroundColor: Color.fromARGB(255, 44, 184, 102)
                                   .withOpacity(.7),

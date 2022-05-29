@@ -399,7 +399,7 @@ class FillProfile extends StatelessWidget {
                               backgroundColor: Color.fromARGB(255, 235, 75, 75)
                                   .withOpacity(1),
                               colorText: Colors.white,
-                           
+                           margin: EdgeInsets.only(bottom: 20, left: 20, right: 20),
                             );
                           } else {
                             await profileSubmitted();
@@ -418,6 +418,7 @@ class FillProfile extends StatelessWidget {
                               backgroundColor: Color.fromARGB(255, 44, 184, 102)
                                   .withOpacity(.7),
                               colorText: Colors.white,
+                              margin: EdgeInsets.only(bottom: 20, left: 20, right: 20),
                             );
                             if (data_control.editProfile == true) {
                               data_control.editProfile = false;

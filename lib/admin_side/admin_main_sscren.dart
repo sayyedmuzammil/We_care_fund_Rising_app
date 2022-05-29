@@ -4,6 +4,7 @@ import 'package:we_care/admin_side/home_page_admin.dart';
 import 'package:we_care/bottom_nav_bar.dart';
 
 import '../constant_design.dart';
+import '../controller/myDonationController.dart';
 import '../db_functions/controller.dart';
 import '../screens/Profile.dart';
 import '../screens/donation_fundrise/donations.dart';
@@ -20,7 +21,9 @@ final _pages = [
   ];
   @override
   Widget build(BuildContext context) {
-   Get.put(GetController());
+   
+    Get.put(MyDonationController());
+   Get.put(GetController()).refreshUser();
     return Scaffold(
       backgroundColor: Styles.primary_black,
       body: SafeArea(

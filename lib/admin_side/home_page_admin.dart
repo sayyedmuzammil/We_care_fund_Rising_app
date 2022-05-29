@@ -16,6 +16,7 @@ import '../screens/donation_fundrise/widgets/main_card.dart';
 import '../screens/signup_signin/screenWelcome.dart';
 import '../screens/urgentFundraising.dart';
 import '../widgets/single_button.dart';
+import 'widgets/fundrise_request.dart';
 
 class Home_page_admin extends StatelessWidget {
   const Home_page_admin({ Key? key }) : super(key: key);
@@ -110,10 +111,11 @@ class Home_page_admin extends StatelessWidget {
           onPressed: () { 
             data_control.approvalButton.value=true;
             data_control.update();
+            // changeStatus("")
        Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => newFundrising(firstButton:  draft_or_cancel_button('Cancel', Icon(Icons.cancel,),Colors.red),)));
+                        builder: (context) => FundRise_request(firstButton:  draft_or_cancel_button('Cancel', Icon(Icons.cancel,),Colors.red, firstBtnFun: true,model: data ), data: data, )));
           },
         ),
               // bg_image: data.mainImage!,
@@ -134,4 +136,6 @@ class Home_page_admin extends StatelessWidget {
      ),
     );
   }
+
+
 }

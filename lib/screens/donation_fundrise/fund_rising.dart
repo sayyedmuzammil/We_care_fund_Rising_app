@@ -2,11 +2,15 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:sizer/sizer.dart';
 import 'package:we_care/bottom_nav_bar.dart';
 import 'package:we_care/constant_design.dart';
+import 'package:we_care/controller/myDonationController.dart';
 import 'package:we_care/db_functions/controller.dart';
+import 'package:we_care/db_functions/firebase.dart';
+import 'package:we_care/db_functions/fundRiseModel.dart';
 import 'package:we_care/screens/donation_fundrise/new_fundrise/new_fundraising.dart';
 import 'package:we_care/screens/donation_fundrise/tab_activity.dart';
 import 'package:we_care/screens/donation_fundrise/tab_fundraising.dart';
@@ -18,8 +22,13 @@ var dateFormated = DateFormat.yMMMMEEEEd().format(date);
 class FundRising extends StatelessWidget {
   FundRising({Key? key}) : super(key: key);
   int count = 3;
+
+final  MyDonationController _myDonationController = Get.find();
   @override
   Widget build(BuildContext context) {
+    _myDonationController.getDonationDetails();
+
+      data_control.categoryButtonClicked.value=0; 
     return DefaultTabController(
       length: 2,
       child: Scaffold(
@@ -99,7 +108,7 @@ class FundRising extends StatelessWidget {
   }
 }
 
-  SizedBox draft_or_cancel_button(title, icon, color) {
+  SizedBox draft_or_cancel_button(title, icon, color, {bool? firstBtnFun, fundriseModel? model} ) {
     return SizedBox(
                     width: 30.w,
                     height: 12.w,
@@ -118,6 +127,9 @@ class FundRising extends StatelessWidget {
                         side:  BorderSide(color: color ),
                       ),
                       onPressed: () {
+                        if(firstBtnFun==true) {
+changeStatus('rejected', model!.fundraiseId!);
+                        }
                         print('Pressed');
                       },
                     ),

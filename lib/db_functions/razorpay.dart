@@ -34,20 +34,13 @@ _razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
   }
 };
  _razorpay.open(options);
+ 
   }
-  call() {
   
-    donationSuccess(fundriseData.fundraiseId!, fundriseData.userId!, amount);
-  addAmount(fundriseData.fundriseAmount!, int.parse(amount), fundriseData.fundraiseId!, fundriseData.donatorsCount!);
-  }
  _handlePaymentSuccess(PaymentSuccessResponse response) {
-  // Do something when payment succeeds
-  // donationSuccess(fundriseData.fundraiseId!, fundriseData.userId!, amount);
-  // addAmount(fundriseData.fundriseAmount!, int.parse(amount), fundriseData.fundraiseId!, fundriseData.donatorsCount!);
-  // _myDonationController.getDonationDetails();
-  // return    Alert(context: BuildContext Context, title: "RFLUTTER", desc: "Flutter is awesome.").show();;
-}
-
+     donationSuccess(fundriseData.fundraiseId!, fundriseData.userId!, amount);
+  addAmount(fundriseData.fundriseAmount!, int.parse(amount), fundriseData.fundraiseId!, fundriseData.donatorsCount!);
+ }
 void _handlePaymentError(PaymentFailureResponse response) {
   // Do something when payment fails
 

@@ -50,7 +50,7 @@ class MyApp extends StatelessWidget {
             if(datas.email=='admin@gmail.com'){
               return AdminScreenMain();
             }
-              return ScreenMainPage();
+              return ScreenMainPage(indexGett: 0,); 
             } else if (snapshot.hasError) {
               return Center(
                 child: Text('${snapshot.error}'),

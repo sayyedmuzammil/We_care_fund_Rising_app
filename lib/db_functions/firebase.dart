@@ -31,3 +31,21 @@ int calculateExpiryDate(String endDate){
   return reminingDate;
 
 }
+
+
+
+// ----------------------------------------------status change
+
+Future<bool> changeStatus(String newStatus, String fundId)async{
+  bool completed=false;
+ 
+  final fundDb=await FirebaseFirestore.instance.collection('fundrise').doc(fundId).update({
+    'status' : newStatus
+  }).then((value) {
+    completed=true;
+  });
+ 
+ return completed;
+
+}
+
