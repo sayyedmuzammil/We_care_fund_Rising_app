@@ -1,26 +1,17 @@
+// ignore_for_file: avoid_print
+
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:razorpay_flutter/razorpay_flutter.dart';
-import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'package:sizer/sizer.dart';
 import 'package:we_care/constant_design.dart';
-import 'package:we_care/db_functions/controller.dart';
 import 'package:we_care/db_functions/firebase.dart';
 import 'package:we_care/db_functions/fundRiseModel.dart';
-import 'package:we_care/db_functions/user_model.dart';
 import 'package:we_care/screens/donate_click/donators.dart';
 import 'package:we_care/widgets/details_tile.dart';
 
 import 'payment_screen.dart';
 
-  
-
-Padding scroll1(BuildContext context, fundriseModel data) {
-
-  print(DateTime.now()); 
-  // print(data_control.clickedData!.expireDate!);
-  
-
+Padding scroll1(BuildContext context, FundriseModel data) {
 // _razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
   return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -40,8 +31,9 @@ Padding scroll1(BuildContext context, fundriseModel data) {
                 total_fund: data.totalRequireAmount!.toString(),
                 raised_fund: data.fundriseAmount!.toString(),
                 donators_count: data.donatorsCount!.toString(),
-                days_left: calculateExpiryDate(data.expireDate!)+1,
-                percentWidth: 95,
+                days_left: calculateExpiryDate(data.expireDate!) + 1,
+                // percentWidth: 95,
+                widthOfPercent:95,
                 titleVisible: false,
               )),
           Styles.KHeight10,
@@ -147,14 +139,14 @@ Padding scroll1(BuildContext context, fundriseModel data) {
                       side: const BorderSide(color: Styles.primary_green),
                     ),
                     onPressed: () {
-                         Navigator.push(
-                  context,
-                  PageTransition(
-                    type: PageTransitionType.rightToLeft,
-                    child:  PaymentScreen(data:data),
-                  ),
-                );
-                      
+                      Navigator.push(
+                        context,
+                        PageTransition(
+                          type: PageTransitionType.rightToLeft,
+                          child: PaymentScreen(data: data),
+                        ),
+                      );
+
                       print('Pressed');
                     },
                   ),
@@ -165,6 +157,4 @@ Padding scroll1(BuildContext context, fundriseModel data) {
           ),
         ],
       ));
-      
 }
-  

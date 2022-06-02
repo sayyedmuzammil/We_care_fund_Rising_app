@@ -5,13 +5,12 @@ import 'package:we_care/constant_design.dart';
 ValueNotifier<int> indexChangeNotifier = ValueNotifier(0);
 
 class BottomNavigationWidget extends StatelessWidget {
-
-   BottomNavigationWidget({Key? key,}) : super(key: key);
+  const BottomNavigationWidget({
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-
-    print("start $indexChangeNotifier");
     return ValueListenableBuilder(
         valueListenable: indexChangeNotifier,
         builder: (context, int newIndex, _) {
@@ -22,15 +21,13 @@ class BottomNavigationWidget extends StatelessWidget {
               indexChangeNotifier.value = index;
             },
             currentIndex: newIndex,
-            elevation: 10, 
+            elevation: 10,
             type: BottomNavigationBarType.fixed,
-            backgroundColor:Styles.primary_black,
+            backgroundColor: Styles.primary_black,
             selectedItemColor: Colors.white,
             unselectedItemColor: Colors.grey,
             showSelectedLabels: false,
             showUnselectedLabels: false,
-            // selectedIconTheme: const IconThemeData(color: Colors.white),
-            // unselectedIconTheme: const IconThemeData(color: Colors.grey),
             items: [
               BottomNavigationBarItem(
                   icon: newIndex != 0

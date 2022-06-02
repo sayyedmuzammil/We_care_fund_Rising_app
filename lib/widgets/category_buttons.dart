@@ -1,8 +1,8 @@
-// ignore_for_file: unrelated_type_equality_checks, must_be_immutable, camel_case_types
+// ignore_for_file: unrelated_type_equality_checks, must_be_immutable, camel_case_types, prefer_typing_uninitialized_variables
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:we_care/db_functions/controller.dart';
+import 'package:we_care/controller/dataController.dart';
 import '../constant_design.dart';
 
 class category_button extends StatelessWidget {
@@ -39,8 +39,7 @@ class category_button extends StatelessWidget {
           ),
           onPressed: () { 
              controller.jumpToPage(currentIndex);
-            // data_control.categoryButtonClicked.value = currentIndex;
-            // print('Pressed');
+         
           },
         ),
       ),

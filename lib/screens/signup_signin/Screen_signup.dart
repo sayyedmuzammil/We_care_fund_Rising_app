@@ -1,19 +1,17 @@
-// ignore_for_file: avoid_print, camel_case_types, must_be_immutable, non_constant_identifier_names, use_key_in_widget_constructors, unused_field, prefer_const_constructors, unrelated_type_equality_checks
+// ignore_for_file: avoid_print, camel_case_types, must_be_immutable, non_constant_identifier_names, use_key_in_widget_constructors, unused_field, prefer_const_constructors, unrelated_type_equality_checks, file_names
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
-import 'package:we_care/admin_side/home_page_admin.dart';
 import 'package:we_care/constant_design.dart';
 import 'package:we_care/db_functions/auth_method.dart';
-import 'package:we_care/db_functions/controller.dart';
+import 'package:we_care/controller/dataController.dart';
 import 'package:we_care/screen_main_page.dart';
-import 'package:we_care/screens/Home_screen.dart';
-import 'package:we_care/screens/donation_fundrise/new_fundrise/new_fundraising.dart';
 import 'package:we_care/screens/signup_signin/screen_fill_profile.dart';
 
 import '../../admin_side/admin_main_sscren.dart';
+import '../../widgets/textField.dart';
 
 class SignupScreen extends StatelessWidget {
   SignupScreen();
@@ -27,19 +25,11 @@ class SignupScreen extends StatelessWidget {
         body: ListView(
           children: [
             SizedBox(
-              height: 27.h,     
-              // width: 100.w, 
-              child: FittedBox( 
+              height: 27.h,
+              child: FittedBox(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    // SvgPicture.asset(
-                    //   'assets/images/main_logo.svg',
-                    //   height: 80,
-                    // ),
-                     Image.asset(
-                                    'assets/images/WeCareMainLogo.png')
-                  ],
+                  children: [Image.asset('assets/images/WeCareMainLogo.png')],
                 ),
               ),
             ),
@@ -50,7 +40,7 @@ class SignupScreen extends StatelessWidget {
                           : 'Sign in to your account',
                       style: Styles.Header.copyWith(fontSize: 24),
                     ))),
-            SizedBox( 
+            SizedBox(
               height: 3.h,
             ),
             Padding(
@@ -79,7 +69,6 @@ class SignupScreen extends StatelessWidget {
                             text_field(
                               Text_field_controller: _emailController,
                               hintText: 'Email',
-                              
                             ),
                             Styles.KHeight10,
                             Row(
@@ -143,52 +132,62 @@ class SignupScreen extends StatelessWidget {
                     height: 13.w,
                     width: 90.w,
                     child: TextButton(
-                      child: Obx(() => Text(
-                            data_control.signUp == true ? 'Sign up' : 'Sign in',
-                            style: TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.bold),
-                          )),
-                      style: TextButton.styleFrom(
-                        backgroundColor: Styles.primary_green,
-                        primary: Colors.white,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(28.0)),
-                        side: const BorderSide(color: Styles.primary_green),
-                      ),
-                      onPressed: data_control.signUp==true?() async{
-                         String res= await AuthMethods().signUpUser(email: _emailController.text, password: _passwordController.text);
-                          print("this in login button $res");
-                          data_control.profileImage=null;
-                          if(res=='success'){
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (BuildContext context) => FillProfile(email: _emailController.text, password: _passwordController.text,),
-                          ),
-                        );
-                          }
-                      }:()async{
-                         String res= await AuthMethods().signInUser(email: _emailController.text, password: _passwordController.text);
-                          print("777 res $res");
-                          if(res=='admin')
-                          {
-                             Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (BuildContext context) => AdminScreenMain()
-                          ),
-                        );
-                          }
-                          if(res=='success'){
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (BuildContext context) => ScreenMainPage()
-                          ),
-                        );
-                          }
-                      }
-                    ),
+                        child: Obx(() => Text(
+                              data_control.signUp == true
+                                  ? 'Sign up'
+                                  : 'Sign in',
+                              style: TextStyle(
+                                  fontSize: 16, fontWeight: FontWeight.bold),
+                            )),
+                        style: TextButton.styleFrom(
+                          backgroundColor: Styles.primary_green,
+                          primary: Colors.white,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(28.0)),
+                          side: const BorderSide(color: Styles.primary_green),
+                        ),
+                        onPressed: data_control.signUp == true
+                            ? () async {
+                                String res = await AuthMethods().signUpUser(
+                                    email: _emailController.text,
+                                    password: _passwordController.text);
+                                print("this in login button $res");
+                                data_control.profileImage = null;
+                                if (res == 'success') {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (BuildContext context) =>
+                                          FillProfile(
+                                        email: _emailController.text,
+                                        password: _passwordController.text,
+                                      ),
+                                    ),
+                                  );
+                                }
+                              }
+                            : () async {
+                                String res = await AuthMethods().signInUser(
+                                    email: _emailController.text,
+                                    password: _passwordController.text);
+                                print("777 res $res");
+                                if (res == 'admin') {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (BuildContext context) =>
+                                            AdminScreenMain()),
+                                  );
+                                }
+                                if (res == 'success') {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (BuildContext context) =>
+                                            ScreenMainPage()),
+                                  );
+                                }
+                              }),
                   ),
                   Obx(() => Column(
                         children: [
@@ -248,10 +247,9 @@ class SignupScreen extends StatelessWidget {
                           )),
                       TextButton(
                           onPressed: () {
-
                             data_control.signUp.value =
                                 !data_control.signUp.value;
-                                data_control.update();
+                            data_control.update();
                           },
                           child: Obx(() => Text(
                                 data_control.signUp == true
@@ -269,7 +267,6 @@ class SignupScreen extends StatelessWidget {
         ));
   }
 }
-
 
 class Logo_button_signUp extends StatelessWidget {
   String imageIcon;

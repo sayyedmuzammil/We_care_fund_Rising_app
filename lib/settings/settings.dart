@@ -1,11 +1,10 @@
-// ignore_for_file: non_constant_identifier_names
+// ignore_for_file: non_constant_identifier_names, avoid_print
 
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:we_care/db_functions/controller.dart';
+import 'package:we_care/controller/dataController.dart';
 import 'package:we_care/screens/signup_signin/screen_fill_profile.dart';
 import 'package:we_care/settings/help.dart';
-
 import '../constant_design.dart';
 import '../db_functions/auth_method.dart';
 import '../screens/signup_signin/screenWelcome.dart';
@@ -44,20 +43,21 @@ class SettingsUser extends StatelessWidget {
           padding: const EdgeInsets.only(left: 20, right: 20),
           child: Column(
             children: [
-              Styles.KHeight10,  
+              Styles.KHeight10,
               GestureDetector(
-                  onTap: () {print("edit profile clicked");
+                  onTap: () {
+                    print("edit profile clicked");
 
-                  data_control.editProfile=true;
-                  data_control.profileImage=null;
-                  data_control.update();
+                    data_control.editProfile = true;
+                    data_control.profileImage = null;
+                    data_control.update();
                     Navigator.push(
-                  context,
-                  PageTransition(
-                    type: PageTransitionType.rightToLeft,
-                    child: FillProfile(),
-                  ),
-                );
+                      context,
+                      PageTransition(
+                        type: PageTransitionType.rightToLeft,
+                        child: FillProfile(),
+                      ),
+                    );
                   },
                   child:
                       Optional_buttons(Icons.person_rounded, "Edit Profile")),
@@ -65,19 +65,19 @@ class SettingsUser extends StatelessWidget {
                 onTap: () {},
                 child: Optional_buttons(Icons.notifications, "Notification"),
               ),
-              GestureDetector( 
+              GestureDetector(
                 onTap: () {},
                 child: Optional_buttons(Icons.lock, "Security"),
               ),
               GestureDetector(
                 onTap: () {
-              Navigator.push(
-                  context,
-                  PageTransition(
-                    type: PageTransitionType.rightToLeft,
-                    child:const ScreenHelp(),
-                  ),
-                );
+                  Navigator.push(
+                    context,
+                    PageTransition(
+                      type: PageTransitionType.rightToLeft,
+                      child: const ScreenHelp(),
+                    ),
+                  );
                 },
                 child: Optional_buttons(Icons.info, "Help"),
               ),
@@ -85,23 +85,23 @@ class SettingsUser extends StatelessWidget {
                 onTap: () {},
                 child: Optional_buttons(Icons.group, "Invite Freinds"),
               ),
-               Divider(
+              Divider(
                 color: Colors.grey[800],
               ),
               Styles.KHeight10,
               InkWell(
-                onTap: ()async {
-                await AuthMethods().signOut();
-                Navigator.pushAndRemoveUntil(
-                  context,
-                  MaterialPageRoute(
-                    builder: (BuildContext context) => const ScreenWelcome(),
-                  ),
-                  (route) => false,
-                );
-              },
+                onTap: () async {
+                  await AuthMethods().signOut();
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(
+                      builder: (BuildContext context) => const ScreenWelcome(),
+                    ),
+                    (route) => false,
+                  );
+                },
                 child: Row(
-                  children:const [
+                  children: const [
                     CircleAvatar(
                       radius: 25,
                       backgroundColor: Color(0xFF2C161E),
@@ -121,55 +121,51 @@ class SettingsUser extends StatelessWidget {
                   ],
                 ),
               ),
-               
-               
-              
-                
             ],
           ),
         ),
       ),
     );
   }
-
 }
 
-  Column Optional_buttons(icon, title) {
-    return Column(
-      children: [
-      Divider(color: Colors.grey[800],), 
-        Styles.KHeight10,
-        SizedBox(
-          width: double.infinity,
-          child: Row(
-            children: [
-              CircleAvatar(
-                radius: 25,
-                backgroundColor: Styles.primary_green_light,
-                child: Icon(
-                  icon,
-                  color: Styles.primary_green,
-                ),
-              ),
-              Styles.KWidth20,
-              Text(
-                title,
-                style: const TextStyle(
-                    fontSize: 16,
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold),
-              ),
-              const Spacer(),
-              const Icon(
-                Icons.arrow_forward_ios,
+Column Optional_buttons(icon, title) {
+  return Column(
+    children: [
+      Divider(
+        color: Colors.grey[800],
+      ),
+      Styles.KHeight10,
+      SizedBox(
+        width: double.infinity,
+        child: Row(
+          children: [
+            CircleAvatar(
+              radius: 25,
+              backgroundColor: Styles.primary_green_light,
+              child: Icon(
+                icon,
                 color: Styles.primary_green,
-                size: 14,
-              )
-            ],
-          ),
+              ),
+            ),
+            Styles.KWidth20,
+            Text(
+              title,
+              style: const TextStyle(
+                  fontSize: 16,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold),
+            ),
+            const Spacer(),
+            const Icon(
+              Icons.arrow_forward_ios,
+              color: Styles.primary_green,
+              size: 14,
+            )
+          ],
         ),
-        Styles.KHeight10, 
-        
-      ],
-    );
-  }
+      ),
+      Styles.KHeight10,
+    ],
+  );
+}

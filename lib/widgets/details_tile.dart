@@ -5,7 +5,6 @@ import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:sizer/sizer.dart';
 
 import 'package:we_care/constant_design.dart';
-import 'package:we_care/db_functions/controller.dart';
 
 class Details_tile extends StatelessWidget {
   String title;
@@ -13,7 +12,7 @@ class Details_tile extends StatelessWidget {
   String raised_fund;
   String donators_count;
   int days_left;
-  int percentWidth;
+  int widthOfPercent;
   bool titleVisible;
   Details_tile({
     required this.title,
@@ -21,13 +20,14 @@ class Details_tile extends StatelessWidget {
     required this.raised_fund,
     required this.donators_count,
     required this.days_left,
-    this.percentWidth = 50,
+    this.widthOfPercent = 50,
     this.titleVisible = true,
     Key? key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    var percentWidth= int.parse(raised_fund)/int.parse(total_fund); 
     return Stack(
       children: [
         Positioned(
@@ -84,7 +84,7 @@ class Details_tile extends StatelessWidget {
                       child: Row(
                         children: [
                           Text(
-                            "$days_left  ",
+                            "${days_left+1 }  ",
                             style: Styles.RegularText.copyWith(fontSize: 12),
                           ),
                           Text(
@@ -106,11 +106,11 @@ class Details_tile extends StatelessWidget {
           left: -10,
           child: FittedBox(
             child: LinearPercentIndicator(
-              width: percentWidth.w,
+              width: widthOfPercent.w,
               animation: true,
               lineHeight: 5.0,
               animationDuration: 1000,
-              percent: 0.55,
+              percent: percentWidth,
               barRadius: const Radius.circular(30),
               progressColor: Styles.primary_green,
             ),

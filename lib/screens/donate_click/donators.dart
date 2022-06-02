@@ -48,29 +48,27 @@ class ScreenDonators extends StatelessWidget {
             child: ListView.separated(
               itemCount: 20,
               separatorBuilder: (context, index) {
-                return SizedBox(
+                return const SizedBox(
                   height: 30,
                 );
               },
               itemBuilder: (context, index) {
-                return Container(
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Styles.KWidth10,
-                      const CircleAvatar(
-                        backgroundColor: Styles.primary_black,
-                        radius: 25,
-                        backgroundImage:
-                            AssetImage('assets/images/profile_avatar.png'),
-                      ),
-                      Styles.KWidth20,
-                      const Text(
-                        'Anonymous',
-                        style: Styles.Header,
-                      ),
-                    ],
-                  ),
+                return Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: const [
+                    Styles.KWidth10,
+                    CircleAvatar(
+                      backgroundColor: Styles.primary_black,
+                      radius: 25,
+                      backgroundImage:
+                          AssetImage('assets/images/profile_avatar.png'),
+                    ),
+                    Styles.KWidth20,
+                    Text(
+                      'Anonymous',
+                      style: Styles.Header,
+                    ),
+                  ],
                 );
               },
             )),

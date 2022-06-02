@@ -1,65 +1,30 @@
-// ignore_for_file: must_be_immutable, use_key_in_widget_constructors
+// ignore_for_file: must_be_immutable, use_key_in_widget_constructors, file_names
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 import 'package:we_care/constant_design.dart';
-import 'package:we_care/db_functions/controller.dart';
-import 'package:we_care/db_functions/firebase.dart';
-import 'package:we_care/db_functions/fundRiseModel.dart';
+import 'package:we_care/controller/dataController.dart';
 import 'package:we_care/screens/Home_screen.dart';
 import 'package:we_care/screens/donation_fundrise/widgets/main_card.dart';
-import 'donation_fundrise/new_fundrise/new_fundraising.dart';
+import 'package:we_care/widgets/appBarHead.dart';
+import '../widgets/textField.dart';
 
 class UrgentFundraising extends StatelessWidget {
   String title;
-
-
+  String page;
   final _searchController = TextEditingController();
   UrgentFundraising({
+    this.page='urgent',
     this.title = 'Urgent Fundraising',
-  
   });
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // bottomNavigationBar:  BottomNavigationWidget(),
       backgroundColor: Styles.primary_black,
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: Styles.primary_black,
-        title: Text(
-          title,
-          style: const TextStyle(
-              fontSize: 24, color: Colors.white, fontWeight: FontWeight.bold),
-        ),
-        leading: Builder(builder: (BuildContext context) {
-          return IconButton(
-              onPressed: () {},
-              icon: Padding(
-                padding: const EdgeInsets.only(left: 10),
-                child: IconButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    icon: const Icon(
-                      Icons.arrow_back,
-                      size: 20,
-                      color: Styles.primary_green,
-                    )),
-              ));
-        }),
-        actions: [
-          IconButton(
-              onPressed: () {},
-              icon: SvgPicture.asset("assets/images/menu_button.svg")),
-          const SizedBox(
-            width: 15,
-          ),
-        ],
-      ),
+      appBar: AppBarHead('Search'), 
       body: Column(
         children: [
           Padding(
@@ -67,7 +32,7 @@ class UrgentFundraising extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                Container(
+                SizedBox(
                   width: 80.w,
                   child: text_field(
                     Text_field_controller: _searchController,
@@ -87,7 +52,7 @@ class UrgentFundraising extends StatelessWidget {
             ),
           ),
           Styles.KHeight10,
-          const scrollable_category(),
+          // const scrollable_category(),
           Expanded(
             child: Padding(
 
@@ -100,14 +65,13 @@ class UrgentFundraising extends StatelessWidget {
                   }
                   if(snapshot.data!=null){ */
                    GetX<GetController>(
-                    //  init: funController(),
-                    //  initState: (_) {},
+                  
                      builder: (controller) {
                        return ListView.separated(
                                        separatorBuilder: (context, index) => Styles.KHeight10,
-                                       itemCount: controller.fundRiseStream.length,
+                                       itemCount: page=='urgent'? controller.urgentFundrise.length:page=='end'? controller.endingFundrise.length:controller.publishedFundriseAll.length,
                                        itemBuilder: (context, index) {
-                                         final data=controller.fundRiseStream[index];
+                                         final data=page=='urgent'? controller.urgentFundrise[index]:page=='end'? controller.endingFundrise[index]:controller.publishedFundriseAll[index];
                                          return main_childCard(
                                            data: data,
                                           
@@ -117,10 +81,7 @@ class UrgentFundraising extends StatelessWidget {
                                      ); 
                      },
                    ), 
-              //  }
-              //  else return Center(child: Text("No Data"),);
-              //   }
-              // ),
+            
             ),
           ),
           Styles.KHeight20,

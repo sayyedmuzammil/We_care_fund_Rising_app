@@ -16,12 +16,12 @@ class DonatorsModel {
   int? amount;
 
   bool? isAnonymous;
-  
+
   DonatorsModel({
     // this.donationId,
     // required this.userId,
     required this.fundRiseId,
-    required this.fundRiseUserID, 
+    required this.fundRiseUserID,
     required this.date,
     required this.amount,
     this.isAnonymous,
@@ -50,6 +50,4 @@ class DonatorsModel {
       isAnonymous: map['isAnonymous'],
     );
   }
-
-
 }

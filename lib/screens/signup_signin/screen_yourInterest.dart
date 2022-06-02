@@ -3,7 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 import 'package:we_care/constant_design.dart';
-import 'package:we_care/screens/signup_signin/screenPinGenerator.dart';
+import 'package:we_care/extras/screenPinGenerator.dart';
+import 'package:we_care/widgets/appBarHead.dart';
 
 class InterestScreen extends StatelessWidget {
   const InterestScreen({Key? key}) : super(key: key);
@@ -12,29 +13,7 @@ class InterestScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Styles.primary_black,
-        appBar: AppBar(
-          backgroundColor: Styles.primary_black,
-          elevation: 0,
-          title: const Text(
-            "Select Your Interest",
-            style: TextStyle(
-                fontSize: 24, color: Colors.white, fontWeight: FontWeight.bold),
-          ),
-          leading: Builder(
-            builder: (BuildContext context) {
-              return IconButton(
-                icon: const Icon(
-                  Icons.arrow_back,
-                  color: Styles.primary_green,
-                ),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
-              );
-            },
-          ),
-        ),
+        appBar: AppBarHead('Select Your Interest'),
         body: Container(
           margin: const EdgeInsets.all(20),
           child: Column(
@@ -106,5 +85,4 @@ class InterestScreen extends StatelessWidget {
           ),
         ));
   }
-  
 }

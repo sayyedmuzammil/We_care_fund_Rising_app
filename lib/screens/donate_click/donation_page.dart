@@ -1,4 +1,4 @@
-// ignore_for_file: camel_case_types, must_be_immutable, unused_import, non_constant_identifier_names
+// ignore_for_file: camel_case_types, must_be_immutable, unused_import, non_constant_identifier_names, avoid_print
 
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
@@ -6,7 +6,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'package:sizer/sizer.dart';
 import 'package:we_care/constant_design.dart';
-import 'package:we_care/db_functions/controller.dart';
+import 'package:we_care/controller/dataController.dart';
 import 'package:we_care/db_functions/fundRiseModel.dart';
 import 'package:we_care/screens/donate_click/scroll1_donate.dart';
 import 'package:we_care/screens/donate_click/scroll2_donate.dart';
@@ -14,8 +14,8 @@ import 'package:we_care/screens/donation_fundrise/new_fundrise/new_fundraising.d
 import 'package:we_care/widgets/details_tile.dart';
 
 class donationScreen extends StatelessWidget {
-   fundriseModel data;
-  donationScreen({ required this.data});
+   FundriseModel data;
+  donationScreen({Key? key,  required this.data}) : super(key: key);
 
   List<String> imageList1 = [
     

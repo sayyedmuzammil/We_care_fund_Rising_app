@@ -1,40 +1,31 @@
 // ignore: unnecessary_import
-// ignore_for_file: prefer_const_constructors, camel_case_types
+// ignore_for_file: prefer_const_constructors, camel_case_types, file_names
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_instance/get_instance.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:sizer/sizer.dart';
 import 'package:we_care/constant_design.dart';
-import 'package:we_care/controller/myDonationController.dart';
-import 'package:we_care/db_functions/auth_method.dart';
-import 'package:we_care/db_functions/fundRiseModel.dart';
+import 'package:we_care/controller/dbController.dart';
 import 'package:we_care/screens/donate_click/donation_page.dart';
-import 'package:we_care/screens/signup_signin/Screen_signup.dart';
-import 'package:we_care/screens/signup_signin/screenWelcome.dart';
 import 'package:we_care/screens/urgentFundraising.dart';
 import 'package:we_care/widgets/carousel_slider.dart';
 import 'package:we_care/widgets/category_buttons.dart';
 import 'package:we_care/widgets/first_card.dart';
 import 'package:we_care/widgets/video_card.dart';
-
-import '../db_functions/controller.dart';
-import '../db_functions/firebase.dart';
+import '../controller/dataController.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({Key? key}) : super(key: key);
-  // init() async {
-  //   await data_control.refreshUser();
-  //   // data_control.update();
-  //   print("in it ${data_control.user!.photoUrl}");
-  // }
+    HomeScreen({Key? key}) : super(key: key);
+   final GetController _controller=Get.find();
+     final DbController _dbController = Get.put(DbController());
 
   @override
   Widget build(BuildContext context) {
-
+     _dbController.getDonationDetails();
+    // Get.put(GetController().saparatelist());
+     _controller. saparatelist() ;
     return Scaffold(
       backgroundColor: Styles.primary_black,
       appBar: AppBar(
@@ -47,19 +38,8 @@ class HomeScreen extends StatelessWidget {
         ),
         leading: Builder(builder: (BuildContext context) {
           return IconButton(
-              // splashColor: Colors.transparent,
               highlightColor: Colors.transparent,
-              // visualDensity: null,
-
               onPressed: () {
-                // await AuthMethods().signOut();
-                // Navigator.pushAndRemoveUntil(
-                //   context,
-                //   MaterialPageRoute(
-                //     builder: (BuildContext context) => ScreenWelcome(),
-                //   ),
-                //   (route) => false,
-                // );
               },
               icon: Padding(
                 padding: const EdgeInsets.only(left: 10),
@@ -73,16 +53,17 @@ class HomeScreen extends StatelessWidget {
                     context,
                     MaterialPageRoute(
                         builder: (context) => UrgentFundraising(
+                          page: 'search',
                               title: 'Search',
                             )));
               },
               icon: SvgPicture.asset("assets/images/search_svg.svg")),
-          IconButton(
+        /*   IconButton(
               onPressed: () {},
               icon: SvgPicture.asset("assets/images/noti_svg.svg")),
           IconButton(
               onPressed: () {},
-              icon: SvgPicture.asset("assets/images/bookmark_svg.svg")),
+              icon: SvgPicture.asset("assets/images/bookmark_svg.svg")), */
           const SizedBox(
             width: 15,
           ),
@@ -135,6 +116,7 @@ class HomeScreen extends StatelessWidget {
                           context,
                           MaterialPageRoute(
                               builder: (context) => UrgentFundraising(
+                                  page: 'urgent',
                                     title: 'Urgent Fundraising',
                                   )),
                         );
@@ -149,23 +131,20 @@ class HomeScreen extends StatelessWidget {
               ],
             ),
           ),
-          scrollable_category(),
-          SizedBox(
+
+
+          // scrollable_category(),
+          
+           SizedBox(
             height: 54.w + 2,
             child: GetX<GetController>(
               builder: (controller) {
-                List<fundriseModel> urgentFundrise = [];
-                for (var item in controller.fundRiseStream) {
-                  final dayLeft = calculateExpiryDate(item.expireDate!);
-                  if (dayLeft > 3) {
-                    urgentFundrise.add(item);
-                  }
-                }
+                // controller.saparatelist();
                 return ListView.builder(
                   scrollDirection: Axis.horizontal,
-                  itemCount: urgentFundrise.length,
+                  itemCount: controller.urgentFundrise.length,
                   itemBuilder: (context, index) {
-                    final data = urgentFundrise[index];
+                    final data = controller.urgentFundrise[index];
                     return SizedBox(
                         height: 115,
                         child: GestureDetector(
@@ -175,7 +154,7 @@ class HomeScreen extends StatelessWidget {
                   context,
                   PageTransition(
                     type: PageTransitionType.rightToLeft,
-                    child: donationScreen(data: urgentFundrise[index],),
+                    child: donationScreen(data:controller.urgentFundrise[index],),
                   ),
                 );
                           },
@@ -185,7 +164,6 @@ class HomeScreen extends StatelessWidget {
                         ));
                   },
                 );
-                //  final daysRemaining=data_control.calculateExpiryDate(controller.expiry)
               },
             ),
           ),
@@ -212,6 +190,7 @@ class HomeScreen extends StatelessWidget {
                           context,
                           MaterialPageRoute(
                               builder: (context) => UrgentFundraising(
+                                  page: 'end',
                                     title: 'Coming to an end',
                                   )),
                         );
@@ -230,18 +209,19 @@ class HomeScreen extends StatelessWidget {
             height: 54.w + 2,
             child: GetX<GetController>(
               builder: (controller) {
-                List<fundriseModel> endingFundrise = [];
-                for (var item in controller.fundRiseStream) {
-                  final dayLeft = calculateExpiryDate(item.expireDate!);
-                  if (dayLeft <= 3 && dayLeft >= 0) {
-                    endingFundrise.add(item);
-                  }
-                }
+                // List<FundriseModel> endingFundrise = [];
+                // for (var item in controller.fundRiseStream) {
+                //   final dayLeft = calculateExpiryDate(item.expireDate!);
+                //   if (dayLeft <= 3 && dayLeft >= 0) {
+                //     endingFundrise.add(item);
+                //   }
+                // }
+                // controller.saparatelist();
                 return ListView.builder(
                   scrollDirection: Axis.horizontal,
-                  itemCount: endingFundrise.length,
+                  itemCount: controller.endingFundrise.length,
                   itemBuilder: (context, index) {
-                    final data = endingFundrise[index];
+                    final data = controller.endingFundrise[index];
                     return SizedBox(
                         height: 115,
                         child: GestureDetector(
@@ -251,7 +231,7 @@ class HomeScreen extends StatelessWidget {
                   context,
                   PageTransition(
                     type: PageTransitionType.rightToLeft,
-                    child: donationScreen(data: endingFundrise[index],),
+                    child: donationScreen(data: controller.endingFundrise[index],),
                   ),
                 );
                           },
@@ -261,12 +241,11 @@ class HomeScreen extends StatelessWidget {
                         ));
                   },
                 );
-                //  final daysRemaining=data_control.calculateExpiryDate(controller.expiry)
               },
             ),
           ),
           Styles.KHeight10,
-          SizedBox(
+        /*   SizedBox(
             width: 82.w,
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -300,7 +279,7 @@ class HomeScreen extends StatelessWidget {
             ),
           ),
           const video_card(),
-          Styles.KHeight20,
+          Styles.KHeight20, */
         ],
       ),
     );

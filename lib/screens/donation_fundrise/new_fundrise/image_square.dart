@@ -1,4 +1,4 @@
-// ignore_for_file: unrelated_type_equality_checks, camel_case_types
+// ignore_for_file: unrelated_type_equality_checks, camel_case_types, must_be_immutable, avoid_print
 
 import 'dart:io';
 
@@ -9,23 +9,23 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:sizer/sizer.dart';
 import 'package:we_care/constant_design.dart';
-import 'package:we_care/db_functions/controller.dart';
+import 'package:we_care/controller/dataController.dart';
 
 class getx_image_picker extends StatelessWidget {
-   getx_image_picker({
+  getx_image_picker({
     Key? key,
     required this.index,
   }) : super(key: key);
 
   final int index;
-  List<File> squareImage=[];
+  List<File> squareImage = [];
   @override
   Widget build(BuildContext context) {
     print("this is index $index");
     return Stack(
       children: [
-        
-          Obx(() => (data_control.squaredImage[index]==''
+        Obx(
+          () => (data_control.squaredImage[index] == ''
               ? FDottedLine(
                   color: const Color(0xFF172927),
                   strokeWidth: 2.0,
@@ -44,35 +44,30 @@ class getx_image_picker extends StatelessWidget {
                   child: SizedBox(
                     child: FittedBox(
                         fit: BoxFit.fill,
-                        child:  Image(image: Image.file(File(data_control.squaredImage[index].toString())  )
-                                        .image)),
+                        child: Image(
+                            image: Image.file(File(data_control
+                                    .squaredImage[index]
+                                    .toString()))
+                                .image)),
                     height: 18.w,
                     width: 18.w,
                   ),
-                )
-          ),),
+                )),
+        ),
         SizedBox(
           height: 18.w,
           width: 18.w,
           child: IconButton(
               onPressed: () async {
-                // squareImage[index] = (await FilePicker.platform.pickFiles(
-                //             allowMultiple: false, type: FileType.image))!;
-                //             final path = squareImage[index].files.single.path;
-                // if (squareImage[index].toString != 'null') {
-                //   data_control.child_image_list[index] = path!;
-                // }
-                // data_control.update();
-
-                final image= await FilePicker.platform.pickFiles(
-                            allowMultiple: false, type: FileType.image);
-                            final img=image!.files.single.path;
-                            final fl= File(img!);
-                            data_control.child_image_list.add(image);
-                            data_control.squaredImage[index]=img;
-                            data_control.update();
+                final image = await FilePicker.platform
+                    .pickFiles(allowMultiple: false, type: FileType.image);
+                if (image != null) {
+                  final img = image.files.single.path;
+                  data_control.child_image_list.add(image);
+                  data_control.squaredImage[index] = img!;
+                  data_control.update();
+                }
               },
-             
               icon: const Icon(
                 Icons.add,
                 color: Styles.primary_green,

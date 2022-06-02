@@ -10,17 +10,14 @@ import 'package:we_care/db_functions/fundRiseModel.dart';
 import 'package:we_care/widgets/details_tile.dart';
 
 class first_card extends StatelessWidget {
-  fundriseModel data;
-  // String bg_image;
+  FundriseModel data;
    first_card({
-    // required this.bg_image,
     required this.data, 
     Key? key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    print("checking data ${data.mainImage}");
     return Container(
       margin: const EdgeInsets.only(left: 20),
       alignment: Alignment.topLeft, 
@@ -30,7 +27,6 @@ class first_card extends StatelessWidget {
           alignment: Alignment.topCenter,
           width: 50.w,
           height: 55.w,
-          
           color: Styles.primary_black_light,    
           child: Stack(
             children: [

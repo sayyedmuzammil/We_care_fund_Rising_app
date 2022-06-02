@@ -1,6 +1,8 @@
+// ignore_for_file: avoid_print, non_constant_identifier_names
+
 import 'package:flutter/material.dart';
 import 'package:we_care/constant_design.dart';
-import 'package:we_care/db_functions/controller.dart';
+import 'package:we_care/controller/dataController.dart';
 
 Padding scroll2(data) {
   return Padding(

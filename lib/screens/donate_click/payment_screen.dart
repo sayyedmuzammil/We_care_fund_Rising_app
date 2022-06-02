@@ -1,26 +1,21 @@
 // ignore_for_file: non_constant_identifier_names, must_be_immutable
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:razorpay_flutter/razorpay_flutter.dart';
-import 'package:rflutter_alert/rflutter_alert.dart';
-
 import 'package:sizer/sizer.dart';
 import 'package:we_care/db_functions/donators_model.dart';
 import 'package:we_care/db_functions/fundRiseModel.dart';
 import 'package:we_care/db_functions/razorpay.dart';
 import 'package:we_care/screens/donate_click/widgets/successAlert.dart';
 import 'package:we_care/widgets/appBarHead.dart';
-import 'package:we_care/widgets/single_button.dart';
 import '../../constant_design.dart';
-import '../../db_functions/controller.dart';
-import '../../db_functions/user_model.dart';
+import '../../controller/dataController.dart';
+import '../../widgets/snackbars.dart';
 
 class PaymentScreen extends StatelessWidget {
-  fundriseModel data;
+  FundriseModel data;
   PaymentScreen({Key? key, required this.data}) : super(key: key);
 
 //      _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
@@ -157,6 +152,10 @@ class PaymentScreen extends StatelessWidget {
                   side: const BorderSide(color: Styles.primary_green),
                 ),
                 onPressed: () async {
+                  if(_amountController.text.isEmpty || _amountController.text.contains(' ')){ 
+                      CustomSnackBar('Error', 'amount is Required', const Color.fromARGB(255, 235, 75, 75).withOpacity(1), Icons.error);
+                  }
+                  else{
                   int futRisedAmount = (data.fundriseAmount!) +
                       int.parse(_amountController.text);
                   int balanceAmount =
@@ -164,35 +163,44 @@ class PaymentScreen extends StatelessWidget {
 
                   if (data.totalRequireAmount! > futRisedAmount) {
                     await RazorpayPayment(
+                            context :context,
                             fundriseData: data,
                             amount: _amountController.text.trim())
                         .onPay(data_control.user!);
 
+                      
+                         _amountController.clear();
+                  
                     // Alert(context: context, title: "RFLUTTER", desc: "Flutter is awesome.",
                     // buttons: single_button('hello')).show();
-                    Navigator.push(
-                      context,
-                      PageTransition(
-                        type: PageTransitionType.rightToLeft,
-                        child: successAlert(),
-                      ),
-                    );
+                    
+                   
+                   
+                    // showDialog(context: context, builder: (BuildContext context){
+                    //   return AnimatedContainer(duration: Duration(milliseconds: 500),
+                    //   curve: Curves.fastLinearToSlowEaseIn,
+                    //   child: Dialog(shape: RoundedRectangleBorder( borderRadius: BorderRadius.circular(20)),
+                    //   backgroundColor: Colors.transparent,
+                    //   elevation: 0,
+                    //   child: Column(children: [
+                    //     Container(height: 42.w,
+                    //     width: 80.w,
+                    //     decoration: BoxDecoration(borderRadius: BorderRadius.only(topRight: Radius.circular(20), topLeft: Radius.circular(20), ), color: Colors.indigo),
+                    //     child: Center(child:Icon(Icons.error_outline_outlined, color: Colors.white, size: 40,) ,),
+                    //     ),
+
+                    //   ],),
+                    //   ),
+                    //   );
+
+                    // });
                   } else {
-                    Get.snackbar(
-                      'Error',
-                      "Only $balanceAmount is Needed",
-                      animationDuration: Duration(milliseconds: 500),
-                      duration: Duration(seconds: 1),
-                      icon: Icon(
-                        Icons.error,
-                        size: 36,
-                        color: Colors.black,
-                      ),
-                      margin: EdgeInsets.only(bottom: 20, left: 20, right: 20),
-                      snackPosition: SnackPosition.BOTTOM,
-                      backgroundColor: Colors.blueAccent.withOpacity(1),
-                      colorText: Colors.white,
-                    );
+                    CustomSnackBar(
+                        'Error',
+                        "Only $balanceAmount is Nedded",
+                        const Color.fromARGB(255, 235, 75, 75).withOpacity(1),
+                        Icons.error);
+                  }
                   }
 
                   // Navigator.pop(context);
@@ -247,12 +255,17 @@ donationSuccess(String fundRiseId, String fundRiseUserId, String amount) {
   });
 }
 
-addAmount(int oldFundriseAmount, int amount, String fundriseId,
+Future<bool> addAmount(int oldFundriseAmount, int amount, String fundriseId,
     int oldDontorsCount) async {
+      bool isAdded= false;
   final total = oldFundriseAmount + amount;
   final donationDb = FirebaseFirestore.instance;
+  print("444 $oldDontorsCount");
   final data = await donationDb
       .collection('fundrise')
       .doc(fundriseId)
-      .update({"fundriseAmount": total, "donatorsCount": oldDontorsCount++});
+      .update({"fundriseAmount": total, "donatorsCount": oldDontorsCount+1}).then((value) {
+        isAdded=true;
+      });
+      return isAdded;
 }

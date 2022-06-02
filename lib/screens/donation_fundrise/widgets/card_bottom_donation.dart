@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:we_care/constant_design.dart';
-import 'package:we_care/widgets/category_buttons.dart';
 import 'package:we_care/widgets/single_button.dart';
 
 class card_bottom extends StatelessWidget {

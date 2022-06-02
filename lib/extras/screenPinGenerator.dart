@@ -6,7 +6,7 @@ import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:sizer/sizer.dart';
 import 'package:we_care/screen_main_page.dart';
 
-import '../../constant_design.dart';
+import '../constant_design.dart';
 
 class ScreenPinGenerate extends StatefulWidget {
   const ScreenPinGenerate({Key? key}) : super(key: key);
@@ -110,7 +110,7 @@ class _ScreenPinGenerateState extends State<ScreenPinGenerate> {
                         enablePinAutofill: true,
                         animationType: AnimationType.fade,
                         validator: (v) {
-                          if (v!.length < 1) {
+                          if (v!.isEmpty) {
                             return "please enter the OTP";
                           } else {
                             return null;

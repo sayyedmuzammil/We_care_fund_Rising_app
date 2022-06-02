@@ -1,30 +1,28 @@
-
 // ignore_for_file: must_be_immutable, camel_case_types, non_constant_identifier_names
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:sizer/sizer.dart';
 import 'package:we_care/constant_design.dart';
-import 'package:we_care/db_functions/controller.dart';
 import 'package:we_care/db_functions/firebase.dart';
 import 'package:we_care/db_functions/fundRiseModel.dart';
 import 'package:we_care/widgets/details_tile.dart';
 
 class donation_card extends StatelessWidget {
-  Widget?  card_bottom;
+  Widget? card_bottom;
   // String? bg_image;
-  fundriseModel data;
-   donation_card({
-     required this.data,
-      // this.bg_image, 
-     this.card_bottom,
+  FundriseModel data;
+  donation_card({
+    required this.data,
+    // this.bg_image,
+    this.card_bottom,
     Key? key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 15,left: 10, right: 10),
+      padding: const EdgeInsets.only(bottom: 15, left: 10, right: 10),
       child: Container(
         decoration: BoxDecoration(
           border: Border.all(color: Styles.primary_green_light, width: 2),
@@ -38,11 +36,10 @@ class donation_card extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Styles.KHeight10,
-              main_childCard( data: data,),
-              card_bottom!=null?
-             card_bottom!
-             :Container(),
-           
+              main_childCard(
+                data: data,
+              ),
+              card_bottom != null ? card_bottom! : Container(),
             ],
           ),
         ),
@@ -52,14 +49,11 @@ class donation_card extends StatelessWidget {
 }
 
 class main_childCard extends StatelessWidget {
-    fundriseModel? data;
-   main_childCard({
+  FundriseModel? data;
+  main_childCard({
     Key? key,
-     this.data,
+    this.data,
   }) : super(key: key);
-
- 
- 
 
   @override
   Widget build(BuildContext context) {
@@ -75,12 +69,11 @@ class main_childCard extends StatelessWidget {
           Stack(
             children: [
               ClipRRect(
-                borderRadius: const BorderRadius.horizontal(
-                    left: Radius.circular(20)),
+                borderRadius:
+                    const BorderRadius.horizontal(left: Radius.circular(20)),
                 child: SizedBox(
                   child: FittedBox(
-                      fit: BoxFit.fill,
-                      child: Image.network(data!.mainImage!)),
+                      fit: BoxFit.fill, child: Image.network(data!.mainImage!)),
                   height: 100.w,
                   width: 30.w,
                 ),
@@ -98,7 +91,7 @@ class main_childCard extends StatelessWidget {
           Container(
               height: 30.w,
               width: 52.w,
-               padding: const EdgeInsets.symmetric(horizontal: 10),
+              padding: const EdgeInsets.symmetric(horizontal: 10),
               child: Details_tile(
                 title: data!.title!,
                 total_fund: data!.totalRequireAmount.toString(),
@@ -111,4 +104,3 @@ class main_childCard extends StatelessWidget {
     );
   }
 }
-

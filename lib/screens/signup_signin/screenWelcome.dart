@@ -1,11 +1,11 @@
-// ignore_for_file: avoid_print, camel_case_types, must_be_immutable
+// ignore_for_file: avoid_print, camel_case_types, must_be_immutable, file_names
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:sizer/sizer.dart';
 import 'package:we_care/constant_design.dart';
-import 'package:we_care/db_functions/controller.dart';
-import 'package:we_care/screens/signup_signin/screen_phone.dart';
+import 'package:we_care/controller/dataController.dart';
+import 'package:we_care/extras/screen_phone.dart';
 
 import 'Screen_signup.dart';
 
@@ -125,7 +125,7 @@ class verification_Logo_button extends StatelessWidget {
         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (BuildContext context) => PhoneAuthentication(), 
+                            builder: (BuildContext context) => const PhoneAuthentication(), 
                           ),
                         );
       },

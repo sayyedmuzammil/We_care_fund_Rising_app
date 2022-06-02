@@ -2,28 +2,26 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:we_care/admin_side/home_page_admin.dart';
 import 'package:we_care/bottom_nav_bar.dart';
-
 import '../constant_design.dart';
-import '../controller/myDonationController.dart';
-import '../db_functions/controller.dart';
+import '../controller/dbController.dart';
+import '../controller/dataController.dart';
 import '../screens/Profile.dart';
 import '../screens/donation_fundrise/donations.dart';
 import '../screens/donation_fundrise/fund_rising.dart';
 
 class AdminScreenMain extends StatelessWidget {
-   AdminScreenMain({ Key? key }) : super(key: key);
-final _pages = [
+  AdminScreenMain({Key? key}) : super(key: key);
+  final _pages = [
     const Home_page_admin(),
-     Donations(),
+    Donations(),
     FundRising(),
-// ChatBox(),
-    const Profile(),
+// ChatBox(), 
+    Profile(),
   ];
   @override
   Widget build(BuildContext context) {
-   
-    Get.put(MyDonationController());
-   Get.put(GetController()).refreshUser();
+    Get.put(DbController());
+    Get.put(GetController()).refreshUser();
     return Scaffold(
       backgroundColor: Styles.primary_black,
       body: SafeArea(
@@ -33,7 +31,7 @@ final _pages = [
               return _pages[index];
             }),
       ),
-      bottomNavigationBar:  BottomNavigationWidget(),
+      bottomNavigationBar: const BottomNavigationWidget(),
     );
   }
 }

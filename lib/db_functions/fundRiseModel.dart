@@ -1,9 +1,10 @@
-import 'dart:convert';
+// ignore_for_file: camel_case_types
+
 
 // ignore_for_file: file_names
 
 
-class fundriseModel {
+class FundriseModel {
   String? fundraiseId;
 
   String? userId;
@@ -37,7 +38,7 @@ class fundriseModel {
   int? fundriseAmount; 
 
   int? donatorsCount; 
-  fundriseModel({
+  FundriseModel({
     this.fundraiseId,
     this.userId,
     this.mainImage,
@@ -78,8 +79,8 @@ class fundriseModel {
     };
   }
 
-  static fundriseModel fromMap(Map<String, dynamic> map) {
-    return fundriseModel(
+  static FundriseModel fromMap(Map<String, dynamic> map) {
+    return FundriseModel(
       fundraiseId: map['fundraiseId'],
       userId: map['userId'],
       mainImage: map['mainImage'],
@@ -99,7 +100,4 @@ class fundriseModel {
     );
   }
 
-  // String toJson() => json.encode(toMap());
-
-  // factory fundriseModel.fromJson(String source) => fundriseModel.fromMap(json.decode(source));
 }

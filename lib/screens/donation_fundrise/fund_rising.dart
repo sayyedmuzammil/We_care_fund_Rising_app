@@ -1,16 +1,13 @@
-// ignore_for_file: must_be_immutable
+// ignore_for_file: must_be_immutable, non_constant_identifier_names
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:sizer/sizer.dart';
 import 'package:we_care/bottom_nav_bar.dart';
 import 'package:we_care/constant_design.dart';
-import 'package:we_care/controller/myDonationController.dart';
-import 'package:we_care/db_functions/controller.dart';
-import 'package:we_care/db_functions/firebase.dart';
-import 'package:we_care/db_functions/fundRiseModel.dart';
+import 'package:we_care/controller/dbController.dart';
+import 'package:we_care/controller/dataController.dart';
 import 'package:we_care/screens/donation_fundrise/new_fundrise/new_fundraising.dart';
 import 'package:we_care/screens/donation_fundrise/tab_activity.dart';
 import 'package:we_care/screens/donation_fundrise/tab_fundraising.dart';
@@ -23,12 +20,12 @@ class FundRising extends StatelessWidget {
   FundRising({Key? key}) : super(key: key);
   int count = 3;
 
-final  MyDonationController _myDonationController = Get.find();
+  final DbController _dbController = Get.find();
   @override
   Widget build(BuildContext context) {
-    _myDonationController.getDonationDetails();
+    _dbController.getDonationDetails();
 
-      data_control.categoryButtonClicked.value=0; 
+    data_control.categoryButtonClicked.value = 0;
     return DefaultTabController(
       length: 2,
       child: Scaffold(
@@ -73,11 +70,11 @@ final  MyDonationController _myDonationController = Get.find();
           actions: [
             IconButton(
                 onPressed: () {
-                  data_control.approvalButton.value=false;
+                  data_control.approvalButton.value = false;
                   data_control.update();
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => newFundrising(firstButton:  draft_or_cancel_button('Draft', Icon(Icons.save_outlined,),Styles.primary_green),)),
+                    MaterialPageRoute(builder: (context) => newFundrising()),
                   );
                 },
                 icon: SvgPicture.asset("assets/images/draft_icon.svg")),
@@ -93,11 +90,11 @@ final  MyDonationController _myDonationController = Get.find();
         floatingActionButton: FloatingActionButton(
           backgroundColor: Styles.primary_green,
           onPressed: () {
-             data_control.approvalButton.value=false;
-                  data_control.update();
+            data_control.approvalButton.value = false;
+            data_control.update();
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => newFundrising(firstButton:  draft_or_cancel_button('Draft', Icon(Icons.save_outlined,),Styles.primary_green),)),
+              MaterialPageRoute(builder: (context) => newFundrising()),
             );
           },
           tooltip: 'create new fund rising',
@@ -107,31 +104,3 @@ final  MyDonationController _myDonationController = Get.find();
     );
   }
 }
-
-  SizedBox draft_or_cancel_button(title, icon, color, {bool? firstBtnFun, fundriseModel? model} ) {
-    return SizedBox(
-                    width: 30.w,
-                    height: 12.w,
-                    child: TextButton.icon(
-                      icon: icon ,
-                      label:  Text(
-                        title,
-                        style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.bold),
-                      ),
-                      style: TextButton.styleFrom(
-                        backgroundColor: Styles.primary_black,
-                        primary: color,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(28.0)),
-                        side:  BorderSide(color: color ),
-                      ),
-                      onPressed: () {
-                        if(firstBtnFun==true) {
-changeStatus('rejected', model!.fundraiseId!);
-                        }
-                        print('Pressed');
-                      },
-                    ),
-                  );
-  }

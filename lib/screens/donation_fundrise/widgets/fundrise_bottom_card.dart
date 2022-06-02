@@ -1,13 +1,12 @@
-// ignore_for_file: camel_case_types
+// ignore_for_file: camel_case_types, prefer_typing_uninitialized_variables
 
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 import 'package:we_care/constant_design.dart';
-import 'package:we_care/widgets/category_buttons.dart';
 import 'package:we_care/widgets/single_button.dart';
 
 class card_bottom_fundrise extends StatelessWidget {
-   card_bottom_fundrise({
+   const card_bottom_fundrise({
     Key? key, 
   this.data, 
   }) : super(key: key);
@@ -60,7 +59,7 @@ final data;
             width: 25.w,
             child: FittedBox(
               child: single_button(
-                data: data,
+               
                 title: 'See Results',
                 resultBtn: true,
                 // currentIndex: 7,
