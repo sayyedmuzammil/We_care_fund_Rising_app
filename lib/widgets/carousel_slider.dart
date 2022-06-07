@@ -8,7 +8,6 @@ import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 import 'package:we_care/constant_design.dart';
 import 'package:we_care/controller/dataController.dart';
-import 'package:we_care/controller/dbController.dart';
 
 class carousel_Slider extends StatelessWidget {
   carousel_Slider({

@@ -46,7 +46,7 @@ tab_Activity(bgImage, dateFormated) {
                             backgroundColor: Styles.primary_black,
                             radius: 25,
                             backgroundImage:
-                               (data[index]["anonymous"]==true) ? AssetImage('assets/images/Anonymous_Avatar.png') as ImageProvider : NetworkImage(data[index]["profile"]),
+                               (data[index]["anonymous"]==true) ? const AssetImage('assets/images/Anonymous_Avatar.png') as ImageProvider : NetworkImage(data[index]["profile"]),
                           ),
                           Styles.KWidth20,
                           Column(

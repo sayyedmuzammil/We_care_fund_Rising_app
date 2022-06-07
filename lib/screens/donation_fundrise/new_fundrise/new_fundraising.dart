@@ -332,6 +332,7 @@ class newFundrising extends StatelessWidget {
                       );
                     },
                   ),
+                 
                   Styles.KHeight10,
                   Row(
                     children: [
@@ -538,6 +539,7 @@ class newFundrising extends StatelessWidget {
                             print("checking ");
                             final result = await FilePicker.platform.pickFiles(
                                 type: FileType.custom,
+
                                 allowedExtensions: ['pdf'],
                                 allowMultiple: false);
                             if (result == null) return;

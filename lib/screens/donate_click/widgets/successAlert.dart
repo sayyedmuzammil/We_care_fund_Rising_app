@@ -13,9 +13,9 @@ class SuccessAlert extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Styles.primary_black.withOpacity(.7),  
+      backgroundColor: Colors.transparent,  
       body: SizedBox(
-        height: 100.h, 
+        // height: 100.h, 
         child: Center( 
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,

@@ -3,12 +3,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:page_transition/page_transition.dart';
 import 'package:sizer/sizer.dart';
 import 'package:we_care/db_functions/donators_model.dart';
 import 'package:we_care/db_functions/fundRiseModel.dart';
 import 'package:we_care/db_functions/razorpay.dart';
-import 'package:we_care/screens/donate_click/widgets/successAlert.dart';
 import 'package:we_care/widgets/appBarHead.dart';
 import '../../constant_design.dart';
 import '../../controller/dataController.dart';
@@ -260,8 +258,8 @@ Future<bool> addAmount(int oldFundriseAmount, int amount, String fundriseId,
       bool isAdded= false;
   final total = oldFundriseAmount + amount;
   final donationDb = FirebaseFirestore.instance;
-  print("444 $oldDontorsCount");
-  final data = await donationDb
+  // print("444 $oldDontorsCount");
+  await donationDb
       .collection('fundrise')
       .doc(fundriseId)
       .update({"fundriseAmount": total, "donatorsCount": oldDontorsCount+1}).then((value) {

@@ -4,8 +4,10 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dio/dio.dart';
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
@@ -40,6 +42,20 @@ class FundRise_request extends StatelessWidget {
   List<String> mainImages = [];
   var previusValue;
   String pdfName = '';
+    List<String> items = [
+    'Education',
+    'Environment',
+    'Social',
+    'Sick Child',
+    'Medical',
+    'Infrastructure',
+    'Art',
+    'Disaster',
+    'Orphanage',
+    'Difable',
+    'Humanity',
+    'Others'
+  ];
 
   init() {
     if (data != null) {
@@ -168,11 +184,79 @@ class FundRise_request extends StatelessWidget {
                     ),
                   ],
                 ),
-                text_field(
-                  inputType: TextInputType.none,
-                  Text_field_controller: _categoryController,
-                  hintText: 'Title',
-                ),
+                GetBuilder<GetController>(
+                    builder: (controller) {
+                      return Padding(
+                        padding: const EdgeInsets.only(left: 4, right: 4),
+                        child: DropdownButtonHideUnderline(
+                            child: DropdownButton2(
+                          isExpanded: true,
+                          hint: Text(
+                            previusValue ?? data!.category,
+                            style:const TextStyle(
+                                    fontSize: 16,
+                                    color: Colors.white,
+                                  ),
+                           
+                          ),
+                          items: items
+                              .map((item) => DropdownMenuItem<String>(
+                                    value: item,
+                                    child: Text(
+                                      item,
+                                      style: const TextStyle(
+                                        fontSize: 16,
+                                       
+                                        color: Colors.white,
+                                      ),
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ))
+                              .toList(),
+                          value: controller.selectedValueDrop,
+                          onChanged: (value) {
+                            controller.selectedValueDrop = value as String;
+                            controller.update();
+                          },
+                          icon: const Icon(
+                            Icons.arrow_drop_down,
+                          ),
+                          iconSize: 24,
+                          iconEnabledColor: Colors.grey,
+                          iconDisabledColor: Colors.grey,
+                          buttonHeight: 50,
+                    
+                          buttonPadding:
+                              const EdgeInsets.only(left: 20, right: 12),
+                          buttonDecoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            border: Border.all(
+                              color: Colors.black26,
+                            ),
+                            color: Styles.primary_black_light,
+                          ),
+                          buttonElevation: 2,
+                          itemHeight: 40,
+                          itemPadding:
+                              const EdgeInsets.only(left: 20, right: 12),
+                        
+                          dropdownPadding: null,
+                          dropdownMaxHeight: 35.h,
+
+                          dropdownDecoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            color: Styles.primary_black_light,
+                          ),
+                          dropdownElevation: 8,
+                          scrollbarRadius: const Radius.circular(20),
+                          scrollbarThickness: 6,
+                          scrollbarAlwaysShow: true,
+                          offset: const Offset(-0, 0),
+                        )),
+                      );
+                    },
+                  ),
+                  
                 Styles.KHeight10,
                 Row(
                   children: [
@@ -246,7 +330,7 @@ class FundRise_request extends StatelessWidget {
                   ),
                 ),
                 text_field(
-                  inputType: TextInputType.number,
+                  inputType: TextInputType.none,
                   Text_field_controller: _planController,
                   hintText: 'Fund Usage Plan',
                   line_no: 5,

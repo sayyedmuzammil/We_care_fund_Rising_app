@@ -9,9 +9,7 @@ import 'package:we_care/admin_side/home_page_admin.dart';
 import 'package:we_care/constant_design.dart';
 import 'package:we_care/controller/dataController.dart';
 import 'package:we_care/screen_main_page.dart';
-import 'package:we_care/screens/Home_screen.dart';
 import 'package:we_care/screens/signup_signin/Screen_signup.dart';
-import 'admin_side/admin_main_sscren.dart';
 import 'screens/signup_signin/screenWelcome.dart';
 
 void main() async {

@@ -6,7 +6,6 @@ import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 import 'package:we_care/constant_design.dart';
 import 'package:we_care/controller/dataController.dart';
-import 'package:we_care/screens/Home_screen.dart';
 import 'package:we_care/screens/donation_fundrise/widgets/main_card.dart';
 import 'package:we_care/widgets/appBarHead.dart';
 import '../widgets/textField.dart';

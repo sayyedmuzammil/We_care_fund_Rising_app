@@ -5,7 +5,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:sizer/sizer.dart';
 import '../constant_design.dart';
 import '../db_functions/auth_method.dart';
-import '../controller/dataController.dart';
 import '../db_functions/firebase.dart';
 import '../db_functions/fundRiseModel.dart';
 import '../screens/donation_fundrise/widgets/main_card.dart';

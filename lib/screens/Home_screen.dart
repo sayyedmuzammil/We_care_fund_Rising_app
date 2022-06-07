@@ -13,7 +13,6 @@ import 'package:we_care/screens/urgentFundraising.dart';
 import 'package:we_care/widgets/carousel_slider.dart';
 import 'package:we_care/widgets/category_buttons.dart';
 import 'package:we_care/widgets/first_card.dart';
-import 'package:we_care/widgets/video_card.dart';
 import '../controller/dataController.dart';
 
 class HomeScreen extends StatelessWidget {

@@ -112,7 +112,6 @@ class DbController extends GetxController {
 
   getFundriseData(String id,  String profile,String name) async {
     
-    List<Map<String, String>> data = [];
     final userDb = await FirebaseFirestore.instance
         .collection('donationDb')
         .doc(id)

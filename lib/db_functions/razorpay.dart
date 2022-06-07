@@ -1,11 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:page_transition/page_transition.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'package:we_care/db_functions/fundRiseModel.dart';
 import 'package:we_care/db_functions/user_model.dart';
 import 'package:we_care/screens/donate_click/payment_screen.dart';
-
 import '../screens/donate_click/widgets/successAlert.dart';
 
 class RazorpayPayment {
@@ -39,26 +36,25 @@ class RazorpayPayment {
     final res = await addAmount(fundriseData.fundriseAmount!, int.parse(amount),
         fundriseData.fundraiseId!, fundriseData.donatorsCount!);
     if (res == true) {
-      Navigator.pushAndRemoveUntil(
+      Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder: (BuildContext context) =>  SuccessAlert(),
                   ),
-                  (route) => false,
+                  // (route) => false,
                 );
     }
   }
 
-  void _handlePaymentError(PaymentFailureResponse response) {
-    // Do something when payment fails
-    Navigator.pushAndRemoveUntil(
+   _handlePaymentError(PaymentFailureResponse response) {
+     Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder: (BuildContext context) =>  SuccessAlert(success: false,),
                   ),
-                  (route) => false,
+                  // (route) => false,
                 );
-    // failure page design
+   
   }
 
   void _handleExternalWallet(ExternalWalletResponse response) {
