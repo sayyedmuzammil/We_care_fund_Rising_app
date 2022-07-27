@@ -51,12 +51,12 @@ class Details_tile extends StatelessWidget {
                 )),
                 Visibility(visible: titleVisible, child: Styles.KHeight10),
                 SizedBox(
-                  width: 80.w,
+                  width: 80.w, 
                   child: Row(
                     children: [
-                      Text("₹$total_fund  ", 
+                      Text("₹$total_fund ", 
                           style: Styles.RegularText.copyWith(fontSize: 12)),
-                      Text("fund raised from ₹$raised_fund",
+                      Text("fundraised from ₹$raised_fund",
                           style: Styles.RegularText.copyWith(
                               fontSize: 12, color: Colors.white)),
                     ],

@@ -1,6 +1,7 @@
 // ignore_for_file: non_constant_identifier_names, file_names, avoid_print
 
 import 'dart:typed_data';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:get/get.dart';
 import 'package:we_care/db_functions/fundRiseModel.dart';
@@ -26,7 +27,10 @@ class GetController extends GetxController {
   bool editProfile = false;
   late DateTime selectedDate = DateTime.now();
 
+
   String? selectedValueDrop;
+
+
 
 //add profile data
   Future<void> refreshUser() async {
@@ -56,12 +60,14 @@ class GetController extends GetxController {
   final fundRiseStream = <FundriseModel>[].obs;
 // FundriseModel? clickedData;
   DateTime? expiry;
-   List<FundriseModel> publishedFundriseAll = <FundriseModel>[].obs;
-   List<FundriseModel> carousilFundrise = <FundriseModel>[].obs;
-  List<FundriseModel> endingFundrise = <FundriseModel>[].obs;
-  List<FundriseModel> urgentFundrise = <FundriseModel>[].obs;
+   List<FundriseModel> publishedFundriseAll = <FundriseModel>[];
+   List<FundriseModel> carousilFundrise = <FundriseModel>[];
+  List<FundriseModel> endingFundrise = <FundriseModel>[];
+  List<FundriseModel> urgentFundrise = <FundriseModel>[];
+ userModel? fundriseUser;
 
   saparatelist() {
+    print("seperate list");
     endingFundrise.clear(); 
     urgentFundrise.clear();
     carousilFundrise.clear(); 
@@ -104,4 +110,17 @@ class GetController extends GetxController {
   }
 
 // ---------------------------------------------------------
+
+ Future<userModel> getFundriseUser(String Id) async{
+
+  print("function called $Id");
+  final userDb=await FirebaseFirestore.instance.collection('users').doc(Id).get();
+  print("hai");
+  print("11 ${userDb.data()!['userId']}");
+  final data = userModel.fromMap(userDb.data()!);  
+  // update();
+return data;
+  
+
+} 
 }

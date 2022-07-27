@@ -20,11 +20,14 @@ class FundRising extends StatelessWidget {
   FundRising({Key? key}) : super(key: key);
   int count = 3;
 
-  final DbController _dbController = Get.find();
+   final GetController _controller=Get.find();
+   final DbController _dbController = Get.put(DbController());
+  
   @override
   Widget build(BuildContext context) {
-    _dbController.getDonationDetails();
 
+    _dbController.getDonationDetails();
+    _controller.saparatelist();
     data_control.categoryButtonClicked.value = 0;
     return DefaultTabController(
       length: 2,
@@ -84,8 +87,8 @@ class FundRising extends StatelessWidget {
           ],
         ),
         body: TabBarView(children: [
-          tab_fundraising(count),
-          tab_Activity('assets/images/hungry_kid.jpg', dateFormated),
+          tab_fundraising(),
+          tab_Activity(),
         ]),
         floatingActionButton: FloatingActionButton(
           backgroundColor: Styles.primary_green,

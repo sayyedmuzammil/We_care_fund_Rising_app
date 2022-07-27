@@ -9,7 +9,7 @@ import 'package:we_care/screens/donation_fundrise/widgets/fundrise_bottom_card.d
 import 'package:we_care/screens/donation_fundrise/widgets/main_card.dart';
 import 'package:we_care/widgets/category_buttons.dart';
 
-Padding tab_fundraising(count) {
+Padding tab_fundraising() {
   //  final MyDonationController  _myDonationController=Get.put(MyDonationController());
   final PageController controller = PageController();
   return Padding(

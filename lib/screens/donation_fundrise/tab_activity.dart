@@ -7,14 +7,23 @@ import 'package:sizer/sizer.dart';
 import 'package:we_care/constant_design.dart';
 import 'package:we_care/controller/dbController.dart';
 
-tab_Activity(bgImage, dateFormated) {
-  final DbController _controller = Get.find();
+tab_Activity() {
+    // final DbController _dbController = Get.put(DbController());
+
+      //  _dbController.update();
+  final DbController _dbController = Get.find();
+         _dbController.getDonationDetails();    
   return Padding(
       padding: const EdgeInsets.only(left: 20, right: 20),
-      child: ListView.builder(
-        itemCount: _controller.myFundDonators.length,
+      child: 
+      GetBuilder<DbController>(
+            builder: (_controller) {
+              print("abc ${_controller.myFundDonators}");
+      return ListView.builder(
+        itemCount: (_controller.myFundDonators.length),
         itemBuilder: (context, index) {
           final data = _controller.myFundDonators;
+          print("total length ${data.length} and $index " );
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -85,5 +94,9 @@ tab_Activity(bgImage, dateFormated) {
             ],
           );
         },
-      ));
+      );
+            }
+      )
+      
+      );
 }

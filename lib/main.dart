@@ -1,9 +1,11 @@
 // ignore_for_file: prefer_const_constructors, avoid_print
 
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lottie/lottie.dart';
 import 'package:sizer/sizer.dart';
 import 'package:we_care/admin_side/home_page_admin.dart';
 import 'package:we_care/constant_design.dart';
@@ -26,7 +28,14 @@ class MyApp extends StatelessWidget {
     
     Get.put(GetController());
     return Sizer(builder: (context, orientation, deviceType) {
-      return GetMaterialApp(
+      return 
+      StreamBuilder(
+          stream: Connectivity().onConnectivityChanged,
+          builder: (context, AsyncSnapshot<ConnectivityResult> snapshot) {
+            if (snapshot.connectionState != ConnectionState.waiting ||
+               ( snapshot.data == ConnectivityResult.wifi && snapshot.data != ConnectivityResult.mobile || snapshot.data != ConnectivityResult.wifi && snapshot.data == ConnectivityResult.mobile ) ) {  
+                  return
+      GetMaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
         theme: ThemeData(
@@ -65,6 +74,18 @@ class MyApp extends StatelessWidget {
           },
         ),
       );
+               }
+       else{
+                  return Center(
+                    child: SizedBox( 
+                      height: 50.w, 
+                      width: 50.w ,
+                      // color: Colors.red,  
+                      child: Center(child: Lottie.asset('assets/images/lf30_editor_wzzws3ua.json'))),
+                  );
+                } 
+          }
+    );
     });
   }
 }

@@ -61,12 +61,12 @@ class SuccessAlert extends StatelessWidget {
                             borderRadius: BorderRadius.circular(28.0)),
                         // side: const BorderSide(color: Styles.primary_green),
                       ),
-                      onPressed: () async {
+                      onPressed: ()  {
                           Navigator.push(
                         context,
                         PageTransition(
                           type: PageTransitionType.rightToLeft,
-                          child: ScreenMainPage(indexGett: 1), 
+                          child: ScreenMainPage(), 
                         ),
                       );
                       },

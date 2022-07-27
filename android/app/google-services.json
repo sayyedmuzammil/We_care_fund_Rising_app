@@ -41,6 +41,35 @@
           ]
         }
       }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:255627941988:android:bb057d8bc6cc9e14c76771",
+        "android_client_info": {
+          "package_name": "in.we_care.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "255627941988-q4fkvtnh08gbqq5mq1ufqa25q92cbphn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA27N7762DdS_qkBCeE0YLUCHzHCI94wKk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "255627941988-q4fkvtnh08gbqq5mq1ufqa25q92cbphn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
     }
   ],
   "configuration_version": "1"

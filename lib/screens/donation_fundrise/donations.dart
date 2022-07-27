@@ -19,6 +19,7 @@ class Donations extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print("Donation nav");
     _dbController.getDonationDetails();
     return Scaffold(
       backgroundColor: Styles.primary_black,

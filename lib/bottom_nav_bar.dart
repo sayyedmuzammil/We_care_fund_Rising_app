@@ -50,15 +50,15 @@ class BottomNavigationWidget extends StatelessWidget {
                       : SvgPicture.asset(
                           "assets/images/nav_icons/fundrise_white.svg"),
                   label: 'fund Rise'),
-              // BottomNavigationBarItem(
-              //     icon: newIndex != 3
-              //         ? SvgPicture.asset(
-              //             "assets/images/nav_icons/chat_green.svg")
-              //         : SvgPicture.asset(
-              //             "assets/images/nav_icons/chat_white.svg"),
-              //     label: 'chat Box'),
               BottomNavigationBarItem(
-                  icon: newIndex != 3
+                  icon: newIndex != 3 
+                      ? SvgPicture.asset(
+                          "assets/images/nav_icons/chat_green.svg")
+                      : SvgPicture.asset(
+                          "assets/images/nav_icons/chat_white.svg"),
+                  label: 'chat Box'),
+              BottomNavigationBarItem(
+                  icon: newIndex != 4
                       ? SvgPicture.asset(
                           "assets/images/nav_icons/profile_green.svg")
                       : SvgPicture.asset(

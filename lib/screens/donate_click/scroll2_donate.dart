@@ -1,10 +1,17 @@
 // ignore_for_file: avoid_print, non_constant_identifier_names
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:we_care/constant_design.dart';
 import 'package:we_care/controller/dataController.dart';
+import 'package:we_care/db_functions/fundRiseModel.dart';
+import 'package:we_care/db_functions/user_model.dart';
 
-Padding scroll2(data) {
+import '../../db_functions/firebase.dart';
+
+Padding scroll2(FundriseModel data) {
+// data_control.getFundriseUser(data.userId!);
   return Padding(
     padding: const EdgeInsets.symmetric(horizontal: 20),
     child: Column(
@@ -16,51 +23,63 @@ Padding scroll2(data) {
           style: Styles.Header,
         ),
         Styles.KHeight10,
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Styles.KWidth10,
-             CircleAvatar(
-              backgroundColor: Styles.primary_black,
-              radius: 25,
-              backgroundImage: 
-                                           NetworkImage(data_control
-                                              .user!.photoUrl
-                                              .toString()),
-                                          // fit: BoxFit.cover,
-                                      
-                                            
-            ),
-            Styles.KWidth20,
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
+       
+         FutureBuilder<userModel>(
+          future: data_control.getFundriseUser(data.userId!),
+          builder: (context,snap) {
+            if(snap.data==null){
+            return  Center(child: CupertinoActivityIndicator(color: Colors.red,),);
+
+            }
+          
+            print("111 ${snap.data!.name}");
+            
+            return Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                 Text(
-                  data_control.user!.name!,
-                  style: Styles.Header,
+                Styles.KWidth10,
+                 CircleAvatar(
+                  backgroundColor: Styles.primary_black,
+                  radius: 25,
+                  backgroundImage: 
+                                               NetworkImage(snap.data!.photoUrl!),
+                                              // fit: BoxFit.cover,
+                                          
+                                                
                 ),
-                const SizedBox(
-                  height: 5,
-                ),
-                Row(
+                Styles.KWidth20,
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(
-                      'verified ',
-                      style: Styles.RegularText.copyWith(
-                          color: Colors.white, fontSize: 14),
+                     Text(
+                    snap.data!.name!,
+                      style: Styles.Header,
                     ),
-                    const Icon(
-                      Icons.verified_outlined,
-                      color: Styles.primary_green,
-                      size: 16,
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    Row(
+                      children: [
+                        Text(
+                          'verified ',
+                          style: Styles.RegularText.copyWith(
+                              color: Colors.white, fontSize: 14),
+                        ),
+                        const Icon(
+                          Icons.verified_outlined,
+                          color: Styles.primary_green,
+                          size: 16,
+                        )
+                      ],
                     )
                   ],
-                )
+                ),
               ],
-            ),
-          ],
+            );
+          }
         ),
+     
         Styles.KHeight20,
         const Text(
           'Patiant',

@@ -7,6 +7,7 @@ import 'package:we_care/constant_design.dart';
 import 'package:we_care/controller/dataController.dart';
 import 'package:we_care/screens/Home_screen.dart';
 import 'package:we_care/screens/Profile.dart';
+import 'package:we_care/screens/chatBox.dart';
 import 'package:we_care/screens/donation_fundrise/donations.dart';
 import 'package:we_care/screens/donation_fundrise/fund_rising.dart';
 
@@ -19,7 +20,7 @@ class ScreenMainPage extends StatelessWidget {
      HomeScreen(),
     Donations(),
     FundRising(),
-// ChatBox(),
+ChatBox(), 
     const Profile(),
   ];
 

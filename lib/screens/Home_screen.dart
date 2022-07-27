@@ -22,9 +22,13 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print("Home");
      _dbController.getDonationDetails();
+     
     // Get.put(GetController().saparatelist());
-     _controller. saparatelist() ;
+     _controller.saparatelist();
+    // _dbController.update(); 
+    // _controller.update();
     return Scaffold(
       backgroundColor: Styles.primary_black,
       appBar: AppBar(
@@ -136,14 +140,17 @@ class HomeScreen extends StatelessWidget {
           
            SizedBox(
             height: 54.w + 2,
-            child: GetX<GetController>(
-              builder: (controller) {
+            child: GetBuilder<GetController>
+             /*  builder: (controller) {
                 // controller.saparatelist();
-                return ListView.builder(
+                return */(
+                  builder: (controller){
+              
+                   return ListView.builder(
                   scrollDirection: Axis.horizontal,
-                  itemCount: controller.urgentFundrise.length,
+                  itemCount: data_control.urgentFundrise.length,
                   itemBuilder: (context, index) {
-                    final data = controller.urgentFundrise[index];
+                    final data = data_control.urgentFundrise[index];
                     return SizedBox(
                         height: 115,
                         child: GestureDetector(
@@ -153,7 +160,7 @@ class HomeScreen extends StatelessWidget {
                   context,
                   PageTransition(
                     type: PageTransitionType.rightToLeft,
-                    child: donationScreen(data:controller.urgentFundrise[index],),
+                    child: donationScreen(data:data_control.urgentFundrise[index],),
                   ),
                 );
                           },
@@ -162,8 +169,9 @@ class HomeScreen extends StatelessWidget {
                           ),
                         ));
                   },
-                );
-              },
+                ); 
+                  }
+              
             ),
           ),
           Styles.KHeight10,
@@ -206,8 +214,8 @@ class HomeScreen extends StatelessWidget {
           ),
           SizedBox(
             height: 54.w + 2,
-            child: GetX<GetController>(
-              builder: (controller) {
+            child: GetBuilder<GetController>(
+              // builder: (controller) {
                 // List<FundriseModel> endingFundrise = [];
                 // for (var item in controller.fundRiseStream) {
                 //   final dayLeft = calculateExpiryDate(item.expireDate!);
@@ -216,11 +224,12 @@ class HomeScreen extends StatelessWidget {
                 //   }
                 // }
                 // controller.saparatelist();
+                builder: (controller){
                 return ListView.builder(
                   scrollDirection: Axis.horizontal,
-                  itemCount: controller.endingFundrise.length,
+                  itemCount: data_control.endingFundrise.length,
                   itemBuilder: (context, index) {
-                    final data = controller.endingFundrise[index];
+                    final data = data_control.endingFundrise[index];
                     return SizedBox(
                         height: 115,
                         child: GestureDetector(
@@ -230,7 +239,7 @@ class HomeScreen extends StatelessWidget {
                   context,
                   PageTransition(
                     type: PageTransitionType.rightToLeft,
-                    child: donationScreen(data: controller.endingFundrise[index],),
+                    child: donationScreen(data: data_control.endingFundrise[index],),
                   ),
                 );
                           },
@@ -240,7 +249,8 @@ class HomeScreen extends StatelessWidget {
                         ));
                   },
                 );
-              },
+                }
+              
             ),
           ),
           Styles.KHeight10,
