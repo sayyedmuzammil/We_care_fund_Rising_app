@@ -10,7 +10,7 @@ class Messsage extends StatelessWidget {
   const Messsage({Key? key, required this.message, required this.isSamePerson})
       : super(key: key);
 
-  final ChatMessage message;
+  final message;
   final bool isSamePerson;
 
   // var groupByDate=groupBy(message, (obj)=> obj['date'].substring(0,10)); 
@@ -29,10 +29,10 @@ class Messsage extends StatelessWidget {
           
           Row(
             mainAxisAlignment:
-                message.isSender ? MainAxisAlignment.end : MainAxisAlignment.start,
+                message['isSender_fb']? MainAxisAlignment.end : MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              if (!message.isSender) ...[
+              if (!message['isSender_fb']) ...[
                 isSamePerson
                     ? const SizedBox(
                         width: 30,
@@ -53,7 +53,7 @@ class Messsage extends StatelessWidget {
                       width: 8,
                     )
                   : Container(),
-              if (message.isSender) MessageStatusDot(status: message.messageStatus)
+              if (message['isSender_fb']) MessageStatusDot(status: message['status_fb'])
             ],
           ),
         ],

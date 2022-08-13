@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
@@ -47,7 +49,48 @@ class ChatInputField extends StatelessWidget {
               ),
             ),
             IconButton(
-                onPressed: () {
+                onPressed: () async{
+                  String message_from_input=_chatController.text; 
+                  _chatController.clear();
+                  String _date=DateTime.now().toString();
+                  //sender side message storing
+                  await FirebaseFirestore.instance.collection("users").doc(FirebaseAuth.instance.currentUser!.uid).collection('messages').doc('T5A55Kp7DoedrCQd1wLLfs74RRE3').collection('chats').add(
+                    {
+                      "senderId": FirebaseAuth.instance.currentUser!.uid, 
+                      "receiverId" : 'T5A55Kp7DoedrCQd1wLLfs74RRE3', 
+                      'text_fb' : message_from_input, 
+                      'type' : 'text', 
+                      'status_fb' : 'not_view', 
+                      'date_fb' : _date, 
+                      'isSender_fb': true
+                    }
+                  ).then((value) {
+                    FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser!.uid).collection('messages').doc('T5A55Kp7DoedrCQd1wLLfs74RRE3').set(
+                      {
+                        'last_msg' : message_from_input
+                      }
+                    );
+                  });
+
+
+                  //Reciever side message storing
+                   await FirebaseFirestore.instance.collection("users").doc('T5A55Kp7DoedrCQd1wLLfs74RRE3').collection('messages').doc(FirebaseAuth.instance.currentUser!.uid).collection('chats').add(
+                    {
+                      "senderId": FirebaseAuth.instance.currentUser!.uid, 
+                      "receiverId" : 'T5A55Kp7DoedrCQd1wLLfs74RRE3', 
+                      'text_fb' : message_from_input, 
+                      'type' : 'text', 
+                      'status_fb' : 'not_view', 
+                      'date_fb' : _date, 
+                      'isSender_fb': false
+                    }
+                  ).then((value) {
+                    FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser!.uid).collection('messages').doc('T5A55Kp7DoedrCQd1wLLfs74RRE3').set(
+                      {
+                        'last_msg' : message_from_input
+                      }
+                    );
+                  });
                   // socketConnecting();
                 },
                 icon: const Icon(

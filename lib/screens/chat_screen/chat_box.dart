@@ -1,3 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:intl/intl.dart';
@@ -42,87 +45,116 @@ void initState() {
   @override
   Widget build(BuildContext context) {
     final _chatController = TextEditingController();
-    ChatMessage _check = demoChatMessages[0];
-    bool _checkSamePerson = !_check.isSender;
-    bool _checkRepeat;
+    
     return Scaffold(
       appBar: AppBarHead('ChatBox'),
       backgroundColor: Styles.primary_black,
       body: Stack(
         children: [ 
-          Expanded(
-              child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10,),
-            child: ListView.builder(
-              
-              // shrinkWrap: true,  
-              controller: _controller, 
-              physics: _physics,
-              itemBuilder: (context, index) {
+           Expanded(
+                child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10,),
+              child:  StreamBuilder(
+            stream: FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser!.uid).collection('messages').doc('T5A55Kp7DoedrCQd1wLLfs74RRE3').collection('chats').orderBy('date_fb',descending: false).snapshots(),
+            builder: (context, AsyncSnapshot snapshot){
+       
+              if(snapshot.hasData){
+                if(snapshot.data.docs.length<1){
+                  return Center(
+                    child: Text("Say Hi... "),
+                  ); 
 
-            
-
-              ///Checking same sender
-                ChatMessage _singleMessage = demoChatMessages[index];
-            
-                if (_checkSamePerson == _singleMessage.isSender) {
-                  _checkRepeat = true;
-                } else {
-                  _checkRepeat = false;
-                  _checkSamePerson = _singleMessage.isSender;
                 }
-
-                    // Checking same date
-                   bool isSameDate = true;
-              
-              final DateTime date = demoChatMessages[index].date;
-              final item = demoChatMessages[index];
-              if (index == 0) {
-                isSameDate = false;
-              } else {
-                final DateTime prevDate = demoChatMessages[index - 1].date;
-                isSameDate = date.isSameDate(prevDate);
-              }
-
-              //building message
-              if (index == 0 || !(isSameDate)) {
-
-                return Column(
-                  children: [
-                    Center(child: Card(
-                      margin: EdgeInsets.only(top: 10), 
-                      color: Styles.primary_green_light,
-          child: Padding(padding: const EdgeInsets.all(8), 
-          child: Text(DateFormat.yMMMd().format(demoChatMessages[index].date), style: const TextStyle(color: Colors.white),),
-          ),
-          ),), 
-                    Messsage(
-                      isSamePerson: _checkRepeat,
-                      message: demoChatMessages[index],
-                    ), 
-                    index==demoChatMessages.length-1?
-                    SizedBox(height: 70,):Container(), 
-                  ],
-                );
-              }
-              else{
-                return Column(
-                  children: [
-
-                    Messsage(
-                      isSamePerson: _checkRepeat,
-                      message: demoChatMessages[index],
-                    ), 
-                    index==demoChatMessages.length-1?
-                    SizedBox(height: 70,):Container(), 
-                  ],
-                );
-              }
+                   else{
+                        final _check = snapshot.data.docs[2]; 
+    bool _checkSamePerson = !_check['isSender_fb'];
+    bool _checkRepeat; 
+       return ListView.builder(
                 
-              },
-              itemCount: demoChatMessages.length,
+                // shrinkWrap: true,  
+                controller: _controller, 
+                reverse: false,
+                physics: _physics, 
+                itemCount: snapshot.data.docs.length,
+                itemBuilder: (context, index) {
+          
+              print("666 ${snapshot.data.docs.length-1}");
+          
+                ///Checking same sender
+                  final _singleMessage = snapshot.data.docs[index];
+              
+                  if (_checkSamePerson == _singleMessage['isSender_fb']) {
+                    _checkRepeat = true;
+                  } else {
+                    _checkRepeat = false;
+                    _checkSamePerson = _singleMessage['isSender_fb'];
+                  }
+          
+                      // Checking same date
+                     bool isSameDate = true;
+                
+                final DateTime date =DateTime.parse(snapshot.data.docs[index]['date_fb']);
+                // final item = snapshot.data.docs[index];
+                if (index == 0) {
+                  isSameDate = false;
+                  print("6667 $isSameDate $_checkRepeat"); 
+                } else {
+                  final DateTime prevDate = DateTime.parse(snapshot.data.docs[index - 1]['date_fb']);
+                  isSameDate = date.isSameDate(prevDate);
+                  print("6666 $isSameDate $_checkRepeat"); 
+                }
+                
+          
+                //building message
+                if (index == 0 || !(isSameDate)) {
+                  
+                  return Column(
+                    children: [
+                      Center(child: Card(
+                        margin: EdgeInsets.only(top: 10), 
+                        color: Styles.primary_green_light,
+            child: Padding(padding: const EdgeInsets.all(8), 
+            child: Text(DateFormat.yMMMd().format(DateTime.parse(snapshot.data.docs[index]['date_fb'])), style: const TextStyle(color: Colors.white),),
             ),
-          )),
+            ),), 
+                      Messsage(
+                        isSamePerson: _checkRepeat,
+                        message: snapshot.data.docs[index],
+                      ), 
+                      index==snapshot.data.docs.length-1?
+                      SizedBox(height: 70,):Container(), 
+                    ],
+                  );
+                }
+                else{
+                  return Column(
+                    children: [
+          
+                      Messsage(
+                        isSamePerson: _checkRepeat,
+                        message: snapshot.data.docs[index],
+                      ), 
+                      index==snapshot.data.docs.length-1?
+                      SizedBox(height: 70,):Container(), 
+                    ],
+                  );
+                }
+                  
+                },
+                
+              );
+           
+                   }
+             
+              }
+              return Center(child: CircularProgressIndicator(),);
+            },
+          
+          ),
+              
+           
+            )),
+          
 
           ChatInputField(chatController: _chatController),
           // Expanded(
@@ -163,18 +195,18 @@ const String dateFormatter = 'MMMM dd, y';
 
 extension DateHelper on DateTime {
   
-   String formatDate() {
-     final formatter = DateFormat(dateFormatter);
-      return formatter.format(this);
-  }
+  //  String formatDate() {
+  //    final formatter = DateFormat(dateFormatter);
+  //     return formatter.format(this);
+  // }
   bool isSameDate(DateTime other) {
     return this.year == other.year &&
         this.month == other.month &&
         this.day == other.day;
   }
 
-  int getDifferenceInDaysWithNow() {
-    final now = DateTime.now();
-    return now.difference(this).inDays;
-  }
+  // int getDifferenceInDaysWithNow() {
+  //   final now = DateTime.now();
+  //   return now.difference(this).inDays;
+  // }
 }

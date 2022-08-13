@@ -4,22 +4,22 @@ import '../../../../constant_design.dart';
 import '../models/chat_message.dart';
 
 class MessageStatusDot extends StatelessWidget {
-  final MessageStatus status;
-  const MessageStatusDot({Key? key, required this.status}) : super(key: key);
+  String status;
+   MessageStatusDot({Key? key, required this.status}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    Color dotColor(MessageStatus status) {
+    Color dotColor(status) {
       switch (status) {
-        case MessageStatus.not_sent:
+        case 'not_sent':
           return Colors.red;
-        case MessageStatus.not_view:
+        case 'not_view':
           return Styles.primary_green_light;
-        case MessageStatus.viewed:
+        case 'viewed':
           return Styles.primary_green.withOpacity(.8);
         default:
           return Colors.transparent;
-      }
+      } 
     }
 
     return Container(
@@ -29,7 +29,7 @@ class MessageStatusDot extends StatelessWidget {
       decoration:
           BoxDecoration(color: dotColor(status), shape: BoxShape.circle),
       child: Icon(
-        status == MessageStatus.not_sent ? Icons.close : Icons.done,
+        status == 'not_sent' ? Icons.close : Icons.done,
         size: 8,
         color: Colors.white,
       ),

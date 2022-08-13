@@ -12,7 +12,7 @@ class TextMessage extends StatelessWidget {
     required this.isSamePerson,
   }) : super(key: key);
 
-  final ChatMessage message;
+  final message;
   final bool isSamePerson;
   @override
   Widget build(BuildContext context) {
@@ -24,17 +24,17 @@ class TextMessage extends StatelessWidget {
       child: Bubble(
         nip: isSamePerson
             ? BubbleNip.no
-            : message.isSender
+            : message['isSender_fb']
                 ? BubbleNip.rightTop
                 : BubbleNip.leftTop,
-        color: message.isSender
-            ? Styles.primary_green.withOpacity(.7)
+        color: message['isSender_fb']
+            ? Styles.primary_green.withOpacity(.9)
             : Styles.primary_black_light,
         child: Text(
-          message.text,
+          message['text_fb'],
           // textAlign: TextAlign.left,
           style: Styles.RegularText.copyWith(
-              color: message.isSender ? Colors.white : Colors.white),
+              color: message['isSender_fb'] ? Colors.white : Colors.white),
         ),
       ),
     );
