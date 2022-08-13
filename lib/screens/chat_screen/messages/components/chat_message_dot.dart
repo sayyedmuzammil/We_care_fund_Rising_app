@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../constant_design.dart';
-import '../models/ChatMessage.dart';
+import '../models/chat_message.dart';
 
 class MessageStatusDot extends StatelessWidget {
   final MessageStatus status;

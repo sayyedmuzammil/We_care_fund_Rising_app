@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:intl/intl.dart';
 import 'package:sizer/sizer.dart';
 import 'package:we_care/constant_design.dart';
 import 'package:we_care/screens/chat_screen/Chat.dart';
-import 'package:we_care/screens/chat_screen/messages/models/ChatMessage.dart';
+import 'package:we_care/screens/chat_screen/messages/models/chat_message.dart';
 import 'package:we_care/widgets/appBarHead.dart';
 import 'package:we_care/widgets/textField.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
@@ -53,10 +54,15 @@ void initState() {
               child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10,),
             child: ListView.builder(
+              
               // shrinkWrap: true,  
               controller: _controller, 
               physics: _physics,
               itemBuilder: (context, index) {
+
+            
+
+              ///Checking same sender
                 ChatMessage _singleMessage = demoChatMessages[index];
             
                 if (_checkSamePerson == _singleMessage.isSender) {
@@ -65,8 +71,31 @@ void initState() {
                   _checkRepeat = false;
                   _checkSamePerson = _singleMessage.isSender;
                 }
+
+                    // Checking same date
+                   bool isSameDate = true;
+              
+              final DateTime date = demoChatMessages[index].date;
+              final item = demoChatMessages[index];
+              if (index == 0) {
+                isSameDate = false;
+              } else {
+                final DateTime prevDate = demoChatMessages[index - 1].date;
+                isSameDate = date.isSameDate(prevDate);
+              }
+
+              //building message
+              if (index == 0 || !(isSameDate)) {
+
                 return Column(
                   children: [
+                    Center(child: Card(
+                      margin: EdgeInsets.only(top: 10), 
+                      color: Styles.primary_green_light,
+          child: Padding(padding: const EdgeInsets.all(8), 
+          child: Text(DateFormat.yMMMd().format(demoChatMessages[index].date), style: const TextStyle(color: Colors.white),),
+          ),
+          ),), 
                     Messsage(
                       isSamePerson: _checkRepeat,
                       message: demoChatMessages[index],
@@ -75,6 +104,20 @@ void initState() {
                     SizedBox(height: 70,):Container(), 
                   ],
                 );
+              }
+              else{
+                return Column(
+                  children: [
+
+                    Messsage(
+                      isSamePerson: _checkRepeat,
+                      message: demoChatMessages[index],
+                    ), 
+                    index==demoChatMessages.length-1?
+                    SizedBox(height: 70,):Container(), 
+                  ],
+                );
+              }
                 
               },
               itemCount: demoChatMessages.length,
@@ -112,5 +155,26 @@ void initState() {
   acceptOrder(bookID, driverId, context) async {
     socket.emit("acceptOrder", {"driverId": driverId, "bookingId": bookID});
     // await orderConfirmed(context);
+  }
+}
+
+
+const String dateFormatter = 'MMMM dd, y';
+
+extension DateHelper on DateTime {
+  
+   String formatDate() {
+     final formatter = DateFormat(dateFormatter);
+      return formatter.format(this);
+  }
+  bool isSameDate(DateTime other) {
+    return this.year == other.year &&
+        this.month == other.month &&
+        this.day == other.day;
+  }
+
+  int getDifferenceInDaysWithNow() {
+    final now = DateTime.now();
+    return now.difference(this).inDays;
   }
 }
