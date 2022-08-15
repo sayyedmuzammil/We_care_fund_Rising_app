@@ -1,35 +1,34 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:we_care/screens/chat_screen/messages/components/text_message.dart';
-
 import '../../../../constant_design.dart';
-import '../models/chat_message.dart';
 import 'chat_message_dot.dart';
 
 class Messsage extends StatelessWidget {
-  const Messsage({Key? key, required this.message, required this.isSamePerson})
+  const Messsage(
+      {Key? key,
+      required this.message,
+      required this.isSamePerson,
+      required this.profile})
       : super(key: key);
 
   final message;
   final bool isSamePerson;
+  final String profile;
 
-  // var groupByDate=groupBy(message, (obj)=> obj['date'].substring(0,10)); 
+  // var groupByDate=groupBy(message, (obj)=> obj['date'].substring(0,10));
 
   @override
   Widget build(BuildContext context) {
- 
-             
-         
     return Padding(
       padding: const EdgeInsets.only(
         top: 10,
       ),
       child: Column(
         children: [
-          
           Row(
-            mainAxisAlignment:
-                message['isSender_fb']? MainAxisAlignment.end : MainAxisAlignment.start,
+            mainAxisAlignment: message['isSender_fb']
+                ? MainAxisAlignment.end
+                : MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               if (!message['isSender_fb']) ...[
@@ -37,10 +36,9 @@ class Messsage extends StatelessWidget {
                     ? const SizedBox(
                         width: 30,
                       )
-                    : const CircleAvatar(
+                    : CircleAvatar(
                         radius: 12,
-                        backgroundImage:
-                            AssetImage('assets/images/Anonymous_Avatar.png'),
+                        backgroundImage: NetworkImage(profile),
                       )
               ],
               Styles.KWidth10,
@@ -53,7 +51,8 @@ class Messsage extends StatelessWidget {
                       width: 8,
                     )
                   : Container(),
-              if (message['isSender_fb']) MessageStatusDot(status: message['status_fb'])
+              if (message['isSender_fb'])
+                MessageStatusDot(status: message['status_fb'])
             ],
           ),
         ],
@@ -61,4 +60,3 @@ class Messsage extends StatelessWidget {
     );
   }
 }
-

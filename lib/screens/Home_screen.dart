@@ -139,7 +139,7 @@ class HomeScreen extends StatelessWidget {
           // scrollable_category(),
           
            SizedBox(
-            height: 54.w + 2,
+            height: 55.w,
             child: GetBuilder<GetController>
              /*  builder: (controller) {
                 // controller.saparatelist();
@@ -213,8 +213,8 @@ class HomeScreen extends StatelessWidget {
             ),
           ),
           SizedBox(
-            height: 54.w + 2,
-            child: GetBuilder<GetController>(
+            height: 55.w,
+             child: GetBuilder<GetController>(
               // builder: (controller) {
                 // List<FundriseModel> endingFundrise = [];
                 // for (var item in controller.fundRiseStream) {

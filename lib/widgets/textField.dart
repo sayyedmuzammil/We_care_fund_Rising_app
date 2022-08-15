@@ -34,6 +34,7 @@ class text_field extends StatelessWidget {
       ),
       color: Styles.primary_black_light,
       child: TextFormField(
+        
         keyboardType: inputType,
         obscureText: isPassword,
         maxLines: line_no,

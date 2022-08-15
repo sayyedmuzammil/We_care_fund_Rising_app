@@ -1,11 +1,12 @@
+// ignore_for_file: prefer_typing_uninitialized_variables
+
 import 'package:flutter/material.dart';
 
 import '../../../../constant_design.dart';
-import '../models/chat_message.dart';
 
 class MessageStatusDot extends StatelessWidget {
-  String status;
-   MessageStatusDot({Key? key, required this.status}) : super(key: key);
+  final status;
+  const MessageStatusDot({Key? key, required this.status}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +20,7 @@ class MessageStatusDot extends StatelessWidget {
           return Styles.primary_green.withOpacity(.8);
         default:
           return Colors.transparent;
-      } 
+      }
     }
 
     return Container(

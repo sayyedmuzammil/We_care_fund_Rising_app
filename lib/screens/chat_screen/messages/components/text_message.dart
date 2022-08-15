@@ -1,9 +1,10 @@
+// ignore_for_file: prefer_typing_uninitialized_variables
+
 import 'package:bubble/bubble.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../../constant_design.dart';
-import '../models/chat_message.dart';
 
 class TextMessage extends StatelessWidget {
   const TextMessage({

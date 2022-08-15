@@ -86,6 +86,7 @@ class SignupScreen extends StatelessWidget {
                               ],
                             ),
                             text_field(
+                              isPassword: true,
                               Text_field_controller: _passwordController,
                               hintText: 'Password',
                               isVisible: true,

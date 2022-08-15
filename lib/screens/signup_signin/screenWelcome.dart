@@ -122,12 +122,12 @@ class verification_Logo_button extends StatelessWidget {
     return InkWell(
       onTap: () {
 
-        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (BuildContext context) => const PhoneAuthentication(), 
-                          ),
-                        );
+        // Navigator.push(
+        //                   context,
+        //                   MaterialPageRoute(
+        //                     builder: (BuildContext context) => const PhoneAuthentication(), 
+        //                   ),
+        //                 );
       },
       child: Container(
         margin: EdgeInsets.only(bottom: 2.h),
