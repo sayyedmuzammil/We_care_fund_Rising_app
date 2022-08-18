@@ -3,14 +3,46 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:sizer/sizer.dart';
+import 'package:we_care/db_functions/fundRiseModel.dart';
 import '../../constant_design.dart';
+import '../../db_functions/firebase.dart';
 
 class SeeResultScreen extends StatelessWidget {
-  const SeeResultScreen({Key? key, this.data}) : super(key: key);
-  final data;
+  const SeeResultScreen({Key? key, required this.data}) : super(key: key);
+  final FundriseModel data;
 
   @override
   Widget build(BuildContext context) {
+    final daysLeft = calculateExpiryDate(data.expireDate!);
+    var percentWidth = (data.fundriseAmount!) / (data.totalRequireAmount!);
+    final resultFundrise = [
+      {"₹${data.fundriseAmount!}": 'Funds gained'},
+      {
+        "₹${data.totalRequireAmount! - data.fundriseAmount!}": 'Funds left',
+      
+      },
+      {"${data.donatorsCount!}": 'Donators' },
+      {"${data.donatorsCount!}": 'Days left'},
+      { "${percentWidth.toString()}%": "Funds reached"}
+    ];
+
+    // final resultFundrise = [
+    //   {'key': 'Funds gained', 'value': "₹${data.fundriseAmount!}"},
+    //   {
+    //     'key': 'Funds left',
+    //     'value': "₹${data.totalRequireAmount! - data.fundriseAmount!}"
+    //   },
+    //   {'key': 'Donators', 'value': "${data.donatorsCount!}"},
+    //   {'key': 'Days left', 'value': "${data.donatorsCount!}"},
+    //   {"key": "Funds reached", 'value': '${percentWidth.toString()}%'}
+    // ];
+List<String> keys;
+List<String> values;
+    resultFundrise.forEach((element) { 
+     keys.add({element});
+     print("3333 ${keys}"); 
+    });
+    print("333 ${data.fundriseAmount}");
     return Scaffold(
       backgroundColor: Styles.primary_black,
       appBar: AppBar(
@@ -93,7 +125,7 @@ class SeeResultScreen extends StatelessWidget {
                           child: Column(
                             children: const [
                               Styles.KHeight10,
-                              Text('₹87750',
+                              Text("hello",
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     color: Colors.white,

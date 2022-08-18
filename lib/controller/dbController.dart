@@ -20,10 +20,7 @@ class DbController extends GetxController {
   var myFundDonators = [];
 
   getDonationDetails() async {
-    print('123called');
-
     myDonations.clear();
-
     donationData.clear();
 
     final donationCollection = FirebaseFirestore.instance;
@@ -39,8 +36,6 @@ class DbController extends GetxController {
     for (var item in data) {
       await getFundriseDetailsDonator(item.fundRiseId!);
     }
-    statusFundrise();
-    getAllUser();
     update();
   }
 
@@ -77,7 +72,7 @@ class DbController extends GetxController {
     myFundrise.clear();
     List<FundriseModel> data = await getFundRiseFuture();
     for (var item in data) {
-      if (item.userId == data_control.user!.userId) {
+      if (item.userId == FirebaseAuth.instance.currentUser!.uid) {
         myFundrise.add(item);
       }
     }
@@ -93,7 +88,7 @@ class DbController extends GetxController {
         rejectedFundrise.add(item);
       }
     }
-
+    getAllUser();
     update();
   }
 

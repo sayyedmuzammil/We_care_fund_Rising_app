@@ -27,10 +27,7 @@ class GetController extends GetxController {
   bool editProfile = false;
   late DateTime selectedDate = DateTime.now();
 
-
   String? selectedValueDrop;
-
-
 
 //add profile data
   Future<void> refreshUser() async {
@@ -60,36 +57,34 @@ class GetController extends GetxController {
   final fundRiseStream = <FundriseModel>[].obs;
 // FundriseModel? clickedData;
   DateTime? expiry;
-   List<FundriseModel> publishedFundriseAll = <FundriseModel>[];
-   List<FundriseModel> carousilFundrise = <FundriseModel>[];
+  List<FundriseModel> publishedFundriseAll = <FundriseModel>[];
+  List<FundriseModel> carousilFundrise = <FundriseModel>[];
   List<FundriseModel> endingFundrise = <FundriseModel>[];
   List<FundriseModel> urgentFundrise = <FundriseModel>[];
- userModel? fundriseUser;
+  userModel? fundriseUser;
 
   saparatelist() {
     print("seperate list");
-    endingFundrise.clear(); 
+    endingFundrise.clear();
     urgentFundrise.clear();
-    carousilFundrise.clear(); 
+    carousilFundrise.clear();
     publishedFundriseAll.clear();
     print("i aaaam here ${fundRiseStream.length}");
 
     for (var item in fundRiseStream) {
       final dayLeft = calculateExpiryDate(item.expireDate!);
       print("678687687 ${item.status}");
-      if (dayLeft <= 3 && dayLeft >= 0 && item.status=='publish') {
+      if (dayLeft <= 15 && dayLeft >= 0 && item.status == 'publish') { 
         endingFundrise.add(item);
         publishedFundriseAll.add(item);
-        if(carousilFundrise.length<=5)
-        {
-        carousilFundrise.add(item);
+        if (carousilFundrise.length <= 5) {
+          carousilFundrise.add(item);
         }
-      } else if(dayLeft > 3 && item.status=='publish'){
+      } else if (dayLeft > 15 && item.status == 'publish') {
         urgentFundrise.add(item);
         publishedFundriseAll.add(item);
-            if(carousilFundrise.length<=5)
-        {
-        carousilFundrise.add(item);
+        if (carousilFundrise.length <= 5) {
+          carousilFundrise.add(item);
         }
       }
     }
@@ -105,22 +100,19 @@ class GetController extends GetxController {
     //  saparatelist();
     // saparatelist();
 
-
     super.onInit();
   }
 
 // ---------------------------------------------------------
 
- Future<userModel> getFundriseUser(String Id) async{
-
-  print("function called $Id");
-  final userDb=await FirebaseFirestore.instance.collection('users').doc(Id).get();
-  print("hai");
-  print("11 ${userDb.data()!['userId']}");
-  final data = userModel.fromMap(userDb.data()!);  
-  // update();
-return data;
-  
-
-} 
+  Future<userModel> getFundriseUser(String Id) async {
+    print("function called $Id");
+    final userDb =
+        await FirebaseFirestore.instance.collection('users').doc(Id).get();
+    print("hai");
+    print("11 ${userDb.data()!['userId']}");
+    final data = userModel.fromMap(userDb.data()!);
+    // update();
+    return data;
+  }
 }

@@ -10,14 +10,23 @@ import 'package:sizer/sizer.dart';
 import 'package:we_care/bottom_nav_bar.dart';
 import 'package:we_care/constant_design.dart';
 import 'package:we_care/controller/dataController.dart';
+import 'package:we_care/db_functions/auth_method.dart';
 import 'package:we_care/screen_main_page.dart';
 import 'package:we_care/settings/settings.dart';
 
+import '../controller/dbController.dart';
+
 class Profile extends StatelessWidget {
-  const Profile({Key? key}) : super(key: key);
+  Profile({Key? key}) : super(key: key);
+
+  final DbController _dbController = Get.put(DbController());
 
   @override
   Widget build(BuildContext context) {
+  _dbController.statusFundrise(); 
+  _dbController.getDonationDetails();
+  // _dbController.getDonationDetails();
+
     return Scaffold(
         backgroundColor: Styles.primary_black,
         appBar: AppBar(
@@ -77,8 +86,7 @@ class Profile extends StatelessWidget {
                 Center(
                   child: Stack(
                     children: [
-                      GetBuilder<GetController>(
-                        builder: (controller) => Row(
+                       Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
@@ -87,14 +95,14 @@ class Profile extends StatelessWidget {
                                 height: 100.0,
                                 decoration: BoxDecoration(
                                     shape: BoxShape.circle,
-                                    image: data_control.profileImage != null
+                                    image: /* data_control.profileImage != null
                                         ? DecorationImage(
                                             image: MemoryImage(
                                                 data_control.profileImage!),
                                             //NetworkImage(image!),
                                             fit: BoxFit.cover,
                                           )
-                                        : DecorationImage(
+                                        :  */DecorationImage(
                                             image: NetworkImage(data_control
                                                 .user!.photoUrl
                                                 .toString()),
@@ -102,8 +110,8 @@ class Profile extends StatelessWidget {
                                           ))),
                           ],
                         ),
-                      ),
-                      Positioned(
+                    
+                    /*   Positioned(
                         bottom: 0,
                         right: 130,
                         child: InkWell(
@@ -125,6 +133,7 @@ class Profile extends StatelessWidget {
                           ),
                         ),
                       )
+                     */
                     ],
                   ),
                 ),
@@ -146,13 +155,15 @@ class Profile extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       Column(
-                        children: const [
-                          Text(
-                            "12",
-                            style: TextStyle(
-                                fontSize: 24,
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold),
+                        children: [
+                          GetBuilder<DbController>( 
+                            builder: (controller) => Text(
+                              _dbController.myFundrise.length.toString(),
+                              style: TextStyle(
+                                  fontSize: 24,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold),
+                            ),
                           ),
                           Spacer(),
                           Text(
@@ -170,14 +181,17 @@ class Profile extends StatelessWidget {
                         color: Colors.grey[800],
                       ),
                       Column(
-                        children: const [
+                        children:  [
+                          GetBuilder<DbController>(
+            builder: (controller) =>
                           Text(
-                            "17",
+                            _dbController.myDonations.length.toString(),
                             style: TextStyle(
                                 fontSize: 24,
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold),
                           ),
+                          ), 
                           Spacer(),
                           Text(
                             "Donation",

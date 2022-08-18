@@ -23,10 +23,11 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     print("Home");
-     _dbController.getDonationDetails();
-     
+    //  _dbController.getDonationDetails();
+    
     // Get.put(GetController().saparatelist());
-     _controller.saparatelist();
+     _controller.saparatelist(); 
+      
     // _dbController.update(); 
     // _controller.update();
     return Scaffold(
@@ -61,7 +62,7 @@ class HomeScreen extends StatelessWidget {
                             )));
               },
               icon: SvgPicture.asset("assets/images/search_svg.svg")),
-        /*   IconButton(
+          /* IconButton(
               onPressed: () {},
               icon: SvgPicture.asset("assets/images/noti_svg.svg")),
           IconButton(

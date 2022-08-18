@@ -8,9 +8,11 @@ import '../constant_design.dart';
 class single_button extends StatelessWidget {
   String title;
   bool resultBtn;
+  final seeResult;
   single_button({
     required this.title,
     this.resultBtn = false,
+    this.seeResult, 
     Key? key,
   }) : super(key: key);
 
@@ -36,7 +38,7 @@ class single_button extends StatelessWidget {
               context,
               PageTransition(
                 type: PageTransitionType.leftToRightWithFade,
-                child: const SeeResultScreen(),
+                child: SeeResultScreen(data: this.seeResult,),
               ),
             );
           } else {

@@ -40,15 +40,20 @@ class _ChatBoxState extends State<ChatBox> {
       recieverId = 'yltPeMZYadYAzJYl3Hu9c4k6KKs1';
     }
   }
-
+  final _chatController = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    final _chatController = TextEditingController();
-
+  
     return Scaffold(
       appBar: AppBar(
-        elevation: 0,
-        backgroundColor: Styles.primary_green.withOpacity(.2),
+         bottom: PreferredSize(
+      child: Container(
+         color: Styles.primary_green, 
+         height: 2.0,
+      ),
+      preferredSize: Size.fromHeight(5.0)),    
+        // elevation: 4, 
+        backgroundColor: Styles.primary_black, 
         title: FutureBuilder<userModel>(
             future: data_control.getFundriseUser(recieverId),
             builder: (context, snap) {
@@ -79,7 +84,7 @@ class _ChatBoxState extends State<ChatBox> {
               } else {
                 _profile = snap.data!.photoUrl!;
                 return Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 8), 
                   child: CircleAvatar(
                     backgroundImage: NetworkImage(
                       snap.data!.photoUrl!,

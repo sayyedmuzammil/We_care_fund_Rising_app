@@ -21,7 +21,7 @@ class ScreenMainPage extends StatelessWidget {
     Donations(),
     FundRising(),
 ChatBox(), 
-    const Profile(),
+     Profile(),
   ];
 
   @override
@@ -31,7 +31,7 @@ ChatBox(),
     Get.put(GetController()).refreshUser();
     
     // Get.put(DbController());
-  
+      
 
     return Scaffold(
       backgroundColor: Styles.primary_black,

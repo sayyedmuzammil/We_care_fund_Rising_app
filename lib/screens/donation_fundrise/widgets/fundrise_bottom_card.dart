@@ -59,7 +59,7 @@ final data;
             width: 25.w,
             child: FittedBox(
               child: single_button(
-               
+                seeResult: data, 
                 title: 'See Results',
                 resultBtn: true,
                 // currentIndex: 7,
