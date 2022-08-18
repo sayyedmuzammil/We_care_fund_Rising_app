@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:sizer/sizer.dart';
+import 'package:we_care/controller/dataController.dart';
 import '../constant_design.dart';
 import '../db_functions/auth_method.dart';
 import '../db_functions/firebase.dart';
@@ -52,6 +53,7 @@ class Home_page_admin extends StatelessWidget {
                     MaterialPageRoute(
                         builder: (context) => UrgentFundraising(
                               title: 'Search',
+                              fundraiseData: data_control.publishedFundriseAll,
                             )));
               },
               icon: SvgPicture.asset("assets/images/search_svg.svg")),

@@ -56,8 +56,8 @@ class HomeScreen extends StatelessWidget {
                     context,
                     MaterialPageRoute(
                         builder: (context) => UrgentFundraising(
-                          page: 'search',
                               title: 'Search',
+                              fundraiseData: data_control.publishedFundriseAll,
                             )));
               },
               icon: SvgPicture.asset("assets/images/search_svg.svg")),
@@ -119,8 +119,8 @@ class HomeScreen extends StatelessWidget {
                           context,
                           MaterialPageRoute(
                               builder: (context) => UrgentFundraising(
-                                  page: 'urgent',
                                     title: 'Urgent Fundraising',
+                                    fundraiseData: data_control.urgentFundrise,
                                   )),
                         );
                       },
@@ -197,8 +197,8 @@ class HomeScreen extends StatelessWidget {
                           context,
                           MaterialPageRoute(
                               builder: (context) => UrgentFundraising(
-                                  page: 'end',
                                     title: 'Coming to an end',
+                                    fundraiseData: data_control.endingFundrise,
                                   )),
                         );
                       },

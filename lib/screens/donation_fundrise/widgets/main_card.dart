@@ -52,7 +52,7 @@ class main_childCard extends StatelessWidget {
   FundriseModel? data;
   main_childCard({
     Key? key,
-    this.data,
+    required this.data,
   }) : super(key: key);
 
   @override

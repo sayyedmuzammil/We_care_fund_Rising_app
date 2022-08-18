@@ -8,22 +8,24 @@ import 'package:we_care/constant_design.dart';
 import 'package:we_care/controller/dataController.dart';
 import 'package:we_care/screens/donation_fundrise/widgets/main_card.dart';
 import 'package:we_care/widgets/appBarHead.dart';
+import '../db_functions/fundRiseModel.dart';
 import '../widgets/textField.dart';
 
 class UrgentFundraising extends StatelessWidget {
   String title;
-  String page;
+  final List<FundriseModel> fundraiseData;
   final _searchController = TextEditingController();
   UrgentFundraising({
-    this.page='urgent',
     this.title = 'Urgent Fundraising',
+    required this.fundraiseData,
   });
 
   @override
   Widget build(BuildContext context) {
+    // print("I am here 78787779866789");
     return Scaffold(
       backgroundColor: Styles.primary_black,
-      appBar: AppBarHead('Search'), 
+      appBar: AppBarHead(title),
       body: Column(
         children: [
           Padding(
@@ -34,6 +36,7 @@ class UrgentFundraising extends StatelessWidget {
                 SizedBox(
                   width: 80.w,
                   child: text_field(
+                    inputType: TextInputType.none,
                     Text_field_controller: _searchController,
                     hintText: 'Search',
                     isVisible: true,
@@ -51,36 +54,23 @@ class UrgentFundraising extends StatelessWidget {
             ),
           ),
           Styles.KHeight10,
-          // const scrollable_category(),
           Expanded(
             child: Padding(
-
               padding: const EdgeInsets.only(left: 20, right: 20, top: 0),
-              child: /* StreamBuilder<List<fundriseModel>>(
-                stream: getFundrise(),
-                builder: (context, snapshot) {
-                  if(snapshot.connectionState==ConnectionState.waiting){
-                    return CircularProgressIndicator();
-                  }
-                  if(snapshot.data!=null){ */
-                   GetX<GetController>(
-                  
-                     builder: (controller) {
-                       return ListView.separated(
-                                       separatorBuilder: (context, index) => Styles.KHeight10,
-                                       itemCount: page=='urgent'? controller.urgentFundrise.length:page=='end'? controller.endingFundrise.length:controller.publishedFundriseAll.length,
-                                       itemBuilder: (context, index) {
-                                         final data=page=='urgent'? controller.urgentFundrise[index]:page=='end'? controller.endingFundrise[index]:controller.publishedFundriseAll[index];
-                                         return main_childCard(
-                                           data: data,
-                                          
-                                         );
-                                       },
-                                      
-                                     ); 
-                     },
-                   ), 
-            
+              child: GetBuilder<GetController>(
+                builder: (controller) {
+                  return ListView.separated(
+                    separatorBuilder: (context, index) => Styles.KHeight10,
+                    itemCount: fundraiseData.length,
+                    itemBuilder: (context, index) {
+                      //  final data=page=='urgent'? data_control.urgentFundrise[index]:page=='end'? data_control.endingFundrise[index]:controller.publishedFundriseAll[index];
+                      return main_childCard(
+                        data: fundraiseData[index],
+                      );
+                    },
+                  );
+                },
+              ),
             ),
           ),
           Styles.KHeight20,
