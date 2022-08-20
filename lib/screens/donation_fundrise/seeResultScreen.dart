@@ -6,6 +6,7 @@ import 'package:sizer/sizer.dart';
 import 'package:we_care/db_functions/fundRiseModel.dart';
 import '../../constant_design.dart';
 import '../../db_functions/firebase.dart';
+import 'widgets/main_card.dart';
 
 class SeeResultScreen extends StatelessWidget {
   const SeeResultScreen({Key? key, required this.data}) : super(key: key);
@@ -14,16 +15,18 @@ class SeeResultScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final daysLeft = calculateExpiryDate(data.expireDate!);
-    var percentWidth = (data.fundriseAmount!) / (data.totalRequireAmount!);
+  
+    // print(data.expireDate);
+    var percentWidth = ((data.fundriseAmount!) / (data.totalRequireAmount!))*100;
     final resultFundrise = [
       {"₹${data.fundriseAmount!}": 'Funds gained'},
       {
         "₹${data.totalRequireAmount! - data.fundriseAmount!}": 'Funds left',
       
-      },
-      {"${data.donatorsCount!}": 'Donators' },
-      {"${data.donatorsCount!}": 'Days left'},
-      { "${percentWidth.toString()}%": "Funds reached"}
+      }, 
+      {"${data.donatorsCount!}": 'Donators' }, 
+      {"${daysLeft+1}": 'Days left'}, 
+      { "${percentWidth.toStringAsFixed(1)}%": "Funds reached"} 
     ];
 
     // final resultFundrise = [
@@ -36,11 +39,14 @@ class SeeResultScreen extends StatelessWidget {
     //   {'key': 'Days left', 'value': "${data.donatorsCount!}"},
     //   {"key": "Funds reached", 'value': '${percentWidth.toString()}%'}
     // ];
-List<String> keys;
-List<String> values;
+List<String> keys=[];
+List<String> values=[]; 
     resultFundrise.forEach((element) { 
-     keys.add({element});
-     print("3333 ${keys}"); 
+      element.forEach((key, value){
+        keys.add(key);
+        values.add(value);
+      }
+     ); 
     });
     print("333 ${data.fundriseAmount}");
     return Scaffold(
@@ -79,18 +85,17 @@ List<String> values;
         padding: const EdgeInsets.only(left: 20, right: 20),
         child: ListView(
           children: [
-            //  donation_card(
-            //                 data: data,
-            //               // card_bottom:  card_bottom_fundrise(),
-            //               bg_image: data.mainImage!,
-            //             ),
-            Styles.KHeight20,
+                Styles.KHeight10,  
+             main_childCard(
+                            data: data,
+                          // card_bottom:  card_bottom_fundrise(),
+                          // bg_image: data.mainImage!,
+                        ),
+            Styles.KHeight10, 
             Divider(
               color: Colors.grey[800],
             ),
-            const SizedBox(
-              height: 30,
-            ),
+           Styles.KHeight10, 
             const Center(
               child: Text(
                 'Fundraising Results',
@@ -107,7 +112,7 @@ List<String> values;
                   crossAxisCount: 3,
                   crossAxisSpacing: 3.0,
                   mainAxisSpacing: 5,
-                  children: List.generate(6, (index) {
+                  children: List.generate(5, (index) {
                     return Center(
                       child: SizedBox(
                         child: Container(
@@ -123,18 +128,18 @@ List<String> values;
                           height: 20.w,
                           width: 25.w,
                           child: Column(
-                            children: const [
+                            children:  [
                               Styles.KHeight10,
-                              Text("hello",
-                                  style: TextStyle(
+                              Text(keys[index],
+                                  style: const TextStyle(
                                     fontWeight: FontWeight.bold,
                                     color: Colors.white,
                                     fontSize: 20,
                                   )),
                               Styles.KHeight10,
                               Text(
-                                "Funds gained",
-                                style: TextStyle(
+                                values[index],
+                                style: const TextStyle(
                                     color: Colors.white, fontSize: 14),
                               ),
                             ],
