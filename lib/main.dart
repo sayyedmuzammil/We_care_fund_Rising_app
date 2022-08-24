@@ -53,7 +53,7 @@ class MyApp extends StatelessWidget {
                   return Home_page_admin();
                 }
                 return ScreenMainPage(
-                  indexGett: 0,
+                  // indexGett: 0,
                 );
               } else if (snapshot.hasError) {
                 return Center(

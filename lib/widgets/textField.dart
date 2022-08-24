@@ -54,7 +54,7 @@ class text_field extends StatelessWidget {
           hintText: hintText,
           suffixIcon: Visibility(
             visible: isVisible,
-            child: suffix_icon,
+            child: suffix_icon, 
           ),
           hintStyle: Styles.RegularText.copyWith(
             color: const Color(0xFF37424F),

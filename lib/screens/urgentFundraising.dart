@@ -59,14 +59,21 @@ class UrgentFundraising extends StatelessWidget {
               padding: const EdgeInsets.only(left: 20, right: 20, top: 0),
               child: GetBuilder<GetController>(
                 builder: (controller) {
+                   
                   return ListView.separated(
                     separatorBuilder: (context, index) => Styles.KHeight10,
                     itemCount: fundraiseData.length,
+                    
                     itemBuilder: (context, index) {
                       //  final data=page=='urgent'? data_control.urgentFundrise[index]:page=='end'? data_control.endingFundrise[index]:controller.publishedFundriseAll[index];
+                    
+                     if (fundraiseData.isEmpty) {
+                    return CircularProgressIndicator(); 
+                  } else {
                       return main_childCard(
                         data: fundraiseData[index],
                       );
+                  }
                     },
                   );
                 },

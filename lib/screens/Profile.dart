@@ -7,14 +7,12 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:sizer/sizer.dart';
-import 'package:we_care/bottom_nav_bar.dart';
 import 'package:we_care/constant_design.dart';
 import 'package:we_care/controller/dataController.dart';
-import 'package:we_care/db_functions/auth_method.dart';
-import 'package:we_care/screen_main_page.dart';
 import 'package:we_care/settings/settings.dart';
 
 import '../controller/dbController.dart';
+import '../widgets/appbar_main.dart';
 
 class Profile extends StatelessWidget {
   Profile({Key? key}) : super(key: key);
@@ -29,33 +27,7 @@ class Profile extends StatelessWidget {
 
     return Scaffold(
         backgroundColor: Styles.primary_black,
-        appBar: AppBar(
-          elevation: 0,
-          backgroundColor: Styles.primary_black,
-          title: const Text(
-            "Profile",
-            style: TextStyle(
-                fontSize: 24, color: Colors.white, fontWeight: FontWeight.bold),
-          ),
-          leading: Builder(builder: (BuildContext context) {
-            return IconButton(
-                onPressed: () {
-                  indexChangeNotifier.value = 0;
-                  Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(
-                      builder: (BuildContext context) => ScreenMainPage(),
-                    ),
-                    (route) => false,
-                  );
-                },
-                icon: Padding(
-                  padding: const EdgeInsets.only(left: 10),
-                  child: SvgPicture.asset("assets/images/main_logo.svg"),
-                ));
-          }),
-          actions: [
-            IconButton(
+        appBar:Appbar_main(context,true,   IconButton(
                 onPressed: () {
                   Navigator.push(
                     context,
@@ -66,15 +38,7 @@ class Profile extends StatelessWidget {
                   );
                 },
                 icon: SvgPicture.asset("assets/images/settings_icon.svg")),
-            const SizedBox(),
-            IconButton(
-                onPressed: () {},
-                icon: SvgPicture.asset("assets/images/menu_button.svg")),
-            const SizedBox(
-              width: 15,
-            ),
-          ],
-        ),
+              ),
         body: SafeArea(
             child: Padding(
           padding: const EdgeInsets.only(left: 20, right: 20),

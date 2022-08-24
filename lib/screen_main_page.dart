@@ -7,7 +7,7 @@ import 'package:we_care/constant_design.dart';
 import 'package:we_care/controller/dataController.dart';
 import 'package:we_care/screens/Home_screen.dart';
 import 'package:we_care/screens/Profile.dart';
-import 'package:we_care/screens/chat_screen/chat_box.dart';
+// import 'package:we_care/screens/chat_screen/chat_box.dart';
 import 'package:we_care/screens/donation_fundrise/donations.dart';
 import 'package:we_care/screens/donation_fundrise/fund_rising.dart';
 
@@ -20,7 +20,7 @@ class ScreenMainPage extends StatelessWidget {
      HomeScreen(),
     Donations(),
     FundRising(),
-ChatBox(), 
+// ChatBox(), 
      Profile(),
   ];
 
@@ -29,7 +29,7 @@ ChatBox(),
     print('main 1');
     Get.put(DbController()).getDonationDetails();
     Get.put(GetController()).refreshUser();
-    
+    Get.put(GetController()).saparatelist();
     // Get.put(DbController());
       
 
@@ -38,6 +38,7 @@ ChatBox(),
       body: SafeArea(
         child: ValueListenableBuilder(
             valueListenable: indexChangeNotifier,
+            
             builder: (context, int index, _) {
               return _pages[index];
             }),

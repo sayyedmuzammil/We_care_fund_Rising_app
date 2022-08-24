@@ -15,7 +15,9 @@ tab_Activity() {
          _dbController.getDonationDetails();    
   return Padding(
       padding: const EdgeInsets.only(left: 20, right: 20),
-      child: 
+      child:  _dbController.myDonations.isEmpty?Center(
+                  child: Image.asset('assets/images/No result icon.png'))
+                  : 
       GetBuilder<DbController>(
             builder: (_controller) {
               print("abc ${_controller.myFundDonators}");

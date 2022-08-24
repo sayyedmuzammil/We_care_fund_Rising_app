@@ -20,12 +20,21 @@ class ScreenWelcome extends StatelessWidget {
           children: [
             const Image(image: AssetImage('assets/images/welcomescreen.png')),
             Center(
-                child: Text(
+                child: Column(
+                  children: [
+                    Text(
               "Sign-in using",
               style: Styles.Header.copyWith(fontSize: 24),
-            )),
+            ),
+                 Text(
+              "*Please proceed with signup -\n all other options are desabled temperoraly*", 
+              textAlign: TextAlign.center, 
+              style: Styles.RegularText.copyWith(color: Colors.red, fontSize: 12), 
+            ),
+                  ],
+                )),
             SizedBox(
-              height: 5.h,
+              height: 3.h,  
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -119,7 +128,7 @@ class verification_Logo_button extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return GestureDetector( 
       onTap: () {
 
         // Navigator.push(

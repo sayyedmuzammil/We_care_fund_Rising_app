@@ -70,7 +70,7 @@ class FundRising extends StatelessWidget {
                   child: SvgPicture.asset("assets/images/main_logo.svg"),
                 ));
           }),
-          actions: [
+          /* actions: [
             IconButton(
                 onPressed: () {
                   data_control.approvalButton.value = false;
@@ -84,8 +84,9 @@ class FundRising extends StatelessWidget {
             const SizedBox(
               width: 15,
             ),
-          ],
+          ], */
         ),
+       
         body: TabBarView(children: [
           tab_fundraising(),
           tab_Activity(),

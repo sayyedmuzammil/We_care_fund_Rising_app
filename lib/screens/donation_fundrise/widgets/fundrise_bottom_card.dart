@@ -18,9 +18,9 @@ final data;
         left: 15,
       ),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: MainAxisAlignment.center, 
         children: [
-          Row(
+          /* Row(
             children: [
               InkWell(
                 onTap: () {},
@@ -54,7 +54,7 @@ final data;
                 ),
               )
             ],
-          ),
+          ), */ 
           SizedBox(
             width: 25.w,
             child: FittedBox(

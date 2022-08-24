@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:sizer/sizer.dart';
 import 'package:we_care/db_functions/fundRiseModel.dart';
+import 'package:we_care/widgets/appBarHead.dart';
 import '../../constant_design.dart';
 import '../../db_functions/firebase.dart';
 import 'widgets/main_card.dart';
@@ -51,36 +52,7 @@ List<String> values=[];
     print("333 ${data.fundriseAmount}");
     return Scaffold(
       backgroundColor: Styles.primary_black,
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: Styles.primary_black,
-        title: const Text(
-          'See Results',
-          style: TextStyle(
-              fontSize: 24, color: Colors.white, fontWeight: FontWeight.bold),
-        ),
-        leading: Builder(builder: (BuildContext context) {
-          return IconButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              icon: const Padding(
-                  padding: EdgeInsets.only(left: 10),
-                  child: Icon(
-                    Icons.arrow_back,
-                    size: 20,
-                    color: Styles.primary_green,
-                  )));
-        }),
-        actions: [
-          IconButton(
-              onPressed: () {},
-              icon: SvgPicture.asset("assets/images/menu_button.svg")),
-          const SizedBox(
-            width: 15,
-          ),
-        ],
-      ),
+      appBar: AppBarHead('See Results'), 
       body: Padding(
         padding: const EdgeInsets.only(left: 20, right: 20),
         child: ListView(

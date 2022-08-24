@@ -7,97 +7,44 @@ import 'package:get/get.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:sizer/sizer.dart';
 import 'package:we_care/constant_design.dart';
-import 'package:we_care/controller/dbController.dart';
 import 'package:we_care/screens/donate_click/donation_page.dart';
 import 'package:we_care/screens/urgentFundraising.dart';
 import 'package:we_care/widgets/carousel_slider.dart';
 import 'package:we_care/widgets/category_buttons.dart';
 import 'package:we_care/widgets/first_card.dart';
 import '../controller/dataController.dart';
+import '../widgets/appbar_main.dart';
 
 class HomeScreen extends StatelessWidget {
-    HomeScreen({Key? key}) : super(key: key);
-   final GetController _controller=Get.find();
-     final DbController _dbController = Get.put(DbController());
+    const HomeScreen({Key? key}) : super(key: key);
 
+   
   @override
   Widget build(BuildContext context) {
     print("Home");
-    //  _dbController.getDonationDetails();
-    
-    // Get.put(GetController().saparatelist());
-     _controller.saparatelist(); 
-      
-    // _dbController.update(); 
-    // _controller.update();
-    return Scaffold(
+    return Scaffold( 
       backgroundColor: Styles.primary_black,
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: Styles.primary_black,
-        title: const Text(
-          "WeCare",
-          style: TextStyle(
-              fontSize: 24, color: Colors.white, fontWeight: FontWeight.bold),
-        ),
-        leading: Builder(builder: (BuildContext context) {
-          return IconButton(
-              highlightColor: Colors.transparent,
+      appBar: Appbar_main(context,true,   IconButton(
+        
               onPressed: () {
-              },
-              icon: Padding(
-                padding: const EdgeInsets.only(left: 10),
-                child: SvgPicture.asset("assets/images/main_logo.svg"),
-              ));
-        }),
-        actions: [
-          IconButton(
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => UrgentFundraising(
+                  Navigator.push(
+                      context,
+                      PageTransition(
+                        type: PageTransitionType.topToBottom,
+                        child: UrgentFundraising(
                               title: 'Search',
                               fundraiseData: data_control.publishedFundriseAll,
-                            )));
+                            ),
+                      )
+                  );
               },
               icon: SvgPicture.asset("assets/images/search_svg.svg")),
-          /* IconButton(
-              onPressed: () {},
-              icon: SvgPicture.asset("assets/images/noti_svg.svg")),
-          IconButton(
-              onPressed: () {},
-              icon: SvgPicture.asset("assets/images/bookmark_svg.svg")), */
-          const SizedBox(
-            width: 15,
-          ),
-        ],
-      ),
+              ),
       body: ListView(
         children: [
-          Stack(
-            children: [
-              Container(
-                  margin: const EdgeInsets.fromLTRB(20, 10, 20, 0),
-                  child: carousel_Slider()),
-              Positioned(
-                bottom: 3.h,
-                left: 40.w,
-                child: Row(
-                  children: [
-                    Container(
-                      height: 8,
-                      width: 8,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5),
-                        color: Styles.primary_green,
-                      ),
-                    ),
-                  ],
-                ),
-              )
-            ],
-          ),
+          Container(
+              margin: const EdgeInsets.fromLTRB(20, 10, 20, 0),
+              child: carousel_Slider(carousilFundrise: data_control.carousilFundrise)),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Row(
@@ -137,7 +84,6 @@ class HomeScreen extends StatelessWidget {
           ),
 
 
-          // scrollable_category(),
           
            SizedBox(
             height: 55.w,
@@ -152,6 +98,9 @@ class HomeScreen extends StatelessWidget {
                   itemCount: data_control.urgentFundrise.length,
                   itemBuilder: (context, index) {
                     final data = data_control.urgentFundrise[index];
+                     if (data_control.urgentFundrise.isEmpty) {
+                    return CircularProgressIndicator(); 
+                  } else {
                     return SizedBox(
                         height: 115,
                         child: GestureDetector(
@@ -169,6 +118,7 @@ class HomeScreen extends StatelessWidget {
                             data: data,
                           ),
                         ));
+                  }
                   },
                 ); 
                   }
@@ -294,7 +244,10 @@ class HomeScreen extends StatelessWidget {
       ),
     );
   }
-}
+
+ 
+  }
+
 
 class scrollable_category extends StatelessWidget {
   const scrollable_category({

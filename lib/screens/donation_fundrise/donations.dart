@@ -13,6 +13,8 @@ import 'package:we_care/screen_main_page.dart';
 import 'package:we_care/screens/donate_click/payment_screen.dart';
 import 'package:we_care/screens/donation_fundrise/widgets/main_card.dart';
 
+import '../../widgets/appbar_main.dart';
+
 class Donations extends StatelessWidget {
   Donations({Key? key}) : super(key: key);
   final DbController _dbController = Get.put(DbController());
@@ -23,40 +25,8 @@ class Donations extends StatelessWidget {
     _dbController.getDonationDetails();
     return Scaffold(
       backgroundColor: Styles.primary_black,
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: Styles.primary_black,
-        title: const Text(
-          "My Donation",
-          style: TextStyle(
-              fontSize: 24, color: Colors.white, fontWeight: FontWeight.bold),
-        ),
-        leading: Builder(builder: (BuildContext context) {
-          return IconButton(
-              onPressed: () {
-                indexChangeNotifier.value = 0;
-                Navigator.pushAndRemoveUntil(
-                  context,
-                  MaterialPageRoute(
-                    builder: (BuildContext context) => ScreenMainPage(),
-                  ),
-                  (route) => false,
-                );
-              },
-              icon: Padding(
-                padding: const EdgeInsets.only(left: 10),
-                child: SvgPicture.asset("assets/images/main_logo.svg"),
-              ));
-        }),
-        actions: [
-          IconButton(
-              onPressed: () {},
-              icon: SvgPicture.asset("assets/images/menu_button.svg")),
-          const SizedBox(
-            width: 15,
-          ),
-        ],
-      ),
+      appBar: Appbar_main(context,false,   
+              ),
       body: Padding(
           padding: const EdgeInsets.only(left: 10, right: 10, top: 5),
           child: /* ListView.builder(

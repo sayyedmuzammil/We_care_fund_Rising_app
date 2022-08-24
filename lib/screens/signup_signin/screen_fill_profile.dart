@@ -11,6 +11,7 @@ import 'package:we_care/screens/signup_signin/screen_yourInterest.dart';
 import '../../db_functions/auth_method.dart';
 import '../../controller/dataController.dart';
 import '../../db_functions/user_model.dart';
+import '../../screen_main_page.dart';
 import '../../widgets/appBarHead.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import '../../widgets/snackbars.dart';
@@ -56,7 +57,7 @@ class FillProfile extends StatelessWidget {
       backgroundColor: Styles.primary_black,
       appBar: AppBarHead(data_control.editProfile == false
           ? "Fill Your Profile"
-          : "Edit Profile"),
+          : "Edit Profile", false ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: NotificationListener<OverscrollIndicatorNotification>(
@@ -357,7 +358,7 @@ class FillProfile extends StatelessWidget {
                         } else {
                           await profileSubmitted();
 
-                           CustomSnackBar('Success', 'Form submitted Successfullys', Styles.primary_green,  Icons.done );
+                           CustomSnackBar('Success', 'Form submitted Successfully', Styles.primary_green,  Icons.done );
                           if (data_control.editProfile == true) {
                             data_control.editProfile = false;
                             await data_control.refreshUser();
@@ -367,7 +368,7 @@ class FillProfile extends StatelessWidget {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => const InterestScreen()),
+                                  builder: (context) =>  ScreenMainPage()),
                             );
                           }
                         }
@@ -436,13 +437,13 @@ class FillProfile extends StatelessWidget {
     photoUrl =
         data_control.editProfile == true && data_control.profileImage == null
             ? data_control.user!.photoUrl.toString()
-            : await StorageMethods().uploadImageToStorage(
+            :data_control.profileImage != null? await StorageMethods().uploadImageToStorage(
                 childName: 'profilePics',
                 file: data_control.profileImage!,
                 isPost: false,
-                uuid: db_control.auth.currentUser!.uid);
+                uuid: db_control.auth.currentUser!.uid): '';
 
-    if (photoUrl == null) {
+    if (photoUrl == null || photoUrl=='') {
       res = "Add your profile picture";
     } else if (name.isEmpty || name.length <= 2 || name[0] == ' ') {
       res = "Name is required minimum 3 character";

@@ -10,13 +10,18 @@ import 'package:we_care/screens/donation_fundrise/widgets/main_card.dart';
 import 'package:we_care/widgets/category_buttons.dart';
 
 Padding tab_fundraising() {
+  final _dbController=Get.put(DbController());
   //  final MyDonationController  _myDonationController=Get.put(MyDonationController());
   final PageController controller = PageController();
+ 
   return Padding(
     padding: const EdgeInsets.only(left: 0, right: 0),
-    child: Column(
+    child: _dbController.myDonations.isEmpty?Center(
+                  child: Image.asset('assets/images/No result icon.png'))
+                  : Column(
       children: [
         Styles.KHeight10,
+        
         SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: Row(
@@ -52,6 +57,7 @@ Padding tab_fundraising() {
         Expanded(
           child: GetBuilder<DbController>(
             builder: (_controller) {
+              
               return PageView(
                 controller: controller,
                 onPageChanged: (value) {
