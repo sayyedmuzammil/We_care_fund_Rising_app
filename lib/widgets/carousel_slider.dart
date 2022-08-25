@@ -3,10 +3,13 @@
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:sizer/sizer.dart';
 import 'package:we_care/constant_design.dart';
 import 'package:we_care/controller/dataController.dart';
 import 'package:we_care/db_functions/fundRiseModel.dart';
+
+import '../screens/donate_click/donation_page.dart';
 
 class carousel_Slider extends StatelessWidget {
   carousel_Slider({
@@ -18,7 +21,6 @@ class carousel_Slider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return GetBuilder<GetController>(
       builder: (_dbController) {
         // int random =
@@ -32,43 +34,53 @@ class carousel_Slider extends StatelessWidget {
                 pagination: const SwiperPagination(
                   alignment: Alignment.bottomCenter,
                 ),
-
                 autoplay: true,
                 itemCount: carousilFundrise.length,
-
                 itemBuilder: (context, index) {
                   if (carousilFundrise.isEmpty) {
-                    return const CircularProgressIndicator(); 
+                    return const CircularProgressIndicator();
                   } else {
-                
-                    return Stack(
-                      children: [
-                        SizedBox(
-                          width: 100.w,
-                          height: 25.h,
-                          child: FittedBox(
-                              fit: BoxFit.fill,
-                              child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(30),
-                                  child: Image.network(carousilFundrise[index]
-                                      .mainImage
-                                      .toString()))),
-                        ),
-                        Positioned(
-                            bottom: 40,
-                            left: 20,
-                            child: Text(
-                              carousilFundrise[index].title.toString(),
-                              style: Styles.Header,
-                            ))
-                      ],
+                    return GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          PageTransition(
+                            type: PageTransitionType.rightToLeft,
+                            child: donationScreen(
+                              data: carousilFundrise[index],
+                            ),
+                          ),
+                        );
+                      },
+                      child: Stack(
+                        children: [
+                          SizedBox(
+                            width: 100.w,
+                            height: 25.h,
+                            child: FittedBox(
+                                fit: BoxFit.fill,
+                                child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(30),
+                                    child: Image.network(carousilFundrise[index]
+                                        .mainImage
+                                        .toString()))),
+                          ),
+                          Positioned(
+                              bottom: 40,
+                              left: 20,
+                              child: Text(
+                                carousilFundrise[index].title.toString(),
+                                style: Styles.Header,
+                              ))
+                        ],
+                      ),
                     );
                   }
                 },
-                  ),
+              ),
             ),
-                // carouselController: _Controller,
-                /*  options: CarouselOptions(
+            // carouselController: _Controller,
+            /*  options: CarouselOptions(
             
                     initialPage: random,
                     viewportFraction: 1,
@@ -100,7 +112,7 @@ class carousel_Slider extends StatelessWidget {
                         ),
                       )
                       .toList() */
-            
+
             /*       Positioned(
                 bottom: 3.h,
                 left: 0.w,   

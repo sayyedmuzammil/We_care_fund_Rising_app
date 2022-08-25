@@ -14,26 +14,19 @@ import 'package:we_care/screens/donation_fundrise/new_fundrise/new_fundraising.d
 import 'package:we_care/widgets/details_tile.dart';
 
 class donationScreen extends StatelessWidget {
-   FundriseModel data;
-  donationScreen({Key? key,  required this.data}) : super(key: key);
+  FundriseModel data;
+  donationScreen({Key? key, required this.data}) : super(key: key);
 
-  List<String> imageList1 = [
-    
-    'assets/images/srilanka1.jpg',
-    'assets/images/srilanka2.jpeg',
-    'assets/images/srilanka3.jpg',
-    'assets/images/srilanka4.jpg',
-  ];
-
+  List<String> _carousilImages = [];
   @override
   Widget build(BuildContext context) {
-    for (var item in data.childImage!) {
-    print("checking donate now $item");
-    }
-
-    return 
-    // data!=null?
-    Scaffold(
+    _carousilImages = [];
+    _carousilImages.clear();
+    _carousilImages = data.childImage!;
+    _carousilImages.add(data.mainImage!);
+    return
+        // data!=null?
+        Scaffold(
       backgroundColor: Styles.primary_black,
       body: Stack(
         children: [
@@ -48,7 +41,7 @@ class donationScreen extends StatelessWidget {
                         autoPlay: true,
                         disableCenter: false,
                       ),
-                      items: data.childImage!/* imageList1 */
+                      items: _carousilImages /* imageList1 */
                           .map(
                             (item) => SizedBox(
                               width: 100.w,
@@ -59,7 +52,6 @@ class donationScreen extends StatelessWidget {
                             ),
                           )
                           .toList()),
-                  
                   scroll1(context, data),
                   Styles.KHeight20,
                   Container(
@@ -90,10 +82,10 @@ class donationScreen extends StatelessWidget {
                         color: Styles.primary_green,
                       )),
                   Row(
-                    children: [
-                      SvgPicture.asset("assets/images/bookmark_svg.svg"),
-                      Styles.KWidth10,
-                      SvgPicture.asset("assets/images/bookmark_svg.svg"),
+                    children: const [
+                      // SvgPicture.asset("assets/images/bookmark_svg.svg"),
+                      // Styles.KWidth10,
+                      // SvgPicture.asset("assets/images/bookmark_svg.svg"),
                     ],
                   ),
                 ],
@@ -102,9 +94,6 @@ class donationScreen extends StatelessWidget {
           ),
         ],
       ),
-    )/* :Container(); */;
+    ) /* :Container(); */;
   }
-
-
-
 }

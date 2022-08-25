@@ -1,4 +1,3 @@
-// ignore_for_file: must_be_immutable, avoid_print
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -28,6 +27,7 @@ class ScreenMainPage extends StatelessWidget {
   Widget build(BuildContext context) {
     print('main 1');
     Get.put(DbController()).getDonationDetails();
+    Get.put(DbController()).statusFundrise();
     Get.put(GetController()).refreshUser();
     Get.put(GetController()).saparatelist();
     // Get.put(DbController());

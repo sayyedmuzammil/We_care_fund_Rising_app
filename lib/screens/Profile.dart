@@ -1,10 +1,8 @@
 // ignore_for_file: must_be_immutable, camel_case_types, non_constant_identifier_names, unrelated_type_equality_checks, avoid_print, file_names
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:sizer/sizer.dart';
 import 'package:we_care/constant_design.dart';
@@ -21,9 +19,9 @@ class Profile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-  _dbController.statusFundrise(); 
-  _dbController.getDonationDetails();
-  // _dbController.getDonationDetails();
+  //    _dbController.getDonationDetails();
+  // _dbController.statusFundrise(); 
+
 
     return Scaffold(
         backgroundColor: Styles.primary_black,
@@ -123,14 +121,14 @@ class Profile extends StatelessWidget {
                           GetBuilder<DbController>( 
                             builder: (controller) => Text(
                               _dbController.myFundrise.length.toString(),
-                              style: TextStyle(
+                              style: const TextStyle(
                                   fontSize: 24,
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold),
                             ),
                           ),
-                          Spacer(),
-                          Text(
+                          const Spacer(),
+                          const Text(
                             "Fundraising",
                             style: TextStyle(
                               fontSize: 15,
@@ -150,14 +148,14 @@ class Profile extends StatelessWidget {
             builder: (controller) =>
                           Text(
                             _dbController.myDonations.length.toString(),
-                            style: TextStyle(
+                            style: const TextStyle(
                                 fontSize: 24,
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold),
                           ),
                           ), 
-                          Spacer(),
-                          Text(
+                          const Spacer(),
+                          const Text(
                             "Donation",
                             style: TextStyle(
                               fontSize: 15,
@@ -189,16 +187,17 @@ class Profile extends StatelessWidget {
                   style: const TextStyle(
                       fontSize: 15, color: Colors.white, wordSpacing: 1.4),
                 ),
-                Styles.KHeight10,
+                Styles.KHeight20, 
                 Container(
                   alignment: Alignment.topLeft,
                   child: Row(
-                    children: [
-                      const Text(
-                        "Interest",
+                    children: const [
+                       Text(
+                        "Intrest",
                         style: Styles.Header,
                       ),
-                      IconButton(
+                        
+                    /*   IconButton(
                         onPressed: () {
                           print("edit interest");
                         },
@@ -207,10 +206,11 @@ class Profile extends StatelessWidget {
                           color: Styles.primary_green,
                           size: 22,
                         ),
-                      ),
+                      ), */
                     ],
                   ),
                 ),
+                Styles.KHeight10, 
                 Wrap(
                   spacing: 15,
                   children: [
@@ -260,16 +260,16 @@ class Profile extends StatelessWidget {
     );
   }
 
-  pickImage() async {
-    try {
-      final img = await ImagePicker().pickImage(source: ImageSource.gallery);
-      if (img == null) {
-        return;
-      }
+  // pickImage() async {
+  //   try {
+  //     final img = await ImagePicker().pickImage(source: ImageSource.gallery);
+  //     if (img == null) {
+  //       return;
+  //     }
 
-      return await img.readAsBytes();
-    } on PlatformException catch (e) {
-      print('Failed to pick image : $e');
-    }
-  }
+  //     return await img.readAsBytes();
+  //   } on PlatformException catch (e) {
+  //     print('Failed to pick image : $e');
+  //   }
+  // }
 }

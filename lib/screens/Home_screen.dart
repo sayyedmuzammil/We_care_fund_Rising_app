@@ -16,35 +16,36 @@ import '../controller/dataController.dart';
 import '../widgets/appbar_main.dart';
 
 class HomeScreen extends StatelessWidget {
-    const HomeScreen({Key? key}) : super(key: key);
+  const HomeScreen({Key? key}) : super(key: key);
 
-   
   @override
   Widget build(BuildContext context) {
     print("Home");
-    return Scaffold( 
+    return Scaffold(
       backgroundColor: Styles.primary_black,
-      appBar: Appbar_main(context,true,   IconButton(
-        
-              onPressed: () {
-                  Navigator.push(
-                      context,
-                      PageTransition(
-                        type: PageTransitionType.topToBottom,
-                        child: UrgentFundraising(
-                              title: 'Search',
-                              fundraiseData: data_control.publishedFundriseAll,
-                            ),
-                      )
-                  );
-              },
-              icon: SvgPicture.asset("assets/images/search_svg.svg")),
-              ),
+      appBar: Appbar_main(
+        context,
+        true,
+        IconButton(
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  PageTransition(
+                    type: PageTransitionType.topToBottom,
+                    child: UrgentFundraising(
+                      title: 'Search',
+                      fundraiseData: data_control.publishedFundriseAll,
+                    ),
+                  ));
+            },
+            icon: SvgPicture.asset("assets/images/search_svg.svg")),
+      ),
       body: ListView(
         children: [
           Container(
               margin: const EdgeInsets.fromLTRB(20, 10, 20, 0),
-              child: carousel_Slider(carousilFundrise: data_control.carousilFundrise)),
+              child: carousel_Slider(
+                  carousilFundrise: data_control.carousilFundrise)),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Row(
@@ -82,48 +83,43 @@ class HomeScreen extends StatelessWidget {
               ],
             ),
           ),
-
-
-          
-           SizedBox(
+          SizedBox(
             height: 55.w,
             child: GetBuilder<GetController>
-             /*  builder: (controller) {
+                /*  builder: (controller) {
                 // controller.saparatelist();
-                return */(
-                  builder: (controller){
-              
-                   return ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: data_control.urgentFundrise.length,
-                  itemBuilder: (context, index) {
-                    final data = data_control.urgentFundrise[index];
-                     if (data_control.urgentFundrise.isEmpty) {
-                    return CircularProgressIndicator(); 
+                return */
+                (builder: (controller) {
+              return ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: data_control.urgentFundrise.length,
+                itemBuilder: (context, index) {
+                  final data = data_control.urgentFundrise[index];
+                  if (data_control.urgentFundrise.isEmpty) {
+                    return CircularProgressIndicator();
                   } else {
                     return SizedBox(
                         height: 115,
                         child: GestureDetector(
                           onTap: () {
-                            
-                      Navigator.push(
-                  context,
-                  PageTransition(
-                    type: PageTransitionType.rightToLeft,
-                    child: donationScreen(data:data_control.urgentFundrise[index],),
-                  ),
-                );
+                            Navigator.push(
+                              context,
+                              PageTransition(
+                                type: PageTransitionType.rightToLeft,
+                                child: donationScreen(
+                                  data: data_control.urgentFundrise[index],
+                                ),
+                              ),
+                            );
                           },
                           child: first_card(
                             data: data,
                           ),
                         ));
                   }
-                  },
-                ); 
-                  }
-              
-            ),
+                },
+              );
+            }),
           ),
           Styles.KHeight10,
           Padding(
@@ -165,8 +161,8 @@ class HomeScreen extends StatelessWidget {
           ),
           SizedBox(
             height: 55.w,
-             child: GetBuilder<GetController>(
-              // builder: (controller) {
+            child: GetBuilder<GetController>(
+                // builder: (controller) {
                 // List<FundriseModel> endingFundrise = [];
                 // for (var item in controller.fundRiseStream) {
                 //   final dayLeft = calculateExpiryDate(item.expireDate!);
@@ -175,37 +171,36 @@ class HomeScreen extends StatelessWidget {
                 //   }
                 // }
                 // controller.saparatelist();
-                builder: (controller){
-                return ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: data_control.endingFundrise.length,
-                  itemBuilder: (context, index) {
-                    final data = data_control.endingFundrise[index];
-                    return SizedBox(
-                        height: 115,
-                        child: GestureDetector(
-                           onTap: () {
-                            
-                      Navigator.push(
-                  context,
-                  PageTransition(
-                    type: PageTransitionType.rightToLeft,
-                    child: donationScreen(data: data_control.endingFundrise[index],),
-                  ),
-                );
-                          },
-                          child: first_card(
-                            data: data,
-                          ),
-                        ));
-                  },
-                );
-                }
-              
-            ),
+                builder: (controller) {
+              return ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: data_control.endingFundrise.length,
+                itemBuilder: (context, index) {
+                  final data = data_control.endingFundrise[index];
+                  return SizedBox(
+                      height: 115,
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            PageTransition(
+                              type: PageTransitionType.rightToLeft,
+                              child: donationScreen(
+                                data: data_control.endingFundrise[index],
+                              ),
+                            ),
+                          );
+                        },
+                        child: first_card(
+                          data: data,
+                        ),
+                      ));
+                },
+              );
+            }),
           ),
           Styles.KHeight10,
-        /*   SizedBox(
+          /*   SizedBox(
             width: 82.w,
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -244,10 +239,7 @@ class HomeScreen extends StatelessWidget {
       ),
     );
   }
-
- 
-  }
-
+}
 
 class scrollable_category extends StatelessWidget {
   const scrollable_category({

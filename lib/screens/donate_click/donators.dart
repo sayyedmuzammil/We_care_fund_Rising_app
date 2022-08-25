@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:we_care/constant_design.dart';
+import 'package:we_care/db_functions/fundRiseModel.dart';
 
 class ScreenDonators extends StatelessWidget {
-  const ScreenDonators({Key? key}) : super(key: key);
+  final FundriseModel data;
+  const ScreenDonators({Key? key, required this.data}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -12,9 +14,9 @@ class ScreenDonators extends StatelessWidget {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Styles.primary_black,
-        title: const Text(
-          "3,438 Donators",
-          style: TextStyle(
+        title: Text(
+          data.donatorsCount.toString(),
+          style: const TextStyle(
               fontSize: 24, color: Colors.white, fontWeight: FontWeight.bold),
         ),
         leading: Builder(builder: (BuildContext context) {
@@ -46,7 +48,7 @@ class ScreenDonators extends StatelessWidget {
         child: Container(
             margin: const EdgeInsets.symmetric(horizontal: 20),
             child: ListView.separated(
-              itemCount: 20,
+              itemCount: data.donatorsCount!,
               separatorBuilder: (context, index) {
                 return const SizedBox(
                   height: 30,

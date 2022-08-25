@@ -33,7 +33,7 @@ Padding scroll1(BuildContext context, FundriseModel data) {
                 donators_count: data.donatorsCount!.toString(),
                 days_left: calculateExpiryDate(data.expireDate!) + 1,
                 // percentWidth: 95,
-                widthOfPercent:95,
+                widthOfPercent: 95,
                 titleVisible: false,
               )),
           Styles.KHeight10,
@@ -41,11 +41,11 @@ Padding scroll1(BuildContext context, FundriseModel data) {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               SizedBox(
-                width: 15.w,
+                // width: 15.w,
                 height: 7.w,
                 child: TextButton(
                   child: const Text(
-                    'Medical',
+                    'Humanity',
                     style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold),
                   ),
                   style: TextButton.styleFrom(
@@ -56,7 +56,7 @@ Padding scroll1(BuildContext context, FundriseModel data) {
                     side: const BorderSide(color: Styles.primary_green),
                   ),
                   onPressed: () {
-                    print('Pressed');
+                    // print('Pressed');
                   },
                 ),
               ),
@@ -65,7 +65,9 @@ Padding scroll1(BuildContext context, FundriseModel data) {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => const ScreenDonators()),
+                        builder: (context) => ScreenDonators(
+                              data: data,
+                            )),
                   );
                 },
                 child: Row(
@@ -103,7 +105,7 @@ Padding scroll1(BuildContext context, FundriseModel data) {
                     ),
                     Styles.KHeight10,
                     Text(
-                      "3,438 donators",
+                      data.donatorsCount.toString(),
                       style: Styles.RegularText.copyWith(color: Colors.white),
                     ),
                     const SizedBox(
