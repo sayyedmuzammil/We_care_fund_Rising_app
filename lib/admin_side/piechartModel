@@ -1,0 +1,139 @@
+/* import 'dart:convert';
+
+class Customer {
+  String?  Name;
+  int? amount;
+  Customer({
+    this.Name,
+    this.amount,
+  });
+
+  Map<String, dynamic> toMap() {
+    return {
+      'Name': Name,
+      'amount': amount,
+    };
+  }
+
+  static Customer fromMap(Map<String, dynamic> map) {
+    return Customer(
+      Name: map['Name'],
+      amount: map['amount']?.toInt(),
+    );
+  }
+
+}
+ */
+
+
+
+
+
+//
+
+
+
+/* import 'package:flutter/material.dart';
+import 'package:pie_chart/pie_chart.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
+import 'package:we_care/admin_side/piechartModel';
+// import 'package:syncfusion_flutter_charts/charts.dart';
+import 'package:we_care/constant_design.dart';
+import 'package:we_care/widgets/appBarHead.dart';
+// import 'package:pie_chart/pie_chart.dart'; 
+
+class PieChart extends StatelessWidget {
+   PieChart({ Key? key }) : super(key: key);
+
+
+var newMap={
+  'Data 1':100,
+  'Data 2':200,
+  'Data 3':300,
+  'Data 4':400,
+  'Data 5':500
+};
+var newMap1=['Data1' 'Data 2', 'Data 3', 'Data 4'];
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Styles.primary_black, 
+      appBar: AppBarHead("pie chart"),
+      body:  AnimatedContainer(
+          duration: const Duration(milliseconds: 1000),
+          width: double.infinity,
+          alignment: Alignment.topCenter,
+          height: 200, 
+          child: FittedBox(
+            fit: BoxFit.fill,
+            alignment: Alignment.topCenter,
+            child: Card(
+                color: Color(0xf01f2420),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15.0),
+                ),
+                elevation: 0,
+                shadowColor: Colors.black,
+                child: SizedBox(
+                  width: 350,
+                  height: 200,
+                  child: ValueListenableBuilder(
+                    valueListenable: 
+                    builder:
+                        (BuildContext ctx, List<Customer> newMap, Widget? _) {
+                      if (newMap == null || newMap.isEmpty) {
+                        return Center(
+                            child: Column(
+                          children: [
+                            Image.asset(
+                              'assets/images/No result icon.png',
+                              height: 160,
+                            ),
+                            Text(
+                              'No transactions yet',
+                              style: TextStyle(
+                                  color: Colors.blueGrey, fontSize: 15),
+                            ),
+                          ],
+                        ));
+                      }
+                      return SfCircularChart(
+                        legend: Legend(
+                            isVisible: true,
+                            overflowMode: LegendItemOverflowMode.wrap,
+                            textStyle: TextStyle(color: Colors.white)),
+                        tooltipBehavior: TooltipBehavior(enable: true),
+                        series: <CircularSeries>[
+                          PieSeries<Customer, String>(
+                            dataSource: newMap,
+                            xValueMapper: (Customer data, _) => data.Name,
+                            yValueMapper: (Customer data, _) => data.amount,
+                            dataLabelSettings: DataLabelSettings(
+                                isVisible: true,
+                                textStyle: TextStyle(
+                                  color: Colors.white,
+                                ),
+                                labelIntersectAction:
+                                    LabelIntersectAction.shift,
+                                labelPosition: ChartDataLabelPosition.outside,
+                                connectorLineSettings: ConnectorLineSettings(
+                                    type: ConnectorType.curve, length: '15%')),
+                            enableTooltip: true,
+                          )
+                        ],
+                      );
+                    },
+                  ),
+                )),
+          ),
+        ),
+    
+
+                   
+                                                 
+                                                  
+    );
+
+
+  }
+} */
