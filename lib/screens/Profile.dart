@@ -20,7 +20,8 @@ class Profile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // _dbController.getDonationDetails();
-    // _dbController.statusFundrise();
+    // _dbController.statusFundrise(); 
+    // _dbController.getFundRiseFuture();  
 
     return Scaffold(
         backgroundColor: Styles.primary_black,

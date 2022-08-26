@@ -17,9 +17,10 @@ var dateFormated = DateFormat.yMMMMEEEEd().format(date);
 class FundRising extends StatelessWidget {
   FundRising({Key? key}) : super(key: key);
   int count = 3;
-
   @override
   Widget build(BuildContext context) {
+    //     _dbController.getDonationDetails();
+    // _dbController.statusFundrise(); 
     // _dbController.getAllUser();
     // _dbController.update();
 

@@ -1,14 +1,17 @@
 // ignore_for_file: file_names, must_be_immutable
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 import 'package:we_care/constant_design.dart';
 import 'package:we_care/screen_main_page.dart';
 
+import '../../../controller/dbController.dart';
+
 class SuccessAlert extends StatelessWidget {
   bool success;
   SuccessAlert({Key? key, this.success = true}) : super(key: key);
-
+ final _dbController= Get.put(DbController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -75,7 +78,9 @@ class SuccessAlert extends StatelessWidget {
                           // side: const BorderSide(color: Styles.primary_green),
                         ),
                         onPressed: () {
-                          
+                              
+                          _dbController.getDonationDetails();
+                          _dbController.statusFundrise();
                           Navigator.pushAndRemoveUntil(
                             context,
                             MaterialPageRoute(

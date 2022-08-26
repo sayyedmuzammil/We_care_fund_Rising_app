@@ -97,8 +97,9 @@ class GetController extends GetxController {
   @override
   void onInit() {
     fundRiseStream.bindStream(getFundrise());
+
+    //  refreshUser();
     //  saparatelist();
-    // saparatelist();
 
     super.onInit();
   }

@@ -19,6 +19,7 @@ class SignupScreen extends StatelessWidget {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _globalKey1 = GlobalKey<FormState>();
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(

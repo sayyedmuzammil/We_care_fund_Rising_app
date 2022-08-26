@@ -7,6 +7,7 @@ import 'package:we_care/db_functions/donators_model.dart';
 import 'package:we_care/db_functions/fundRiseModel.dart';
 import 'package:we_care/db_functions/user_model.dart';
 
+
 class DbController extends GetxController {
   List<DonatorsModel> donationData = [];
   List<FundriseModel> myDonations = [];
@@ -15,6 +16,7 @@ class DbController extends GetxController {
   List<FundriseModel> completedFundrise = [];
   List<FundriseModel> rejectedFundrise = [];
   List<FundriseModel> publishedFundrise = [];
+  // final fundRiseStream = <FundriseModel>[].obs;
   List<FundriseModel> totalFundrise = [];
   var myFundDonators = [];
 
@@ -88,8 +90,8 @@ class DbController extends GetxController {
         rejectedFundrise.add(item);
       }
     }
-    getAllUser();
-    
+    await getAllUser();
+    update();  
   }
 
 // --------------------------------------tab_activity
@@ -102,6 +104,7 @@ class DbController extends GetxController {
     for (var item in allUser) {
       getFundriseData(item.userId!, item.photoUrl!, item.name!);
     }
+  
     return allUser;
   }
 
@@ -131,15 +134,18 @@ class DbController extends GetxController {
       }
     }
     print('11122 leng ${myFundDonators.length} ');
-    update();
+    
   }
 
 // ---------------------------------
   @override
   void onInit() {
+    // fundRiseStream.bindStream(getFundrise());
     super.onInit();
-    // getDonationDetails();
-    // statusFundrise();
+    // refresh();
+    getDonationDetails();
+    statusFundrise();
+    update(); 
     // statusFundrise();
   }
 }

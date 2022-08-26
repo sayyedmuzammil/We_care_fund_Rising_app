@@ -10,10 +10,10 @@ import 'package:we_care/screens/Profile.dart';
 import 'package:we_care/screens/donation_fundrise/donations.dart';
 import 'package:we_care/screens/donation_fundrise/fund_rising.dart';
 
-import 'controller/dbController.dart';
 
 class ScreenMainPage extends StatelessWidget {
-  ScreenMainPage({Key? key, }) : super(key: key);
+  ScreenMainPage({Key? key, this.indexGet=0}) : super(key: key);
+  final int indexGet;
   final _pages = [
      const HomeScreen(),
     const Donations(),
@@ -21,14 +21,21 @@ class ScreenMainPage extends StatelessWidget {
 // ChatBox(), 
      Profile(),
   ];
-
+//  final _dbController= Get.put(DbController());
   @override
   Widget build(BuildContext context) {
-   
+  
+  //  _dbController.myDonations=[]; 
+  //     _dbController.myDonations.clear(); 
+  //     _dbController.myFundrise=[]; 
+  //  _dbController.myFundrise.clear(); 
+
     Get.put(GetController()).refreshUser();
     Get.put(GetController()).saparatelist();
-     Get.put(DbController()).statusFundrise();  
-    Get.put(DbController()).getDonationDetails();  
+    // Get.put(DbController()).getDonationDetails();  
+    //  Get.put(DbController()).statusFundrise();  
+    //  data_control.update();
+    // Get.find();
 
     // Get.put(DbController());
       
@@ -40,6 +47,7 @@ class ScreenMainPage extends StatelessWidget {
             valueListenable: indexChangeNotifier,
             
             builder: (context, int index, _) {
+              // index=indexGet;  
               return _pages[index];
             }),
       ),
