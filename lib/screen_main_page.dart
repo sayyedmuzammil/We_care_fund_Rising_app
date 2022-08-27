@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:we_care/bottom_nav_bar.dart';
 import 'package:we_care/constant_design.dart';
 import 'package:we_care/controller/dataController.dart';
+import 'package:we_care/controller/dbController.dart';
 import 'package:we_care/screens/Home_screen.dart';
 import 'package:we_care/screens/Profile.dart';
 // import 'package:we_care/screens/chat_screen/chat_box.dart';
@@ -12,8 +13,8 @@ import 'package:we_care/screens/donation_fundrise/fund_rising.dart';
 
 
 class ScreenMainPage extends StatelessWidget {
-  ScreenMainPage({Key? key, this.indexGet=0}) : super(key: key);
-  final int indexGet;
+  ScreenMainPage({Key? key, }) : super(key: key);
+  // final int indexGet;
   final _pages = [
      const HomeScreen(),
     const Donations(),
@@ -29,7 +30,7 @@ class ScreenMainPage extends StatelessWidget {
   //     _dbController.myDonations.clear(); 
   //     _dbController.myFundrise=[]; 
   //  _dbController.myFundrise.clear(); 
-
+    
     Get.put(GetController()).refreshUser();
     Get.put(GetController()).saparatelist();
     // Get.put(DbController()).getDonationDetails();  
