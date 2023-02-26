@@ -7,12 +7,12 @@ import 'package:sizer/sizer.dart';
 import 'package:we_care/constant_design.dart';
 import 'package:we_care/controller/dbController.dart';
 
-tab_Activity() {
+tab_Activity(/* List<dynamic> myFundDonators */) {
     // final DbController _dbController = Get.put(DbController());
 
       //  _dbController.update();
-  final DbController _dbController = Get.find();
-         _dbController.getDonationDetails();    
+  final DbController _dbController = Get.put(DbController());
+       
   return Padding(
       padding: const EdgeInsets.only(left: 20, right: 20),
       child:  _dbController.myDonations.isEmpty?Center(

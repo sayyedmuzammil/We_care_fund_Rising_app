@@ -17,7 +17,7 @@ class DbController extends GetxController {
   List<FundriseModel> rejectedFundrise = [];
   List<FundriseModel> publishedFundrise = [];
   List<FundriseModel> totalFundrise=[];
-  var myFundDonators = [];
+  List<dynamic> myFundDonators = [];
 
   getDonationDetails() async {
     myDonations.clear();
@@ -96,6 +96,7 @@ class DbController extends GetxController {
 
   Future<List<userModel>> getAllUser() async {
     myFundDonators.clear();
+    myFundDonators=[]; 
     final userDb = await FirebaseFirestore.instance.collection('users').get();
     final allUser =
         userDb.docs.map((e) => userModel.fromMap(e.data())).toList();
@@ -140,7 +141,7 @@ class DbController extends GetxController {
   void onInit() {
     super.onInit();
     getDonationDetails();
-    getAllUser();
+    statusFundrise();
     // statusFundrise();
   }
 }

@@ -74,13 +74,13 @@ class GetController extends GetxController {
     for (var item in fundRiseStream) {
       final dayLeft = calculateExpiryDate(item.expireDate!);
       print("678687687 ${item.status}");
-      if (dayLeft <= 15 && dayLeft >= 0 && item.status == 'publish') { 
+      if (dayLeft <= 90 && dayLeft >= 0 && item.status == 'publish') {
         endingFundrise.add(item);
         publishedFundriseAll.add(item);
         if (carousilFundrise.length <= 5) {
           carousilFundrise.add(item);
         }
-      } else if (dayLeft > 15 && item.status == 'publish') {
+      } else if (dayLeft > 90 && item.status == 'publish') {
         urgentFundrise.add(item);
         publishedFundriseAll.add(item);
         if (carousilFundrise.length <= 5) {
@@ -90,8 +90,8 @@ class GetController extends GetxController {
     }
 
     // update();
-    // print(endingFundrise.length);
-    // print(urgentFundrise.length);
+    print(endingFundrise.length);
+    print(urgentFundrise.length);
   }
 
   @override

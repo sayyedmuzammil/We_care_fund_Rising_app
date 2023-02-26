@@ -27,6 +27,7 @@ class FundRising extends StatelessWidget {
   Widget build(BuildContext context) {
 
     _dbController.statusFundrise();
+      // _dbController.getAllUser();      
     // _controller.saparatelist();
     data_control.categoryButtonClicked.value = 0;
     return DefaultTabController(
